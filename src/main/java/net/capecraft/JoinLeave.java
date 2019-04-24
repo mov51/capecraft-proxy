@@ -45,7 +45,7 @@ public class JoinLeave implements Listener {
 			return;
 		}
 		
-		for(ServerInfo servers : instance.getProxy().getServersCopy().values()) {
+		for(ServerInfo servers : instance.getProxy().getServers().values()) {
 			ByteArrayDataOutput out = ByteStreams.newDataOutput();
 			
 			out.writeUTF("CapeCraftJL");			
