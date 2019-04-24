@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CapeCraftWaterFall">
+    <output-path>$PROJECT_DIR$/out/artifacts/CapeCraftWaterFall</output-path>
+    <root id="archive" name="CapeCraftWaterFall.jar">
+      <element id="module-output" name="capecraft-waterfall" />
+    </root>
+  </artifact>
+</component>
