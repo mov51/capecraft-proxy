@@ -21,7 +21,7 @@ public class JoinLeave implements Listener {
 	@EventHandler
 	public void onJoin(PostLoginEvent event) {
 			
-		//1.13.2 connection, will need changing when server upgrades!
+		//1.13.2 and 1.14 connection, will need changing when server upgrades!
 		int protocolVersion = event.getPlayer().getPendingConnection().getVersion();
 		if(protocolVersion != 404 && protocolVersion != 477) {
 			return;
@@ -39,9 +39,10 @@ public class JoinLeave implements Listener {
 	
 	@EventHandler
 	public void onLeave(PlayerDisconnectEvent event) {
-		
-		//1.13.2 connection, will need changing when server upgrades!
-		if(event.getPlayer().getPendingConnection().getVersion() != 404) {
+
+		//1.13.2 and 1.14 connection, will need changing when server upgrades!
+		int protocolVersion = event.getPlayer().getPendingConnection().getVersion();
+		if(protocolVersion != 404 && protocolVersion != 477) {
 			return;
 		}
 		
