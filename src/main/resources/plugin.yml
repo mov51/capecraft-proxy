@@ -1,4 +1,7 @@
-name: CapeCraftJoinLeave
+name: CapeCraftProxy
 main: net.capecraft.Main
-version: 1.1
+version: 1.0
 author: james090500
+commands:
+  capecraftproxy:
+    description: CapeCraftProxy commands
