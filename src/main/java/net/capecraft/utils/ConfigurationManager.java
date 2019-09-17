@@ -48,6 +48,7 @@ public class ConfigurationManager {
 	 * @return return the config
 	 */
 	public static Configuration getPluginConfig() {
+		System.out.println("Is config in memory? - " + pluginConfig != null);
 		if(pluginConfig == null) {
 			try {
 				pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, "config.yml"));
@@ -74,7 +75,7 @@ public class ConfigurationManager {
 	 * @param uuid Player UUID
 	 * @return The Configuration
 	 */
-	public static Configuration getPlayerConfig(UUID uuid) {
+	public static Configuration getPlayerConfig(UUID uuid) {		
 		if(playerConfigs.get(uuid) == null) {
 			try {
 				Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(memberFolder, uuid.toString() + ".yml"));
