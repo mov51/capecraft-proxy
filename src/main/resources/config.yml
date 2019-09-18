@@ -1,7 +1,7 @@
 versions:
-	name: "1.14.4"
-	supportedVersions:
-		- 498 
+  name: "1.14.4"
+  supportedVersions:
+    - 498
 
 joinMessage: "%player% has joined the server!"
 leaveMessage: "%player% has left the server!"

@@ -47,8 +47,7 @@ public class ConfigurationManager {
 	 * Loads the config file to memory
 	 * @return return the config
 	 */
-	public static Configuration getPluginConfig() {
-		System.out.println("Is config in memory? - " + pluginConfig != null);
+	public static Configuration getPluginConfig() {		
 		if(pluginConfig == null) {
 			try {
 				pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, "config.yml"));

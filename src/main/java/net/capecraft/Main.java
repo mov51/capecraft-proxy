@@ -11,7 +11,13 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class Main extends Plugin {
 	
-	public static final ComponentBuilder PREFIX = new ComponentBuilder("CapeCraft").color(ChatColor.RED).bold(true).append(" » ").bold(false).color(ChatColor.BLUE); 
+	private static final char ARROW = '\u00BB';
+	public static final ComponentBuilder PREFIX = new ComponentBuilder("CapeCraft")
+			.color(ChatColor.RED)
+			.bold(true)
+			.append(" " + ARROW + " ")
+			.bold(false)
+			.color(ChatColor.BLUE); 
 	
     @Override
     public void onEnable() {
