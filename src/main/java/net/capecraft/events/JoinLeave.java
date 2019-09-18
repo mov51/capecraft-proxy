@@ -43,7 +43,7 @@ public class JoinLeave implements Listener {
 		
 		//Kicks player if version not correct Before they even get to PostLogin
 		if(event.getConnection().getVersion() != getProtocolVersion) {
-			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version " + getVersionMsg).reset().create());
+			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version ").reset().append(getVersionMsg).create());
 		}
 	}
 	
