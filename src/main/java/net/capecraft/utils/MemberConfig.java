@@ -2,8 +2,6 @@ package net.capecraft.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -12,60 +10,23 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
-public class ConfigurationManager {
+public class MemberConfig {
 	
 	private static File pluginFolder;
 	private static File memberFolder;
-	private static Configuration pluginConfig;
-	private static HashMap<UUID, Configuration> playerConfigs = new HashMap<UUID, Configuration>();	
-
+	private static HashMap<UUID, Configuration> playerConfigs = new HashMap<UUID, Configuration>();
+	
 	public static void initConfig(Plugin plugin) {
 		//Makes plugin folders if they don't exist
 		pluginFolder = plugin.getDataFolder();
 		if(!pluginFolder.exists()) {
 			pluginFolder.mkdir();
         }
-		
-		//Copy default config if it doesn't exist
-        File configFile = new File(pluginFolder, "config.yml");
-		if (!configFile.exists()) {
-            try (InputStream in = plugin.getResourceAsStream("config.yml")) {
-                Files.copy(in, configFile.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-		}
 
 		//Creates the users folder
 		memberFolder = new File(pluginFolder + "/users/");
 		if(!memberFolder.exists()) {
 			memberFolder.mkdir();
-		}
-	}
-	
-	/**
-	 * Loads the config file to memory
-	 * @return return the config
-	 */
-	public static Configuration getPluginConfig() {		
-		if(pluginConfig == null) {
-			try {
-				pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, "config.yml"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return pluginConfig;
-	}
-	
-	/**
-	 * Reloads the configuration into memory
-	 */
-	public static void reloadPluginConfig() {
-		try {
-			pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, "config.yml"));
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 	

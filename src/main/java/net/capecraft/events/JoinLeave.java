@@ -3,7 +3,6 @@ package net.capecraft.events;
 import java.util.List;
 
 import net.capecraft.Main;
-import net.capecraft.utils.ConfigurationManager;
 import net.capecraft.utils.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -22,7 +21,7 @@ import net.md_5.bungee.event.EventHandler;
 public class JoinLeave implements Listener {
 	
 	//Gets version msg and supported protocols from config
-	private String getVersionMsg = ConfigurationManager.getPluginConfig().getString(PluginConfig.VERSIONS_NAME);	
+	private String getVersionMsg = PluginConfig.getPluginConfig().getString(PluginConfig.VERSIONS_NAME);	
 	
 	@EventHandler
 	public void onPingEvent(ProxyPingEvent event) {
@@ -50,14 +49,14 @@ public class JoinLeave implements Listener {
 	@EventHandler
 	public void onJoinEvent(PostLoginEvent event) {		
 		//Gets msg from config and sends join/leave message		
-		String msgRaw = ConfigurationManager.getPluginConfig().getString(PluginConfig.JOIN_MESSAGE);
+		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.JOIN_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
 	}
 	
 	@EventHandler
 	public void onLeaveEvent(PlayerDisconnectEvent event) {
 		//Gets msg from config and sends join/leave message
-		String msgRaw = ConfigurationManager.getPluginConfig().getString(PluginConfig.LEAVE_MESSAGE);
+		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.LEAVE_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
 	}
 	
@@ -79,7 +78,7 @@ public class JoinLeave implements Listener {
 	 * @return The supported version
 	 */
 	private int getClientValidVersion(int clientVersion) {
-		List<?> versionList = ConfigurationManager.getPluginConfig().getList(PluginConfig.VERSIONS_SUPPORTED);
+		List<?> versionList = PluginConfig.getPluginConfig().getList(PluginConfig.VERSIONS_SUPPORTED);
 		for(Object supportedVersion : versionList ) {
 			if(Integer.parseInt(supportedVersion.toString()) == clientVersion) {
 				return clientVersion;

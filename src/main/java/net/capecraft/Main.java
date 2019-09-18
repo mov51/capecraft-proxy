@@ -3,8 +3,13 @@ package net.capecraft;
 import java.util.logging.Level;
 
 import net.capecraft.commands.PluginCommands;
+import net.capecraft.commands.help.AfkRulesCommand;
+import net.capecraft.commands.help.AltRulesCommand;
+import net.capecraft.commands.help.CapeCommand;
+import net.capecraft.commands.help.RulesCommand;
 import net.capecraft.events.JoinLeave;
-import net.capecraft.utils.ConfigurationManager;
+import net.capecraft.utils.MemberConfig;
+import net.capecraft.utils.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -24,13 +29,20 @@ public class Main extends Plugin {
     	getLogger().log(Level.INFO, "Loading CapeCraft Proxy");
     	
     	//Initialise Configuration Manager
-    	ConfigurationManager.initConfig(this);
+    	PluginConfig.initConfig(this);
+    	MemberConfig.initConfig(this);
     	
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeave());
         
         //Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
+        
+        //Help Commands
+        getProxy().getPluginManager().registerCommand(this, new RulesCommand());
+        getProxy().getPluginManager().registerCommand(this, new AltRulesCommand());
+        getProxy().getPluginManager().registerCommand(this, new AfkRulesCommand());
+        getProxy().getPluginManager().registerCommand(this, new CapeCommand());
         
         getLogger().log(Level.INFO, "Loaded");
     }
