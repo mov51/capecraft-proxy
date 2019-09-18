@@ -1,5 +1,7 @@
 package net.capecraft.events;
 
+import java.util.List;
+
 import net.capecraft.Main;
 import net.capecraft.utils.ConfigurationManager;
 import net.md_5.bungee.api.ChatColor;
@@ -11,31 +13,41 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
+import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import net.md_5.bungee.protocol.ProtocolConstants;
 
 public class JoinLeave implements Listener {
 	
+	//Gets version msg and supported protocols from config
+	private String getVersionMsg = ConfigurationManager.getPluginConfig().getString("version.name");	
+	
 	@EventHandler
 	public void onPingEvent(ProxyPingEvent event) {
+		//Get connecting clients protocol version
+		int getProtocolVersion = getClientValidVersion(event.getConnection().getVersion());
+		
 		//Shows a custom ping if player isn't on 1.14.4
 		ServerPing response = event.getResponse();
-		response.getVersion().setName("Requires MC 1.14.4");
-		response.getVersion().setProtocol(ProtocolConstants.MINECRAFT_1_14_4);
+		response.getVersion().setName("Requires MC " + getVersionMsg);
+		response.getVersion().setProtocol(getProtocolVersion);
 		event.setResponse(response);
-		
 	}
 	
 	@EventHandler
-	public void onJoinEvent(PostLoginEvent event) {
+	public void onPreJoinEvent(PreLoginEvent event) {
+		//Get connecting clients protocol version
+		int getProtocolVersion = getClientValidVersion(event.getConnection().getVersion());
 		
-		//Kicks player if version not 1.14.4
-		if(event.getPlayer().getPendingConnection().getVersion() != ProtocolConstants.MINECRAFT_1_14_4) {
-			event.getPlayer().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version 1.14.4").reset().create());
+		//Kicks player if version not correct Before they even get to PostLogin
+		if(event.getConnection().getVersion() != getProtocolVersion) {
+			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version " + getVersionMsg).reset().create());
 		}
-		
+	}
+	
+	@EventHandler
+	public void onJoinEvent(PostLoginEvent event) {		
 		//Gets msg from config and sends join/leave message		
 		String msgRaw = ConfigurationManager.getPluginConfig().getString("joinMessage");
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
@@ -54,13 +66,25 @@ public class JoinLeave implements Listener {
 	 * @param player The ProxiedPlayer object
 	 */
 	private void broadcastJoinLeaveMessage(String msgRaw, ProxiedPlayer player) {
-		//Checks player is on 1.14.4
-		if(player.getPendingConnection().getVersion() == ProtocolConstants.MINECRAFT_1_14_4) {
-			//Formats the message and sends it
-			msgRaw = msgRaw.replace("%player%", player.getDisplayName());
-			BaseComponent[] msg = TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE);
-			ProxyServer.getInstance().broadcast(msg);
+		//Formats the message and sends it
+		msgRaw = msgRaw.replace("%player%", player.getDisplayName());
+		BaseComponent[] msg = TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE);
+		ProxyServer.getInstance().broadcast(msg);
+	}
+	
+	/**
+	 * Get the support client versions else response with the support version
+	 * @param clientVersion The clients version
+	 * @return The supported version
+	 */
+	private int getClientValidVersion(int clientVersion) {
+		List<?> versionList = ConfigurationManager.getPluginConfig().getList("version.supportedVersions");
+		for(Object supportedVersion : versionList ) {
+			if(Integer.parseInt(supportedVersion.toString()) == clientVersion) {
+				return clientVersion;
+			}
 		}
+		return (int) versionList.get(0);		
 	}
 	
 }
