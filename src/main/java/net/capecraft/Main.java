@@ -8,8 +8,8 @@ import net.capecraft.commands.help.AltRulesCommand;
 import net.capecraft.commands.help.CapeCommand;
 import net.capecraft.commands.help.RulesCommand;
 import net.capecraft.events.JoinLeave;
-import net.capecraft.utils.MemberConfig;
-import net.capecraft.utils.PluginConfig;
+import net.capecraft.helpers.config.PlayerConfig;
+import net.capecraft.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -30,7 +30,7 @@ public class Main extends Plugin {
     	
     	//Initialise Configuration Manager
     	PluginConfig.initConfig(this);
-    	MemberConfig.initConfig(this);
+    	PlayerConfig.initConfig(this);
     	
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeave());

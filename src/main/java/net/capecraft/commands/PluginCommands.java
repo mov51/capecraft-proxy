@@ -1,7 +1,7 @@
 package net.capecraft.commands;
 
 import net.capecraft.Main;
-import net.capecraft.utils.PluginConfig;
+import net.capecraft.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ComponentBuilder;

@@ -3,5 +3,6 @@ versions:
   supportedVersions:
     - 498
 
+firstJoinMessage: "Please welcome %player% to the server!"
 joinMessage: "%player% has joined the server!"
 leaveMessage: "%player% has left the server!"

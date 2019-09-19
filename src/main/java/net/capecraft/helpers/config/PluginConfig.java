@@ -1,4 +1,4 @@
-package net.capecraft.utils;
+package net.capecraft.helpers.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,7 @@ public class PluginConfig {
 	public static final String VERSIONS_NAME = VERSIONS + ".name";
 	public static final String VERSIONS_SUPPORTED = VERSIONS + ".supportedVersions";
 	
+	public static final String FIRST_JOIN_MESSAGE = "firstJoinMessage";
 	public static final String JOIN_MESSAGE = "joinMessage";
 	public static final String LEAVE_MESSAGE = "leaveMessage";
 	

@@ -1,7 +1,9 @@
-package net.capecraft.utils;
+package net.capecraft.helpers.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -10,8 +12,16 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
-public class MemberConfig {
+public class PlayerConfig {
 	
+	public static final String USERNAME = "username";
+	public static final String JOIN_TIME = "jointime";
+	public static final String PLAY_TIME = "playtime";		
+	public static final String IS_ALT = "alt";
+	public static final String IS_AFK = "afk";
+	public static final String IS_SPYING = "isSpying";
+	
+	private static Plugin plugin;	
 	private static File pluginFolder;
 	private static File memberFolder;
 	private static HashMap<UUID, Configuration> playerConfigs = new HashMap<UUID, Configuration>();
@@ -48,32 +58,22 @@ public class MemberConfig {
 	}
 	
 	/**
-	 * Will check if a player config exists
-	 * @param uuid Player uuid
-	 * @return 
+	 * Checks if the player config exists. If it doesn't creates it
+	 * @param uuid The player uuid
+	 * @return Config exists
 	 */
-	public static boolean checkPlayerConfig(UUID uuid) {
-		return new File(memberFolder, uuid.toString() + ".yml").exists();		
-	}
-	
-	public static Configuration createPlayerConfig(UUID uuid) {
-		File playerConfig = new File(memberFolder, uuid.toString() + ".yml");
-		if(!playerConfig.exists()) {
-			try {
-				Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(playerConfig);
-				playerConfigs.put(uuid, playerConfig);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			try {
-				Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(playerConfig);
-				playerConfigs.put(uuid, playerConfig);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return playerConfigs.get(uuid);
-		}		
+	public static boolean doesConfigExist(UUID uuid) {
+		File playerFile = new File(memberFolder, uuid.toString() + ".yml");
+		if(!playerFile.exists()) {
+			try (InputStream in = plugin.getResourceAsStream("playerconfig.yml")) {
+                Files.copy(in, playerFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+			
+			return false;
+		}
+		return true;
 	}
 	
 	/**
