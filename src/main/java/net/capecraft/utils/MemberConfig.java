@@ -43,8 +43,37 @@ public class MemberConfig {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		} 
 		return playerConfigs.get(uuid);
+	}
+	
+	/**
+	 * Will check if a player config exists
+	 * @param uuid Player uuid
+	 * @return 
+	 */
+	public static boolean checkPlayerConfig(UUID uuid) {
+		return new File(memberFolder, uuid.toString() + ".yml").exists();		
+	}
+	
+	public static Configuration createPlayerConfig(UUID uuid) {
+		File playerConfig = new File(memberFolder, uuid.toString() + ".yml");
+		if(!playerConfig.exists()) {
+			try {
+				Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(playerConfig);
+				playerConfigs.put(uuid, playerConfig);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(playerConfig);
+				playerConfigs.put(uuid, playerConfig);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return playerConfigs.get(uuid);
+		}		
 	}
 	
 	/**
