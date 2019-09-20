@@ -13,3 +13,10 @@ commands:
     description: Show afk the rules
   cape:
     description: cape command
+  lobby:
+    alias: hub
+    description: Teleports to lobby
+  survival:
+    description: Teleports to survival
+  creative:
+    description: Teleports to creative   

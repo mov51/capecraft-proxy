@@ -26,7 +26,9 @@ public class PlayerConfig {
 	private static File memberFolder;
 	private static HashMap<UUID, Configuration> playerConfigs = new HashMap<UUID, Configuration>();
 	
-	public static void initConfig(Plugin plugin) {
+	public static void initConfig(Plugin pluginInstance) {
+		plugin = pluginInstance;
+		
 		//Makes plugin folders if they don't exist
 		pluginFolder = plugin.getDataFolder();
 		if(!pluginFolder.exists()) {
@@ -63,7 +65,7 @@ public class PlayerConfig {
 	 * @return Config exists
 	 */
 	public static boolean doesConfigExist(UUID uuid) {
-		File playerFile = new File(memberFolder, uuid.toString() + ".yml");
+		File playerFile = new File(memberFolder, uuid.toString() + ".yml");		
 		if(!playerFile.exists()) {
 			try (InputStream in = plugin.getResourceAsStream("playerconfig.yml")) {
                 Files.copy(in, playerFile.toPath());

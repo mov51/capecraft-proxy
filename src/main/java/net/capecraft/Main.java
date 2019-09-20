@@ -2,12 +2,17 @@ package net.capecraft;
 
 import java.util.logging.Level;
 
+import net.capecraft.commands.PlayTimeCommands;
 import net.capecraft.commands.PluginCommands;
 import net.capecraft.commands.help.AfkRulesCommand;
 import net.capecraft.commands.help.AltRulesCommand;
 import net.capecraft.commands.help.CapeCommand;
 import net.capecraft.commands.help.RulesCommand;
+import net.capecraft.commands.server.CreativeCommand;
+import net.capecraft.commands.server.LobbyCommand;
+import net.capecraft.commands.server.SurvivalCommand;
 import net.capecraft.events.JoinLeave;
+import net.capecraft.events.PlaytimeEventHandler;
 import net.capecraft.helpers.config.PlayerConfig;
 import net.capecraft.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
@@ -34,9 +39,14 @@ public class Main extends Plugin {
     	
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeave());
+        getProxy().getPluginManager().registerListener(this, new PlaytimeEventHandler());
         
         //Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
+        getProxy().getPluginManager().registerCommand(this, new PlayTimeCommands());
+        getProxy().getPluginManager().registerCommand(this, new LobbyCommand());
+        getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
+        getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
         
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());

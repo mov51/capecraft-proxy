@@ -6,3 +6,5 @@ versions:
 firstJoinMessage: "Please welcome %player% to the server!"
 joinMessage: "%player% has joined the server!"
 leaveMessage: "%player% has left the server!"
+
+playtimeMessage: "%player% has %playtime% hours of play time!"

@@ -20,6 +20,8 @@ public class PluginConfig {
 	public static final String JOIN_MESSAGE = "joinMessage";
 	public static final String LEAVE_MESSAGE = "leaveMessage";
 	
+	public static final String PLAYTIME_MESSAGE = "playtimeMessage";
+	
 	private static File pluginFolder;
 	private static Configuration pluginConfig;
 
