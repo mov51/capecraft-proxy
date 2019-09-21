@@ -1,9 +1,9 @@
-package net.capecraft.helpers;
+package net.capecraft.bungee.helpers;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
 
-import net.capecraft.helpers.config.PlayerConfig;
+import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.md_5.bungee.config.Configuration;
 
 public class PlayTimeHelper {

@@ -1,4 +1,4 @@
-package net.capecraft.helpers.config;
+package net.capecraft.bungee.helpers.config;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,9 +1,9 @@
-package net.capecraft.events;
+package net.capecraft.bungee.events;
 
 import net.capecraft.Main;
-import net.capecraft.helpers.PlayTimeHelper;
-import net.capecraft.helpers.config.PlayerConfig;
-import net.capecraft.helpers.config.PluginConfig;
+import net.capecraft.bungee.helpers.PlayTimeHelper;
+import net.capecraft.bungee.helpers.config.PlayerConfig;
+import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;

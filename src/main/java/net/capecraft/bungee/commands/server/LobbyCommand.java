@@ -1,4 +1,4 @@
-package net.capecraft.commands.server;
+package net.capecraft.bungee.commands.server;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;

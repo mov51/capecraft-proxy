@@ -1,8 +1,8 @@
-package net.capecraft.commands;
+package net.capecraft.bungee.commands;
 
 import net.capecraft.Main;
-import net.capecraft.helpers.PlayTimeHelper;
-import net.capecraft.helpers.config.PluginConfig;
+import net.capecraft.bungee.helpers.PlayTimeHelper;
+import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.BaseComponent;

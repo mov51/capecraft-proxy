@@ -1,4 +1,4 @@
-package net.capecraft.helpers;
+package net.capecraft.bungee.helpers;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import net.capecraft.Main;
-import net.capecraft.helpers.config.PluginConfig;
+import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;

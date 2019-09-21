@@ -1,10 +1,10 @@
-package net.capecraft.commands.help;
+package net.capecraft.bungee.commands.help;
 
 import net.capecraft.Main;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Command;
 
 public class CapeCommand extends Command {
@@ -24,5 +24,3 @@ public class CapeCommand extends Command {
 	}
 
 }
-
-//To get a cape visit https://minecraftcapes.co.uk/discord
