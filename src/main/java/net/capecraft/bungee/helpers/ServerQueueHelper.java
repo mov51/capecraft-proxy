@@ -3,7 +3,6 @@ package net.capecraft.bungee.helpers;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import net.capecraft.Main;
 import net.capecraft.bungee.helpers.config.PluginConfig;
@@ -25,10 +24,7 @@ public class ServerQueueHelper {
 	/**
 	 * The first method calls by the task schedule
 	 */
-	public static void checkServerSlots() {
-		//DEBUG
-		ProxyServer.getInstance().getLogger().log(Level.INFO, "POLLING");
-		
+	public static void checkServerSlots() {		
 		pollServer("survival");
 		pollServer("creative");
 	}
