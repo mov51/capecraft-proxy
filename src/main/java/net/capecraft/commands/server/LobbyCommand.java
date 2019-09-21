@@ -1,6 +1,5 @@
 package net.capecraft.commands.server;
 
-import net.capecraft.helpers.ServerPinger;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -16,8 +15,6 @@ public class LobbyCommand extends Command {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		if(sender instanceof ProxiedPlayer) {
-			ServerPinger sp = new ServerPinger("creative");
-			ProxyServer.getInstance().broadcast(sp.getPlayers() + "/" + sp.getMaxPlayers() + " Online");
 			ServerInfo lobby = ProxyServer.getInstance().getServerInfo("lobby");
 			((ProxiedPlayer) sender).connect(lobby);
 		}

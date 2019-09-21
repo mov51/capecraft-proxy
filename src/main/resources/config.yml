@@ -8,3 +8,6 @@ joinMessage: "%player% has joined the server!"
 leaveMessage: "%player% has left the server!"
 
 playtimeMessage: "%player% has %playtime% hours of play time!"
+
+queueMessage: "You've been added to the server queue. You'll be teleported shortly"
+queueStatus: "You're %place% in the queue! Type /queue cancel to leave the queue"

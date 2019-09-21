@@ -1,5 +1,6 @@
 package net.capecraft;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import net.capecraft.commands.PlayTimeCommands;
@@ -13,6 +14,8 @@ import net.capecraft.commands.server.LobbyCommand;
 import net.capecraft.commands.server.SurvivalCommand;
 import net.capecraft.events.JoinLeave;
 import net.capecraft.events.PlaytimeEventHandler;
+import net.capecraft.events.ServerQueueEventHandler;
+import net.capecraft.helpers.ServerQueueHelper;
 import net.capecraft.helpers.config.PlayerConfig;
 import net.capecraft.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
@@ -40,6 +43,7 @@ public class Main extends Plugin {
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeave());
         getProxy().getPluginManager().registerListener(this, new PlaytimeEventHandler());
+        getProxy().getPluginManager().registerListener(this, new ServerQueueEventHandler());
         
         //Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
@@ -54,11 +58,28 @@ public class Main extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new AfkRulesCommand());
         getProxy().getPluginManager().registerCommand(this, new CapeCommand());
         
+        //Scheduled Events        
+        getProxy().getScheduler().schedule(this, new Runnable() {
+			@Override
+			public void run() {				
+				ServerQueueHelper.checkServerSlots();	
+			}        	
+        }, 0, 5, TimeUnit.SECONDS);
+        
+        getProxy().getScheduler().schedule(this, new Runnable() {
+			@Override
+			public void run() {				
+				ServerQueueHelper.sendQueueMessages();	
+			}        	
+        }, 0, 1, TimeUnit.SECONDS);        
+        
+        //Loaded Log
         getLogger().log(Level.INFO, "Loaded");
     }
     
     @Override
-    public void onDisable() {    	    	
+    public void onDisable() {
+    	//Unloaded Log
     	getLogger().log(Level.INFO, "Unloaded");
     }
 }

@@ -22,6 +22,9 @@ public class PluginConfig {
 	
 	public static final String PLAYTIME_MESSAGE = "playtimeMessage";
 	
+	public static final String QUEUE_MESSAGE = "queueMessage";
+	public static final String QUEUE_STATUS = "queueStatus";
+	
 	private static File pluginFolder;
 	private static Configuration pluginConfig;
 

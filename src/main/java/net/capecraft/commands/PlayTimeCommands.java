@@ -19,7 +19,7 @@ public class PlayTimeCommands extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		if(sender instanceof ProxiedPlayer) {
+		if(sender instanceof ProxiedPlayer) {			
 			//Get ProxiedPlayer instance
 			ProxiedPlayer player = (ProxiedPlayer) sender;			
 			
