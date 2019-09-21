@@ -13,7 +13,7 @@ public class SurvivalCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		if(sender instanceof ProxiedPlayer) {
+		if(sender instanceof ProxiedPlayer) {			
 			((ProxiedPlayer) sender).connect(ProxyServer.getInstance().getServerInfo("survival"));
 		}
 	}
