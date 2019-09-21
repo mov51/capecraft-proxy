@@ -22,8 +22,11 @@ public class SurvivalCommand extends Command {
 		if(sender instanceof ProxiedPlayer) {			
 			ServerQueueHelper.addPlayer("survival", ((ProxiedPlayer) sender).getUniqueId());
 			
+			//Generate queue message
+			String queuePos = String.valueOf(ServerQueueHelper.getQueueSize("survival"));			
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_MESSAGE);
-			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
+			msgRaw = msgRaw.replace("%place%", queuePos);
+			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			
 			sender.sendMessage(msg);
 		}
 	}

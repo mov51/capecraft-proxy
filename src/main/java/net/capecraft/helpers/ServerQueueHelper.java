@@ -43,32 +43,47 @@ public class ServerQueueHelper {
 			public void done(ServerPing result, Throwable error) {
 				if(error == null) {
 					if(result.getPlayers().getOnline() < result.getPlayers().getMax()) {
-						ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
-						getQueuePoll(serverName).connect(serverInfo);					
+						while(result.getPlayers().getOnline() < result.getPlayers().getMax()) {
+							//Gets the next queued player
+							ProxiedPlayer queuedPlayer = getQueuePoll(serverName);
+							
+							//If next player is null, break the loop
+							if(queuedPlayer == null)
+								break;
+							
+							//Send player to server
+							ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
+							queuedPlayer.connect(serverInfo);
+							
+							//Send queue message
+							sendQueueMessages(serverName);
+						}
 					}
 				}
 			}				
 		});
 	}
-	
+
 	/**
 	 * Gets all players in queue to send messages to
+	 * @param serverName Server Name to send sueue message for
 	 */
-	public static void sendQueueMessages() {
+	public static void sendQueueMessages(String serverName) {
 		//The starting queue pos
-		int queuePlace = 1;		
-		//Loops through survivalQueue to send messages
-		for(UUID uuid : survivalQueue) {
-			sendQueueMessage(uuid, queuePlace);
-			queuePlace++;		
-		}
+		int queuePlace = 1;
 		
-		//Resets queue position
-		queuePlace = 1;		
-		//Loops through creative queue to send messages
-		for(UUID uuid : creativeQueue) {		
-			sendQueueMessage(uuid, queuePlace);
-			queuePlace++;
+		if(serverName.equals("survival")) {
+			//Loops through survivalQueue to send messages
+			for(UUID uuid : survivalQueue) {
+				sendQueueMessage(uuid, queuePlace);
+				queuePlace++;
+			}
+		} else if(serverName.equals("creative")) {
+			//Loops through creative queue to send messages
+			for(UUID uuid : creativeQueue) {		
+				sendQueueMessage(uuid, queuePlace);
+				queuePlace++;
+			}	
 		}
 	}
 	
@@ -99,6 +114,19 @@ public class ServerQueueHelper {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * Gets the servers queue size
+	 * @param serverName The name of the server
+	 */
+	public static int getQueueSize(String serverName) {
+		if(serverName.equals("survival")) {
+			return survivalQueue.size();
+		} else if(serverName.equals("creative")) {
+			return creativeQueue.size();
+		}
+		return 0;
 	}
 	
 	/**

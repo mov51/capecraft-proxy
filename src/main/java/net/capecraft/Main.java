@@ -64,14 +64,7 @@ public class Main extends Plugin {
 			public void run() {				
 				ServerQueueHelper.checkServerSlots();	
 			}        	
-        }, 0, 5, TimeUnit.SECONDS);
-        
-        getProxy().getScheduler().schedule(this, new Runnable() {
-			@Override
-			public void run() {				
-				ServerQueueHelper.sendQueueMessages();	
-			}        	
-        }, 0, 1, TimeUnit.SECONDS);        
+        }, 0, 5, TimeUnit.SECONDS);   
         
         //Loaded Log
         getLogger().log(Level.INFO, "Loaded");
