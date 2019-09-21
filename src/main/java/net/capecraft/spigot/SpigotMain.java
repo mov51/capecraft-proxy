@@ -1,18 +1,26 @@
 package net.capecraft.spigot;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.capecraft.spigot.commands.server.CreativeCommand;
 import net.capecraft.spigot.commands.server.LobbyCommand;
+import net.capecraft.spigot.commands.server.SurvivalCommand;
 
 public class SpigotMain extends JavaPlugin {
+	
+	public static Plugin INSTANCE;
 	
 	@Override
 	public void onEnable() {
 		
-	    getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		SpigotMain.INSTANCE = this;
 		
-		getCommand("hub").setExecutor(new LobbyCommand());
+	    getServer().getMessenger().registerOutgoingPluginChannel(this, "CapeCraft");
+		
 		getCommand("lobby").setExecutor(new LobbyCommand());
+		getCommand("creative").setExecutor(new CreativeCommand());
+		getCommand("survival").setExecutor(new SurvivalCommand());
 	}
 	
 }

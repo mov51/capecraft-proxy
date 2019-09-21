@@ -15,6 +15,7 @@ import net.capecraft.bungee.commands.server.SurvivalCommand;
 import net.capecraft.bungee.events.JoinLeave;
 import net.capecraft.bungee.events.PlaytimeEventHandler;
 import net.capecraft.bungee.events.ServerQueueEventHandler;
+import net.capecraft.bungee.events.messaging.CommandMessage;
 import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
@@ -34,14 +35,14 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerListener(this, new JoinLeave());
         getProxy().getPluginManager().registerListener(this, new PlaytimeEventHandler());
         getProxy().getPluginManager().registerListener(this, new ServerQueueEventHandler());
+        getProxy().getPluginManager().registerListener(this, new CommandMessage());
         
         //Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
         getProxy().getPluginManager().registerCommand(this, new PlayTimeCommands());
         getProxy().getPluginManager().registerCommand(this, new LobbyCommand());
         getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
-        getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
-        
+        getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());        
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());
         getProxy().getPluginManager().registerCommand(this, new AltRulesCommand());

@@ -4,16 +4,6 @@ version: 1.0
 authors: [james090500, mov51]
 api-version: 1.14
 commands:
-  capecraftproxy:
-    description: CapeCraftProxy commands
-  rules:
-    description: Show the rules
-  altrules:
-    description: Show alt the rules
-  afkrules:
-    description: Show afk the rules
-  cape:
-    description: cape command
   lobby:
     alias: hub
     description: Teleports to lobby
