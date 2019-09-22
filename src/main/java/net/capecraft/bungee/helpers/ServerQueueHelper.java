@@ -1,7 +1,7 @@
 package net.capecraft.bungee.helpers;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import net.capecraft.Main;
@@ -18,8 +18,8 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ServerQueueHelper {
 		
-	private static Queue<UUID> survivalQueue = new LinkedList<>();
-	private static Queue<UUID> creativeQueue = new LinkedList<>();
+	private static List<UUID> survivalQueue = new ArrayList<UUID>();
+	private static List<UUID> creativeQueue = new ArrayList<UUID>();
 	
 	/**
 	 * The first method calls by the task schedule
@@ -103,10 +103,10 @@ public class ServerQueueHelper {
 	 * @return The ProxiedPlayer object
 	 */
 	private static ProxiedPlayer getQueuePoll(String serverName) {
-		if(serverName.equals("survival")) {
-			return ProxyServer.getInstance().getPlayer(survivalQueue.poll());
+		if(serverName.equals("survival")) {		
+			return ProxyServer.getInstance().getPlayer(survivalQueue.get(0));
 		} else if(serverName.equals("creative")) {
-			return ProxyServer.getInstance().getPlayer(creativeQueue.poll());
+			return ProxyServer.getInstance().getPlayer(creativeQueue.get(0));
 		} else {
 			return null;
 		}
@@ -143,7 +143,19 @@ public class ServerQueueHelper {
 	 * @param uuid The players uuid
 	 */
 	public static void removePlayer(UUID uuid) {
+		
+		int survivalIndex = survivalQueue.indexOf(uuid);
+		for(int s = 0; s < survivalQueue.size(); s++) {
+			if(s > survivalIndex) {
+				//Send Message
+			}
+		}		
+		
+		int creativeIndex = creativeQueue.indexOf(uuid);
+		
+		
+		
 		survivalQueue.remove(uuid);
 		creativeQueue.remove(uuid);
-	}	
+	}
 }
