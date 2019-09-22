@@ -18,7 +18,7 @@ public class CreativeCommand implements CommandExecutor {
 		if(sender instanceof Player) {			
 			ByteArrayDataOutput out = ByteStreams.newDataOutput();
 			out.writeUTF(((Player) sender).getUniqueId().toString());
-			out.writeUTF("creative");
+			out.writeUTF(Main.CREATIVE);
 			((Player) sender).sendPluginMessage(SpigotMain.INSTANCE, Main.PLUGIN_COMMANDS, out.toByteArray());
 			return true;
 		}		
