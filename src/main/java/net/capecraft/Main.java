@@ -11,5 +11,8 @@ public class Main {
 			.bold(true)
 			.append(" " + ARROW + " ")
 			.bold(false)
-			.color(ChatColor.BLUE); 
+			.color(ChatColor.BLUE);
+	
+	private static final String MAIN_CHANNEL = "capecraft";
+	public static final String PLUGIN_COMMANDS = MAIN_CHANNEL + ":commands";
 }

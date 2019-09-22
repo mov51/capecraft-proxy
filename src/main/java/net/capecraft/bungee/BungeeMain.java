@@ -3,6 +3,7 @@ package net.capecraft.bungee;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import net.capecraft.Main;
 import net.capecraft.bungee.commands.PlayTimeCommands;
 import net.capecraft.bungee.commands.PluginCommands;
 import net.capecraft.bungee.commands.help.AfkRulesCommand;
@@ -30,6 +31,9 @@ public class BungeeMain extends Plugin {
     	//Initialise Configuration Manager
     	PluginConfig.initConfig(this);
     	PlayerConfig.initConfig(this);
+    	
+    	//Register Channel
+    	getProxy().registerChannel(Main.PLUGIN_COMMANDS);
     	
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeave());
