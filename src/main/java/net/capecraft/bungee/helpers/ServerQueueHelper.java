@@ -34,27 +34,37 @@ public class ServerQueueHelper {
 	 * @param serverName Server name to poll
 	 */
 	private static void pollServer(String serverName) {
+		//Check server has queued players
+		if(getQueueSize(serverName) < 0) {
+			return;
+		}
+		
 		//Starts a server ping to serverName
 		ProxyServer.getInstance().getServerInfo(serverName).ping(new Callback<ServerPing>() {
 			@Override
 			public void done(ServerPing result, Throwable error) {
 				//Makes sure there isn't an error
 				if(error != null) {
-					error.printStackTrace();
 					return;
 				}
 				
-				//Check players online is less than MAX and players are in the queue
-				if(result.getPlayers().getOnline() < result.getPlayers().getMax() && getQueueSize(serverName) > 0) {
+				//Sets dynamic variables
+				int playersOnline = result.getPlayers().getOnline();
+				int playersMax = result.getPlayers().getMax();
+				
+				while(playersOnline < playersMax && getQueueSize(serverName) > 0) {
 					//Gets the next queued player
 					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);					
 					
 					//Send player to server
 					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
-					queuedPlayer.connect(serverInfo);
+					queuedPlayer.connect(serverInfo);										
 					
 					//Send queue message
 					sendQueueMessages(serverName);
+					
+					//Increase online variable
+					playersOnline++;
 				}
 			}			
 		});
@@ -139,10 +149,15 @@ public class ServerQueueHelper {
 		if(player.hasPermission("capecraft.fulljoin")) {
 			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(Main.CREATIVE);					
 			player.connect(serverInfo);
+			
+			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_DONATOR_MESSAGE);			
+			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			
+			player.sendMessage(msg);
+			return;
 		}
 
 		//Generate queue message
-		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(Main.CREATIVE));			
+		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName));			
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_MESSAGE);
 		msgRaw = msgRaw.replace("%place%", queuePos);
 		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			

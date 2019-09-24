@@ -46,7 +46,8 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new PlayTimeCommands());
         getProxy().getPluginManager().registerCommand(this, new LobbyCommand());
         getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
-        getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());        
+        getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
+        
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());
         getProxy().getPluginManager().registerCommand(this, new AltRulesCommand());

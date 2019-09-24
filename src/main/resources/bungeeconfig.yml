@@ -10,4 +10,5 @@ leaveMessage: "%player% has left the server!"
 playtimeMessage: "%player% has %playtime% hours of play time!"
 
 queueMessage: "You're position %place% in the server queue. You'll be teleported shortly"
+queueDonatorMessage: "Thanks for supporting the server, you've been granted the CapeCraft FastPass"
 queueStatus: "You're %place% in the queue! Type /queue cancel to leave the queue"

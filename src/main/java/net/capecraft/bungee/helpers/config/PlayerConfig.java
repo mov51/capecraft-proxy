@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.UUID;
 
+import net.capecraft.Main;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -14,6 +15,7 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 public class PlayerConfig {
 	
+	//Player config
 	public static final String USERNAME = "username";
 	public static final String JOIN_TIME = "jointime";
 	public static final String PLAY_TIME = "playtime";		
@@ -26,6 +28,10 @@ public class PlayerConfig {
 	private static File memberFolder;
 	private static HashMap<UUID, Configuration> playerConfigs = new HashMap<UUID, Configuration>();
 	
+	/**
+	 * Initialise the player config
+	 * @param pluginInstance The plugin instance
+	 */
 	public static void initConfig(Plugin pluginInstance) {
 		plugin = pluginInstance;
 		
@@ -67,7 +73,7 @@ public class PlayerConfig {
 	public static boolean doesConfigExist(UUID uuid) {
 		File playerFile = new File(memberFolder, uuid.toString() + ".yml");		
 		if(!playerFile.exists()) {
-			try (InputStream in = plugin.getResourceAsStream("playerconfig.yml")) {
+			try (InputStream in = plugin.getResourceAsStream(Main.PLAYER_CONFIG)) {
                 Files.copy(in, playerFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();

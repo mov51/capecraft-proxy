@@ -19,6 +19,13 @@ public class Main {
 	public static final String PLUGIN_COMMANDS = MAIN_CHANNEL + ":commands";
 	
 	//Server Names
+	public static final String LOBBY = "lobby";
 	public static final String CREATIVE = "creative";
 	public static final String SURVIVAL = "survival";
+	
+	//Config files
+	public static final String BUNGEE_CONFIG = "bungeeconfig.yml";
+	public static final String SPIGOT_CONFIG = "spigotconfig.yml";
+	
+	public static final String PLAYER_CONFIG = "playerconfig.yml";		
 }
