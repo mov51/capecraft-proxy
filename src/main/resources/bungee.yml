@@ -19,4 +19,6 @@ commands:
   survival:
     description: Teleports to survival
   creative:
-    description: Teleports to creative   
+    description: Teleports to creative
+  btp:
+    description: Bungee Teleport  

@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.commands.BungeeTeleportCommand;
 import net.capecraft.bungee.commands.PlayTimeCommands;
 import net.capecraft.bungee.commands.PluginCommands;
 import net.capecraft.bungee.commands.help.AfkRulesCommand;
@@ -47,6 +48,7 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new LobbyCommand());
         getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
         getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
+        getProxy().getPluginManager().registerCommand(this, new BungeeTeleportCommand());
         
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());

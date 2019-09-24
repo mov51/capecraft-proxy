@@ -7,6 +7,7 @@ import net.capecraft.Main;
 import net.capecraft.spigot.commands.server.CreativeCommand;
 import net.capecraft.spigot.commands.server.LobbyCommand;
 import net.capecraft.spigot.commands.server.SurvivalCommand;
+import net.capecraft.spigot.events.messenger.CommandMessage;
 
 public class SpigotMain extends JavaPlugin {
 	
@@ -18,6 +19,7 @@ public class SpigotMain extends JavaPlugin {
 		SpigotMain.INSTANCE = this;
 		
 	    getServer().getMessenger().registerOutgoingPluginChannel(this, Main.PLUGIN_COMMANDS);
+	    getServer().getMessenger().registerIncomingPluginChannel(this, Main.PLUGIN_COMMANDS, new CommandMessage());
 		
 		getCommand("lobby").setExecutor(new LobbyCommand());
 		getCommand("creative").setExecutor(new CreativeCommand());
