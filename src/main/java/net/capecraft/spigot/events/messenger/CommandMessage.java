@@ -13,14 +13,9 @@ import net.capecraft.spigot.commands.BungeeTeleportCommand;
 public class CommandMessage implements PluginMessageListener {
 
 	@Override
-	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-		
-		System.out.println(player);
-		System.out.println(message);
-				
+	public void onPluginMessageReceived(String channel, Player player, byte[] message) {		
 		ByteArrayDataInput in = ByteStreams.newDataInput(message);
-		String commandToRun = in.readUTF();
-		System.out.println(commandToRun);
+		String commandToRun = in.readUTF();		
 		
 		//Check if command in IF and send to correct handler
 		if(commandToRun.equalsIgnoreCase("teleport")) {
