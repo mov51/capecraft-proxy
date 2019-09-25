@@ -35,11 +35,12 @@ public class PlaytimeEventHandler implements Listener {
 		
 		//Fill config values of player
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
-		playerConfig.set(PlayerConfig.USERNAME, player.getDisplayName());		
-		playerConfig.set(PlayerConfig.JOIN_TIME, (System.currentTimeMillis() / 1000));
-		playerConfig.set(PlayerConfig.IS_ALT, player.hasPermission("group.alt"));
-		playerConfig.set(PlayerConfig.IS_AFK, false);
-		playerConfig.set(PlayerConfig.IS_SPYING, false);
+		playerConfig.set(Main.PlayerConfigs.USERNAME, player.getDisplayName());		
+		playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
+		playerConfig.set(Main.PlayerConfigs.IS_ALT, player.hasPermission("group.alt"));
+		playerConfig.set(Main.PlayerConfigs.IS_AFK, false);
+		playerConfig.set(Main.PlayerConfigs.IS_SPYING, false);
+		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
 	}
 	
 	/*

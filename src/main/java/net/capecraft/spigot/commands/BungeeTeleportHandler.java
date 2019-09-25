@@ -10,7 +10,7 @@ import net.capecraft.Main;
 import net.capecraft.spigot.SpigotMain;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-public class BungeeTeleportCommand {
+public class BungeeTeleportHandler {
 
 	private static int teleportRetry = 0;
 	

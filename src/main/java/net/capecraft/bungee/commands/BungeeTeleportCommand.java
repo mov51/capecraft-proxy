@@ -46,7 +46,7 @@ public class BungeeTeleportCommand extends Command {
 							out.writeUTF("teleport");
 							out.writeUTF(player.getUniqueId().toString());
 							out.writeUTF(target.getUniqueId().toString());
-							target.getServer().getInfo().sendData(Main.PLUGIN_COMMANDS, out.toByteArray());
+							target.getServer().getInfo().sendData(Main.Channels.CONFIG_CHANNEL, out.toByteArray());
 						}						
 					});																
 				} else {

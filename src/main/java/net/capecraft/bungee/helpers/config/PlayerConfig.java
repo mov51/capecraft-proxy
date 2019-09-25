@@ -15,14 +15,6 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 public class PlayerConfig {
 	
-	//Player config
-	public static final String USERNAME = "username";
-	public static final String JOIN_TIME = "jointime";
-	public static final String PLAY_TIME = "playtime";		
-	public static final String IS_ALT = "alt";
-	public static final String IS_AFK = "afk";
-	public static final String IS_SPYING = "isSpying";
-	
 	private static Plugin plugin;	
 	private static File pluginFolder;
 	private static File memberFolder;
@@ -73,7 +65,7 @@ public class PlayerConfig {
 	public static boolean doesConfigExist(UUID uuid) {
 		File playerFile = new File(memberFolder, uuid.toString() + ".yml");		
 		if(!playerFile.exists()) {
-			try (InputStream in = plugin.getResourceAsStream(Main.PLAYER_CONFIG)) {
+			try (InputStream in = plugin.getResourceAsStream(Main.Configs.PLAYER_CONFIG)) {
                 Files.copy(in, playerFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();

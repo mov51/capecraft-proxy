@@ -25,8 +25,8 @@ public class ServerQueueHelper {
 	 * The first method calls by the task schedule
 	 */
 	public static void checkServerSlots() {		
-		pollServer(Main.SURVIVAL);
-		pollServer(Main.CREATIVE);
+		pollServer(Main.Servers.SURVIVAL);
+		pollServer(Main.Servers.CREATIVE);
 	}
 	
 	/**
@@ -78,13 +78,13 @@ public class ServerQueueHelper {
 		//The starting queue pos
 		int queuePlace = 1;
 		
-		if(serverName.equals(Main.SURVIVAL)) {
+		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			//Loops through survivalQueue to send messages
 			for(UUID uuid : survivalQueue) {
 				sendQueueMessage(uuid, queuePlace);
 				queuePlace++;
 			}
-		} else if(serverName.equals(Main.CREATIVE)) {
+		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			//Loops through creative queue to send messages
 			for(UUID uuid : creativeQueue) {		
 				sendQueueMessage(uuid, queuePlace);
@@ -113,11 +113,11 @@ public class ServerQueueHelper {
 	 * @return The ProxiedPlayer object
 	 */
 	private static ProxiedPlayer getNextPlayer(String serverName) {
-		if(serverName.equals(Main.SURVIVAL)) {
+		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			UUID uuid = survivalQueue.get(0);
 			survivalQueue.remove(uuid);
 			return ProxyServer.getInstance().getPlayer(uuid);
-		} else if(serverName.equals(Main.CREATIVE)) {
+		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			UUID uuid = creativeQueue.get(0);
 			creativeQueue.remove(uuid);
 			return ProxyServer.getInstance().getPlayer(uuid);
@@ -131,9 +131,9 @@ public class ServerQueueHelper {
 	 * @param serverName The name of the server
 	 */
 	private static int getQueueSize(String serverName) {
-		if(serverName.equals(Main.SURVIVAL)) {
+		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			return survivalQueue.size();
-		} else if(serverName.equals(Main.CREATIVE)) {
+		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			return creativeQueue.size();
 		}
 		return 0;
@@ -147,7 +147,7 @@ public class ServerQueueHelper {
 	public static void addPlayer(String serverName, ProxiedPlayer player) {
 		//If player has full join command then make them skip queue
 		if(player.hasPermission("capecraft.fulljoin")) {
-			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(Main.CREATIVE);					
+			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(Main.Servers.CREATIVE);					
 			player.connect(serverInfo);
 			
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_DONATOR_MESSAGE);			
@@ -163,9 +163,9 @@ public class ServerQueueHelper {
 		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			
 		player.sendMessage(msg);
 		
-		if(serverName.equals(Main.SURVIVAL)) {
+		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			survivalQueue.add(player.getUniqueId());
-		} else if(serverName.equals(Main.CREATIVE)) {
+		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			creativeQueue.add(player.getUniqueId());
 		}
 	}

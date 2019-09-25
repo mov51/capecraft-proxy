@@ -5,6 +5,8 @@ authors: [james090500, mov51]
 commands:
   capecraftproxy:
     description: CapeCraftProxy commands
+  comspy:
+    description: Staff ComSpy
   rules:
     description: Show the rules
   altrules:

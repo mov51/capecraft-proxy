@@ -15,7 +15,7 @@ public class SurvivalCommand extends Command {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		if(sender instanceof ProxiedPlayer) {
-			ServerQueueHelper.addPlayer(Main.SURVIVAL, (ProxiedPlayer) sender);
+			ServerQueueHelper.addPlayer(Main.Servers.SURVIVAL, (ProxiedPlayer) sender);
 		}
 	}
 	

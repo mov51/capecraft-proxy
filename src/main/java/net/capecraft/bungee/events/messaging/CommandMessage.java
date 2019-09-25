@@ -17,7 +17,7 @@ public class CommandMessage implements Listener {
 	@EventHandler
 	public void onPluginMessageReceived(PluginMessageEvent event) {
 		//Checks channel is correct
-		if (!event.getTag().equalsIgnoreCase(Main.PLUGIN_COMMANDS)) {
+		if (!event.getTag().equalsIgnoreCase(Main.Channels.CONFIG_CHANNEL)) {
 			return;
 		}
 		

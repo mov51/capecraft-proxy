@@ -8,7 +8,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
-import net.capecraft.spigot.commands.BungeeTeleportCommand;
+import net.capecraft.spigot.commands.BungeeTeleportHandler;
 
 public class CommandMessage implements PluginMessageListener {
 
@@ -21,7 +21,7 @@ public class CommandMessage implements PluginMessageListener {
 		if(commandToRun.equalsIgnoreCase("teleport")) {
 			UUID sender = UUID.fromString(in.readUTF());
 			UUID target = UUID.fromString(in.readUTF());
-			BungeeTeleportCommand.teleport(sender, target);
+			BungeeTeleportHandler.teleport(sender, target);
 		}				
 	}
 

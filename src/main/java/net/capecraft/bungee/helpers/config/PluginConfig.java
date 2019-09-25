@@ -43,9 +43,9 @@ public class PluginConfig {
         }
 		
 		//Copy default config if it doesn't exist
-        File configFile = new File(pluginFolder, Main.BUNGEE_CONFIG);
+        File configFile = new File(pluginFolder, Main.Configs.BUNGEE_CONFIG);
 		if (!configFile.exists()) {
-            try (InputStream in = plugin.getResourceAsStream(Main.BUNGEE_CONFIG)) {
+            try (InputStream in = plugin.getResourceAsStream(Main.Configs.BUNGEE_CONFIG)) {
                 Files.copy(in, configFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -60,7 +60,7 @@ public class PluginConfig {
 	public static Configuration getPluginConfig() {		
 		if(pluginConfig == null) {
 			try {
-				pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, Main.BUNGEE_CONFIG));
+				pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, Main.Configs.BUNGEE_CONFIG));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -73,7 +73,7 @@ public class PluginConfig {
 	 */
 	public static void reloadPluginConfig() {
 		try {
-			pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, Main.BUNGEE_CONFIG));
+			pluginConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(pluginFolder, Main.Configs.BUNGEE_CONFIG));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -5,6 +5,7 @@ import java.util.logging.Level;
 
 import net.capecraft.Main;
 import net.capecraft.bungee.commands.BungeeTeleportCommand;
+import net.capecraft.bungee.commands.ComSpyCommand;
 import net.capecraft.bungee.commands.PlayTimeCommands;
 import net.capecraft.bungee.commands.PluginCommands;
 import net.capecraft.bungee.commands.help.AfkRulesCommand;
@@ -14,6 +15,7 @@ import net.capecraft.bungee.commands.help.RulesCommand;
 import net.capecraft.bungee.commands.server.CreativeCommand;
 import net.capecraft.bungee.commands.server.LobbyCommand;
 import net.capecraft.bungee.commands.server.SurvivalCommand;
+import net.capecraft.bungee.events.ComSpyEvent;
 import net.capecraft.bungee.events.JoinLeave;
 import net.capecraft.bungee.events.PlaytimeEventHandler;
 import net.capecraft.bungee.events.ServerQueueEventHandler;
@@ -34,13 +36,14 @@ public class BungeeMain extends Plugin {
     	PlayerConfig.initConfig(this);
     	
     	//Register Channel
-    	getProxy().registerChannel(Main.PLUGIN_COMMANDS);
+    	getProxy().registerChannel(Main.Channels.CONFIG_CHANNEL);
     	
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeave());
         getProxy().getPluginManager().registerListener(this, new PlaytimeEventHandler());
         getProxy().getPluginManager().registerListener(this, new ServerQueueEventHandler());
         getProxy().getPluginManager().registerListener(this, new CommandMessage());
+        getProxy().getPluginManager().registerListener(this, new ComSpyEvent());
         
         //Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
@@ -49,6 +52,7 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
         getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
         getProxy().getPluginManager().registerCommand(this, new BungeeTeleportCommand());
+        getProxy().getPluginManager().registerCommand(this, new ComSpyCommand());
         
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());

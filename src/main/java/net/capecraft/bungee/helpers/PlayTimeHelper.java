@@ -3,6 +3,7 @@ package net.capecraft.bungee.helpers;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
+import net.capecraft.Main;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.md_5.bungee.config.Configuration;
 
@@ -18,17 +19,17 @@ public class PlayTimeHelper {
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(uuid);
 		
 		//Playtime in minutes
-		int playTimeMin = playerConfig.getInt(PlayerConfig.PLAY_TIME);
+		int playTimeMin = playerConfig.getInt(Main.PlayerConfigs.PLAY_TIME);
 		//Join time unix
-		int joinTimeUnix = playerConfig.getInt(PlayerConfig.JOIN_TIME);
+		int joinTimeUnix = playerConfig.getInt(Main.PlayerConfigs.JOIN_TIME);
 		//difference in seconds
 		int joinTimeDiff = (int) ((System.currentTimeMillis() / 1000) - joinTimeUnix);
 		//convert to minutes
 		joinTimeDiff = joinTimeDiff / 60;
 		playTimeMin = playTimeMin + joinTimeDiff;
 
-		playerConfig.set(PlayerConfig.JOIN_TIME, (System.currentTimeMillis() / 1000));
-		playerConfig.set(PlayerConfig.PLAY_TIME, playTimeMin);
+		playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
+		playerConfig.set(Main.PlayerConfigs.PLAY_TIME, playTimeMin);
 		PlayerConfig.saveConfig(uuid, playerConfig);
 	} 
 	

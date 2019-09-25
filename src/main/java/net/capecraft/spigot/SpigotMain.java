@@ -18,9 +18,11 @@ public class SpigotMain extends JavaPlugin {
 		
 		SpigotMain.INSTANCE = this;
 		
-	    getServer().getMessenger().registerOutgoingPluginChannel(this, Main.PLUGIN_COMMANDS);
-	    getServer().getMessenger().registerIncomingPluginChannel(this, Main.PLUGIN_COMMANDS, new CommandMessage());
+		//Register listener channels
+	    getServer().getMessenger().registerOutgoingPluginChannel(this, Main.Channels.CONFIG_CHANNEL);
+	    getServer().getMessenger().registerIncomingPluginChannel(this, Main.Channels.CONFIG_CHANNEL, new CommandMessage());
 		
+	    //Server Commands
 		getCommand("lobby").setExecutor(new LobbyCommand());
 		getCommand("creative").setExecutor(new CreativeCommand());
 		getCommand("survival").setExecutor(new SurvivalCommand());

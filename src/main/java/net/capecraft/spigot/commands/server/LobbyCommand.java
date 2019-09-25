@@ -19,7 +19,7 @@ public class LobbyCommand implements CommandExecutor {
 			ByteArrayDataOutput out = ByteStreams.newDataOutput();
 			out.writeUTF(((Player) sender).getUniqueId().toString());
 			out.writeUTF("lobby");
-			((Player) sender).sendPluginMessage(SpigotMain.INSTANCE, Main.PLUGIN_COMMANDS, out.toByteArray());			
+			((Player) sender).sendPluginMessage(SpigotMain.INSTANCE, Main.Channels.CONFIG_CHANNEL, out.toByteArray());			
 			return true;
 		}		
 		return false;
