@@ -10,7 +10,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class PluginCommands extends Command {
 
 	public PluginCommands() {
-		super("capecraftproxy", "capecraft.admin");
+		super("capecraftproxy", Main.Permissions.ADMIN);
 	}
 
 	@Override	

@@ -44,4 +44,9 @@ public class Main {
 		public static final String IS_AFK = "afk";
 		public static final String IS_SPYING = "isSpying";
 	}
+	
+	//Permissions
+	public class Permissions {
+		public static final String ADMIN = "capecraft.admin";
+	}
 }

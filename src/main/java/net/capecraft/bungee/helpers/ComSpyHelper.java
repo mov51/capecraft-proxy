@@ -5,6 +5,9 @@ import java.util.List;
 
 import net.capecraft.Main;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
@@ -55,5 +58,15 @@ public class ComSpyHelper implements Listener {
      */
     public static boolean isPlayerSpying(ProxiedPlayer player) {
     	return ComSpyHelper.ComListener.contains(player);
+    }
+    
+    /**
+     * Build the message component
+     * @param name Player who initiated the command
+     * @param command The command
+     * @return The built message
+     */
+    public static BaseComponent[] buildCommandMessage(String name, String command) {
+    	return new ComponentBuilder("[CC] ").color(ChatColor.RED).bold(true).append( name + ": " + command).color(ChatColor.YELLOW).bold(false).create();
     }
 }

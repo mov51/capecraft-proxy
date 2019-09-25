@@ -39,7 +39,6 @@ public class PlaytimeEventHandler implements Listener {
 		playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
 		playerConfig.set(Main.PlayerConfigs.IS_ALT, player.hasPermission("group.alt"));
 		playerConfig.set(Main.PlayerConfigs.IS_AFK, false);
-		playerConfig.set(Main.PlayerConfigs.IS_SPYING, false);
 		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
 	}
 	

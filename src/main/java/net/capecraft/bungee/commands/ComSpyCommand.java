@@ -1,5 +1,6 @@
 package net.capecraft.bungee.commands;
 
+import net.capecraft.Main;
 import net.capecraft.bungee.helpers.ComSpyHelper;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -18,22 +19,22 @@ public class ComSpyCommand extends Command {
 	public void execute(CommandSender sender, String[] args) {
 		if(sender instanceof ProxiedPlayer) {
 			ProxiedPlayer player = (ProxiedPlayer) sender;
-			if(player.hasPermission("capecraft.admin")) {
+			if(player.hasPermission(Main.Permissions.ADMIN)) {
 				if(!ComSpyHelper.isPlayerSpying(player)) {
 					ComSpyHelper.addComListener(player);
-					player.sendMessage(buildMessage("ComSpy Enabled!"));
+					player.sendMessage(buildCommandMessage("ComSpy Enabled!"));
 					return;
 				} else {
 					ComSpyHelper.removeComListener(player);
-					player.sendMessage(buildMessage("ComSpy Enabled!"));
+					player.sendMessage(buildCommandMessage("ComSpy Enabled!"));
 					return;
 				}
 			}
 		}		
-        sender.sendMessage(buildMessage("No permission"));
+        sender.sendMessage(buildCommandMessage("No permission"));
 	}
 	
-    private static BaseComponent[] buildMessage(String error) {
-    	return new ComponentBuilder("[CC]").color(ChatColor.RED).bold(true).append(error).color(ChatColor.GREEN).bold(false).create();
+	private static BaseComponent[] buildCommandMessage(String message) {
+    	return new ComponentBuilder("[CC] ").color(ChatColor.RED).bold(true).append(message).color(ChatColor.GREEN).bold(false).create();
     }
 }
