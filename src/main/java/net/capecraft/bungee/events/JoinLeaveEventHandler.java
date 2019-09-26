@@ -18,7 +18,7 @@ import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-public class JoinLeave implements Listener {
+public class JoinLeaveEventHandler implements Listener {
 	
 	//Gets version msg and supported protocols from config
 	private String getVersionMsg = PluginConfig.getPluginConfig().getString(PluginConfig.VERSIONS_NAME);	

@@ -50,6 +50,6 @@ public class PlaytimeEventHandler implements Listener {
 	@EventHandler
 	public void onLeave(PlayerDisconnectEvent event) {
 		ProxiedPlayer player = event.getPlayer();
-		PlayTimeHelper.updatePlaytime(player.getUniqueId());
+		PlayTimeHelper.updatePlaytime(player);
 	}
 }

@@ -31,7 +31,7 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 			ProxiedPlayer player = (ProxiedPlayer) sender;			
 			
 			//Update players playtime
-			PlayTimeHelper.updatePlaytime(player.getUniqueId());
+			PlayTimeHelper.updatePlaytime(player);
 			
 			//Display playtime message
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.PLAYTIME_MESSAGE);

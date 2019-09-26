@@ -21,14 +21,14 @@ public class PlayTimeHelper {
 	 * @param uuid Player uuid
 	 * @param playerConfig Player config
 	 */
-	public static void updatePlaytime(UUID uuid) {
+	public static void updatePlaytime(ProxiedPlayer player) {
 		//Player config
-		Configuration playerConfig = PlayerConfig.getPlayerConfig(uuid);
+		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
 		
 		//Check if player is AFK and prevent playtime updates
-		if(AfkHelper.isAfk(ProxyServer.getInstance().getPlayer(uuid))) {
+		if(AfkHelper.isAfk(player)) {
 			playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
-			PlayerConfig.saveConfig(uuid, playerConfig);
+			PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
 			return;
 		}
 		
@@ -44,10 +44,10 @@ public class PlayTimeHelper {
 
 		playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
 		playerConfig.set(Main.PlayerConfigs.PLAY_TIME, playTimeMin);
-		PlayerConfig.saveConfig(uuid, playerConfig);
+		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
 		
 		//Rankup the player if applicable
-		checkPlayerRank(ProxyServer.getInstance().getPlayer(uuid));
+		checkPlayerRank(ProxyServer.getInstance().getPlayer(player.getUniqueId()));
 	} 
 	
 	/**

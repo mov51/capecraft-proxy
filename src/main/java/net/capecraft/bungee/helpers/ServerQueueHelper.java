@@ -32,7 +32,7 @@ public class ServerQueueHelper {
 			public void run() {				
 				ServerQueueHelper.checkServerSlots();	
 			}        	
-        }, 0, 5, TimeUnit.SECONDS);   
+        }, 0, 2, TimeUnit.SECONDS);   
 	}
 	
 	/**
@@ -66,7 +66,24 @@ public class ServerQueueHelper {
 				int playersOnline = result.getPlayers().getOnline();
 				int playersMax = result.getPlayers().getMax();
 				
-				while(playersOnline < playersMax && getQueueSize(serverName) > 0) {
+				while(getQueueSize(serverName) > 0) {
+					
+					//Check if server is capped
+					if(playersOnline >= (playersMax - 1)) {
+						//Get messages
+						BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK));
+						BaseComponent[] disconnectBroadcast = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK_BROADCAST));
+						//Make sure there are players in AFK Queue
+						ProxiedPlayer afkPlayer = AfkHelper.getNextPlayer(serverName);
+						if(afkPlayer != null) {
+							afkPlayer.disconnect(disconnectMsg);
+							//Broadcast to players in that server
+							for(ProxiedPlayer players : ProxyServer.getInstance().getServerInfo(serverName).getPlayers()) {
+								players.sendMessage(new ComponentBuilder(Main.PREFIX).append(disconnectBroadcast).reset().create());
+						    }
+						}						
+					}
+					
 					//Gets the next queued player
 					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);					
 					

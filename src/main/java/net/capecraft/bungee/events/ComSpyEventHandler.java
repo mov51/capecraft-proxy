@@ -11,7 +11,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-public class ComSpyEvent implements Listener {
+public class ComSpyEventHandler implements Listener {
 
     /**
      * Get all commands and send to comspy players 

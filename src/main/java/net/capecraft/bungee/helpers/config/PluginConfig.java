@@ -27,6 +27,17 @@ public class PluginConfig {
 	public static final String QUEUE_MESSAGE = "queueMessage";
 	public static final String QUEUE_DONATOR_MESSAGE = "queueDonatorMessage";
 	public static final String QUEUE_STATUS = "queueStatus";	
+		
+	public static final String AFK_MESSAGE = "afkMessage";
+	public static final String UNAFK_MESSAGE = "unAfkMessage";
+	public static final String ALT_AFK = "altAfk";
+	public static final String NO_AFK = "noAfk";
+	public static final String FAIL_AFK = "failAfk";
+	public static final String FULL_AFK = "fullAfk";
+	public static final String AFK_ACTIONBAR = "afkActionBar";
+		
+	public static final String KICK_AFK = "kickAfk";
+	public static final String KICK_AFK_BROADCAST = "kickAfkBroadcast";	
 	
 	private static File pluginFolder;
 	private static Configuration pluginConfig;

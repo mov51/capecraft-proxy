@@ -25,7 +25,7 @@ public class SpigotMain extends JavaPlugin {
 	    //Server Commands
 		getCommand("lobby").setExecutor(new LobbyCommand());
 		getCommand("creative").setExecutor(new CreativeCommand());
-		getCommand("survival").setExecutor(new SurvivalCommand());
+		getCommand("survival").setExecutor(new SurvivalCommand());		
 	}
 	
 }
