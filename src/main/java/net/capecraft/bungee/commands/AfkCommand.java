@@ -20,13 +20,13 @@ public class AfkCommand extends Command {
 		if(sender instanceof ProxiedPlayer) {
 			ProxiedPlayer player = (ProxiedPlayer) sender;
 			//Make sure player isn't an alt
-			if(player.hasPermission("group.alt")) {				
+			if(player.hasPermission(Main.Groups.ALT)) {				
 				player.sendMessage(new ComponentBuilder(Main.PREFIX).append("Your an alt! You are already AFK silly!").reset().create());
 				return;
 			}
 			
 			//Make sure player has AFK permission
-			if(!player.hasPermission("capecraft.playafk")) {				
+			if(!player.hasPermission(Main.Permissions.PlAY_AFK)) {				
 				player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You cant AFK! If you think this is an error contact a staff member!").reset().create());
 				return;
 			}

@@ -74,33 +74,33 @@ public class PlayTimeHelper {
 		int playTimeMin = playerConfig.getInt(Main.PlayerConfigs.PLAY_TIME);		
 		
 		//25 hours regular
-		if(playTimeMin >= 1500 && !player.hasPermission("group.regular")) {
-			rankupPlayer(player, "group.default", "group.regular", "§7§lREGULAR");					
+		if(playTimeMin >= 1500 && !player.hasPermission(Main.Groups.REGULAR)) {
+			rankupPlayer(player, Main.Groups.DEFAULT, Main.Groups.REGULAR, "§7§lREGULAR");					
 		}
 
 		//100 hours player
-		if(playTimeMin >= 6000 && !player.hasPermission("group.player")) {
-			rankupPlayer(player, "group.regular", "group.player", "§f§lPLAYER");			
+		if(playTimeMin >= 6000 && !player.hasPermission(Main.Groups.PLAYER)) {
+			rankupPlayer(player, Main.Groups.REGULAR, Main.Groups.PLAYER, "§f§lPLAYER");			
 		}
 
 		//200 hours member
-		if(playTimeMin >= 12000 && !player.hasPermission("group.member")) {
-			rankupPlayer(player, "group.player", "group.member", "§c§lMEMBER");			
+		if(playTimeMin >= 12000 && !player.hasPermission(Main.Groups.MEMBER)) {
+			rankupPlayer(player, Main.Groups.PLAYER, Main.Groups.MEMBER, "§c§lMEMBER");			
 		}
 
 		//350hr elder
-		if(playTimeMin >= 21000 && !player.hasPermission("group.elder")) {
-			rankupPlayer(player, "group.member", "group.elder", "§c§lMEMBER");
+		if(playTimeMin >= 21000 && !player.hasPermission(Main.Groups.ELDER)) {
+			rankupPlayer(player, Main.Groups.MEMBER, Main.Groups.ELDER, "§c§lMEMBER");
 		}
 		
 		//700h Veteran
-		if(playTimeMin >= 42000 && !player.hasPermission("group.veteran")) {
-			rankupPlayer(player, "group.elder", "group.veteran", "§5§lVETERAN");
+		if(playTimeMin >= 42000 && !player.hasPermission(Main.Groups.VETERAN)) {
+			rankupPlayer(player, Main.Groups.ELDER, Main.Groups.VETERAN, "§5§lVETERAN");
 		}
 
 		//1000h Legend
-		if(playTimeMin >= 60000 && !player.hasPermission("group.legend")) {
-			rankupPlayer(player, "group.veteran", "group.legend", "§e§lLEGEND");
+		if(playTimeMin >= 60000 && !player.hasPermission(Main.Groups.LEGEND)) {
+			rankupPlayer(player, Main.Groups.VETERAN, Main.Groups.LEGEND, "§e§lLEGEND");
 		}
 	}
 	

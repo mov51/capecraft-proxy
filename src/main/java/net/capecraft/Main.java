@@ -47,6 +47,30 @@ public class Main {
 	
 	//Permissions
 	public class Permissions {
+		public static final String FULL_JOIN = "capecraft.fulljoin";
+		public static final String PlAY_AFK = "capecraft.playafk";
 		public static final String ADMIN = "capecraft.admin";
+	}
+	
+	public class Groups {
+		//Playtime
+		public static final String DEFAULT = "group.default";
+		public static final String REGULAR = "group.regular";
+		public static final String PLAYER = "group.player";
+		public static final String MEMBER = "group.member";
+		public static final String ELDER = "group.elder";
+		public static final String VETERAN = "group.veteran";
+		public static final String LEGEND = "group.legend";
+		//Donator
+		public static final String RESPECTED = "group.respected";
+		public static final String PREMIUM = "group.premium";
+		public static final String VIP = "group.vip";
+		//Other
+		public static final String ALT = "group.alt";
+		public static final String AMBASSADOR = "group.ambassador";
+		//Staff
+		public static final String MODERATOR = "group.moderator";
+		public static final String ADMINISTRATOR = "group.administrator";
+		public static final String FOUNDER = "group.founder";
 	}
 }

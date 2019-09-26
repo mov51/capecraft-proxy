@@ -160,7 +160,7 @@ public class ServerQueueHelper {
 	 */
 	public static void addPlayer(String serverName, ProxiedPlayer player) {
 		//If player has full join command then make them skip queue
-		if(player.hasPermission("capecraft.fulljoin")) {
+		if(player.hasPermission(Main.Permissions.FULL_JOIN)) {
 			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(Main.Servers.CREATIVE);					
 			player.connect(serverInfo);
 			
