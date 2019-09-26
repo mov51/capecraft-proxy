@@ -19,18 +19,29 @@
             <id>maven-snapshots</id>
             <url>https://papermc.io/repo/repository/maven-snapshots/</url>
         </repository>
+        <repository>
+            <id>luckperms-api</id>
+            <url>https://repo1.maven.org/maven2/me/lucko/luckperms/luckperms-api/</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
             <groupId>io.github.waterfallmc</groupId>
             <artifactId>waterfall-api</artifactId>
             <version>1.14-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
        	<dependency>
 	    	<groupId>com.destroystokyo.paper</groupId>
 	    	<artifactId>paper-api</artifactId>
 	    	<version>1.14.4-R0.1-SNAPSHOT</version>
 	    	<scope>provided</scope>
-	 	</dependency>    
+	 	</dependency>
+ 	    <dependency>
+    		<groupId>me.lucko.luckperms</groupId>
+    		<artifactId>luckperms-api</artifactId>
+    		<version>4.4</version>
+    		<scope>provided</scope>
+		</dependency>
     </dependencies>
 </project>
