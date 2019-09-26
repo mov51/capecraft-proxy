@@ -22,7 +22,10 @@ public class AfkHelper {
 			@Override
 			public void run() {				
 				afkQueueList.forEach(player -> {
-		            BaseComponent[] msg = new ComponentBuilder("You're AFK! ").color(ChatColor.RED).bold( true ).append("You don't gain playtime while AFK ").color(ChatColor.GREEN).bold( true ).append(":'( ").bold( true ).color(ChatColor.AQUA).append("Use ./afk to play normally!").color(ChatColor.GREEN).bold( true ).create();
+		            BaseComponent[] msg = new ComponentBuilder("You're AFK! ").color(ChatColor.RED).bold( true )
+		            		.append("You don't gain playtime while AFK ").color(ChatColor.GREEN).bold( true )
+		            		.append(":'( ").bold( true ).color(ChatColor.AQUA)
+		            		.append("Use ./afk to play normally!").color(ChatColor.GREEN).bold( true ).create();
 					player.sendMessage(ChatMessageType.ACTION_BAR, msg);
 				});	
 			}        	
