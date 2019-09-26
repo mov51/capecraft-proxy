@@ -22,12 +22,15 @@ public class PlayTimeHelper {
 	 * @param playerConfig Player config
 	 */
 	public static void updatePlaytime(UUID uuid) {
-		//Check if player is AFK
-		if(AfkHelper.isAfk(ProxyServer.getInstance().getPlayer(uuid)))
-			return;
-		
 		//Player config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(uuid);
+		
+		//Check if player is AFK and prevent playtime updates
+		if(AfkHelper.isAfk(ProxyServer.getInstance().getPlayer(uuid))) {
+			playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
+			PlayerConfig.saveConfig(uuid, playerConfig);
+			return;
+		}
 		
 		//Playtime in minutes
 		int playTimeMin = playerConfig.getInt(Main.PlayerConfigs.PLAY_TIME);

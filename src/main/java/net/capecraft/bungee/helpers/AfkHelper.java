@@ -15,8 +15,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class AfkHelper {
 
+	//The AFK Queue
 	private static Queue<ProxiedPlayer> afkQueueList = new LinkedList<ProxiedPlayer>();
 	
+	/**
+	 * Loops through the AFK List and show an action bar message
+	 */
 	public static void scheduleAfkMessage() {
 		ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
 			@Override
@@ -62,6 +66,8 @@ public class AfkHelper {
 	 * @param player ProxiedPlayer to add
 	 */
 	public static void addPlayer(ProxiedPlayer player) {
+		//Do a playtime update to prevent people gaining AFK playtime		
+		PlayTimeHelper.updatePlaytime(player.getUniqueId());
 		player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You're now AFK!").reset().create());
 		afkQueueList.add(player);
 	}
@@ -71,6 +77,8 @@ public class AfkHelper {
 	 * @param player ProxiedPlayer to remove
 	 */
 	public static void removePlayer(ProxiedPlayer player) {
+		//Do a playtime update to prevent people gaining AFK playtime
+		PlayTimeHelper.updatePlaytime(player.getUniqueId());
 		player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You're no longer AFK!").reset().create());
 		afkQueueList.remove(player);
 	}
