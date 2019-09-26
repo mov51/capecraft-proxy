@@ -1,9 +1,9 @@
 package net.capecraft.bungee;
 
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.commands.AfkCommand;
 import net.capecraft.bungee.commands.BungeeTeleportCommand;
 import net.capecraft.bungee.commands.ComSpyCommand;
 import net.capecraft.bungee.commands.PlayTimeCommands;
@@ -20,6 +20,7 @@ import net.capecraft.bungee.events.JoinLeave;
 import net.capecraft.bungee.events.PlaytimeEventHandler;
 import net.capecraft.bungee.events.ServerQueueEventHandler;
 import net.capecraft.bungee.events.messaging.CommandMessage;
+import net.capecraft.bungee.helpers.AfkHelper;
 import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
@@ -27,9 +28,13 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeMain extends Plugin {
 	
+	public static Plugin INSTANCE;
+	
     @Override
     public void onEnable() {
     	getLogger().log(Level.INFO, "Loading CapeCraft Proxy");
+    	
+    	BungeeMain.INSTANCE = this;
     	
     	//Initialise Configuration Manager
     	PluginConfig.initConfig(this);
@@ -45,14 +50,19 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerListener(this, new CommandMessage());
         getProxy().getPluginManager().registerListener(this, new ComSpyEvent());
         
-        //Commands
-        getProxy().getPluginManager().registerCommand(this, new PluginCommands());
+        //Play Commands
+        getProxy().getPluginManager().registerCommand(this, new AfkCommand());
         getProxy().getPluginManager().registerCommand(this, new PlayTimeCommands());
+        
+        //Admin Commands
+        getProxy().getPluginManager().registerCommand(this, new PluginCommands());
+        getProxy().getPluginManager().registerCommand(this, new BungeeTeleportCommand());
+        getProxy().getPluginManager().registerCommand(this, new ComSpyCommand());
+        
+        //Server Commands
         getProxy().getPluginManager().registerCommand(this, new LobbyCommand());
         getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
         getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
-        getProxy().getPluginManager().registerCommand(this, new BungeeTeleportCommand());
-        getProxy().getPluginManager().registerCommand(this, new ComSpyCommand());
         
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());
@@ -60,13 +70,9 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new AfkRulesCommand());
         getProxy().getPluginManager().registerCommand(this, new CapeCommand());
         
-        //Scheduled Events        
-        getProxy().getScheduler().schedule(this, new Runnable() {
-			@Override
-			public void run() {				
-				ServerQueueHelper.checkServerSlots();	
-			}        	
-        }, 0, 5, TimeUnit.SECONDS);   
+        //Scheduled Events
+        ServerQueueHelper.scheduleServerPing();
+        AfkHelper.scheduleAfkMessage();
         
         //Loaded Log
         getLogger().log(Level.INFO, "Loaded");

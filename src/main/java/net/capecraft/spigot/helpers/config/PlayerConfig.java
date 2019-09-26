@@ -25,6 +25,11 @@ public class PlayerConfig {
 		sendPacket(player, out);
 	}
 	
+	/**
+	 * Sends a packet to the BungeeCord instance regarding player config
+	 * @param player The player to update
+	 * @param out Out byte array
+	 */
 	private static void sendPacket(Player player, ByteArrayDataOutput out) {
 		player.sendPluginMessage(SpigotMain.INSTANCE, Main.Channels.CONFIG_CHANNEL, out.toByteArray());	
 	}

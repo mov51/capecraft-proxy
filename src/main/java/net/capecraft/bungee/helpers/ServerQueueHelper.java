@@ -3,8 +3,10 @@ package net.capecraft.bungee.helpers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.BungeeMain;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatColor;
@@ -20,6 +22,18 @@ public class ServerQueueHelper {
 		
 	private static List<UUID> survivalQueue = new ArrayList<UUID>();
 	private static List<UUID> creativeQueue = new ArrayList<UUID>();
+	
+	/**
+	 * Schedule the server ping
+	 */
+	public static void scheduleServerPing() {
+		ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
+			@Override
+			public void run() {				
+				ServerQueueHelper.checkServerSlots();	
+			}        	
+        }, 0, 5, TimeUnit.SECONDS);   
+	}
 	
 	/**
 	 * The first method calls by the task schedule

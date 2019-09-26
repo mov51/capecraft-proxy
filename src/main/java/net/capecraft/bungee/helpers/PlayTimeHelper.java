@@ -22,6 +22,10 @@ public class PlayTimeHelper {
 	 * @param playerConfig Player config
 	 */
 	public static void updatePlaytime(UUID uuid) {
+		//Check if player is AFK
+		if(AfkHelper.isAfk(ProxyServer.getInstance().getPlayer(uuid)))
+			return;
+		
 		//Player config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(uuid);
 		
@@ -68,32 +72,32 @@ public class PlayTimeHelper {
 		
 		//25 hours regular
 		if(playTimeMin >= 1500 && !player.hasPermission("group.regular")) {
-			rankupPlayer(player, "group.default", "group.regular", "Â§7Â§lREGULAR");					
+			rankupPlayer(player, "group.default", "group.regular", "§7§lREGULAR");					
 		}
 
 		//100 hours player
 		if(playTimeMin >= 6000 && !player.hasPermission("group.player")) {
-			rankupPlayer(player, "group.regular", "group.player", "Â§fÂ§lPLAYER");			
+			rankupPlayer(player, "group.regular", "group.player", "§f§lPLAYER");			
 		}
 
 		//200 hours member
 		if(playTimeMin >= 12000 && !player.hasPermission("group.member")) {
-			rankupPlayer(player, "group.player", "group.member", "Â§cÂ§lMEMBER");			
+			rankupPlayer(player, "group.player", "group.member", "§c§lMEMBER");			
 		}
 
 		//350hr elder
 		if(playTimeMin >= 21000 && !player.hasPermission("group.elder")) {
-			rankupPlayer(player, "group.member", "group.elder", "Â§cÂ§lMEMBER");
+			rankupPlayer(player, "group.member", "group.elder", "§c§lMEMBER");
 		}
 		
 		//700h Veteran
 		if(playTimeMin >= 42000 && !player.hasPermission("group.veteran")) {
-			rankupPlayer(player, "group.elder", "group.veteran", "Â§5Â§lVETERAN");
+			rankupPlayer(player, "group.elder", "group.veteran", "§5§lVETERAN");
 		}
 
 		//1000h Legend
 		if(playTimeMin >= 60000 && !player.hasPermission("group.legend")) {
-			rankupPlayer(player, "group.veteran", "group.legend", "Â§eÂ§lLEGEND");
+			rankupPlayer(player, "group.veteran", "group.legend", "§e§lLEGEND");
 		}
 	}
 	
