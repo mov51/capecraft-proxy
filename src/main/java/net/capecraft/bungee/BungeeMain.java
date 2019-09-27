@@ -25,6 +25,8 @@ import net.capecraft.bungee.helpers.AfkHelper;
 import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeMain extends Plugin {
@@ -33,6 +35,7 @@ public class BungeeMain extends Plugin {
 	
     @Override
     public void onEnable() {
+    	this.logLogo();
     	getLogger().log(Level.INFO, "Loading CapeCraft Proxy");
     	
     	BungeeMain.INSTANCE = this;
@@ -85,4 +88,20 @@ public class BungeeMain extends Plugin {
     	//Unloaded Log
     	getLogger().log(Level.INFO, "Unloaded");
     }
+    
+    /*
+     * Show our pretty logo     
+     */
+    private void logLogo() {
+    	CommandSender sender = getProxy().getConsole();
+    	sender.sendMessage(TextComponent.fromLegacyText("§a _____                  _____            __ _   "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a/  __ \\                /  __ \\          / _| |  "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a            | |                                 "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a            |_|         §bhttps://capecraft.net          "));
+    	sender.sendMessage(TextComponent.fromLegacyText(""));
+      }
 }

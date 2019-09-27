@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
+import me.lucko.luckperms.api.User;
 import net.capecraft.Main;
 import net.capecraft.bungee.BungeeMain;
 import net.capecraft.bungee.helpers.config.PluginConfig;
@@ -100,10 +101,19 @@ public class AfkHelper {
 		if(!isValidServerName(serverName)) {
 			return;
 		}
+		
 		//Do a playtime update to prevent people gaining AFK playtime		
 		PlayTimeHelper.updatePlaytime(player);
+		
+		//Send config message
 		Configuration pluginConfig = PluginConfig.getPluginConfig();
 		player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.AFK_MESSAGE))).reset().create());
+		
+		//Add afk permission
+		User user = LuckPermsHelper.getUser(player.getUniqueId());
+		LuckPermsHelper.addPermission(user, "essentials.afk.kickexempt");
+		
+		//Add to queue
 		getQueueList(serverName).add(player);
 	}
 	
@@ -116,10 +126,19 @@ public class AfkHelper {
 		if(!isValidServerName(serverName)) {
 			return;
 		}
+		
 		//Do a playtime update to prevent people gaining AFK playtime
 		PlayTimeHelper.updatePlaytime(player);
+		
+		//Send config message
 		Configuration pluginConfig = PluginConfig.getPluginConfig();
 		player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.UNAFK_MESSAGE))).reset().create());
+		
+		//remove AFK permission
+		User user = LuckPermsHelper.getUser(player.getUniqueId());
+		LuckPermsHelper.removePermission(user, "essentials.afk.kickexempt");
+		
+		//Remove from queue
 		getQueueList(serverName).remove(player);
 	}
 
