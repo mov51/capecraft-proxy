@@ -178,7 +178,7 @@ public class ServerQueueHelper {
 	public static void addPlayer(String serverName, ProxiedPlayer player) {
 		//If player has full join command then make them skip queue
 		if(player.hasPermission(Main.Permissions.FULL_JOIN)) {
-			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(Main.Servers.CREATIVE);					
+			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
 			player.connect(serverInfo);
 			
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_DONATOR_MESSAGE);			
