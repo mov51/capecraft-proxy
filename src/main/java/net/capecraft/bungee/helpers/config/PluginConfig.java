@@ -18,6 +18,8 @@ public class PluginConfig {
 	public static final String VERSIONS_NAME = VERSIONS + ".name";
 	public static final String VERSIONS_SUPPORTED = VERSIONS + ".supportedVersions";
 	
+	public static final String WHITELIST = "whitelist";
+	
 	public static final String FIRST_JOIN_MESSAGE = "firstJoinMessage";
 	public static final String JOIN_MESSAGE = "joinMessage";
 	public static final String LEAVE_MESSAGE = "leaveMessage";
@@ -61,7 +63,7 @@ public class PluginConfig {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-		}
+		}		
 	}
 	
 	/**
@@ -80,6 +82,18 @@ public class PluginConfig {
 	}
 	
 	/**
+	 * Save the plugin config
+	 */
+	public static void saveConfig(Configuration config) {
+		try {
+			ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, new File(pluginFolder, Main.Configs.BUNGEE_CONFIG));
+			reloadPluginConfig();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	/**
 	 * Reloads the configuration into memory
 	 */
 	public static void reloadPluginConfig() {
@@ -88,5 +102,5 @@ public class PluginConfig {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}		
 }

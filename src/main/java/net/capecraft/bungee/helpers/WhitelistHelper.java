@@ -1,17 +1,19 @@
 package net.capecraft.bungee.helpers;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
+import com.google.gson.JsonArray;
+
+import net.capecraft.bungee.helpers.config.PluginConfig;
+import net.capecraft.bungee.helpers.config.WhitelistConfig;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.config.Configuration;
 
 public class WhitelistHelper {
 
 	//Variables
-	private static boolean whitelist_Enabled = false;
-	private static List<UUID> whitelist_Players = new ArrayList<UUID>();
+	private static boolean whitelist_Enabled = PluginConfig.getPluginConfig().getBoolean(PluginConfig.WHITELIST);
 	
 	/**
 	 * Check if whitelist is enabled
@@ -27,15 +29,27 @@ public class WhitelistHelper {
 	 */
 	public static void setWhitelist(boolean value) {
 		whitelist_Enabled = value;
+		Configuration pluginConfig = PluginConfig.getPluginConfig();
+		pluginConfig.set(PluginConfig.WHITELIST, value);
+		PluginConfig.saveConfig(pluginConfig);
 	}
 	
 	/**
 	 * Check if a player is in the whitelist
 	 * @param player The player to check
+	 * @return 
 	 * @return The result
 	 */
-	public static boolean inWhitelist(ProxiedPlayer player) {
-		return whitelist_Players.contains(player.getUniqueId());
+	public static boolean inWhitelist(UUID uuid) {
+		JsonArray whitelistUsers = WhitelistConfig.getWhitelistUsers();
+		for(int i = 0; i < whitelistUsers.size(); i++) {
+			if(whitelistUsers.get(i).getAsJsonObject().get("uuid") != null) {
+				if(whitelistUsers.get(i).getAsJsonObject().get("uuid").getAsString().equalsIgnoreCase(uuid.toString())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -45,7 +59,9 @@ public class WhitelistHelper {
 	public static void addWhitelist(String username) {
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(username);
 		if(player != null) {
-			whitelist_Players.add(player.getUniqueId());			
+			WhitelistConfig.addUser(player.getUniqueId(), player.getDisplayName());		
+		} else {
+			WhitelistConfig.addUser(MojangAPIHelper.getUUID(username), username);
 		}
 	}
 	
@@ -56,7 +72,9 @@ public class WhitelistHelper {
 	public static void removeWhitelist(String username) {
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(username);
 		if(player != null) {
-			whitelist_Players.remove(player.getUniqueId());			
+			WhitelistConfig.removeUser(player.getUniqueId());		
+		} else {
+			WhitelistConfig.removeUser(MojangAPIHelper.getUUID(username));
 		}
 	}
 }

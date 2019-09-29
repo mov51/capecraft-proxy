@@ -37,7 +37,7 @@ public class PlayerConfig {
 		memberFolder = new File(pluginFolder + "/users/");
 		if(!memberFolder.exists()) {
 			memberFolder.mkdir();
-		}
+		}				
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package net.capecraft.bungee.events;
 import java.util.List;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.helpers.WhitelistHelper;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -11,6 +12,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
@@ -43,6 +45,15 @@ public class JoinLeaveEventHandler implements Listener {
 		//Kicks player if version not correct Before they even get to PostLogin
 		if(event.getConnection().getVersion() != getProtocolVersion) {
 			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version ").reset().append(getVersionMsg).create());
+		}
+	}
+	
+	@EventHandler
+	public void onLoginEvent(LoginEvent event) {
+		//Checks whitelist isn't on
+		System.out.println(event.getConnection().getUniqueId());
+		if(WhitelistHelper.isWhitelist() && !WhitelistHelper.inWhitelist(event.getConnection().getUniqueId())) {
+			event.getConnection().disconnect(TextComponent.fromLegacyText("Whitelist on"));
 		}
 	}
 	

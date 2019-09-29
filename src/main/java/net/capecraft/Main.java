@@ -30,9 +30,9 @@ public class Main {
 	
 	//Config files
 	public class Configs {	
-		public static final String BUNGEE_CONFIG = "bungeeconfig.yml";
-		public static final String SPIGOT_CONFIG = "spigotconfig.yml";	
+		public static final String BUNGEE_CONFIG = "bungeeconfig.yml";		
 		public static final String PLAYER_CONFIG = "playerconfig.yml";
+		public static final String WHITELIST_CONFIG = "whitelist.json";
 	}
 	
 	//Player config

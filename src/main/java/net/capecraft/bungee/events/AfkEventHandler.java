@@ -3,7 +3,7 @@ package net.capecraft.bungee.events;
 import net.capecraft.Main;
 import net.capecraft.bungee.helpers.AfkHelper;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PostLoginEvent;
+import net.md_5.bungee.api.event.ServerConnectedEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -11,9 +11,9 @@ import net.md_5.bungee.event.EventHandler;
 public class AfkEventHandler implements Listener {
 
 	@EventHandler
-	public void onJoin(PostLoginEvent event) {
+	public void onServerConnect(ServerConnectedEvent event) {		
 		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
-			AfkHelper.addAltPlayer(event.getPlayer());
+			AfkHelper.addAltPlayer(event.getPlayer(), event.getServer());
 		}
 	}
 	

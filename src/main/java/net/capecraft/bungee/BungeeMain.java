@@ -8,6 +8,7 @@ import net.capecraft.bungee.commands.BungeeTeleportCommand;
 import net.capecraft.bungee.commands.ComSpyCommand;
 import net.capecraft.bungee.commands.PlayTimeCommands;
 import net.capecraft.bungee.commands.PluginCommands;
+import net.capecraft.bungee.commands.WhitelistCommand;
 import net.capecraft.bungee.commands.help.AfkRulesCommand;
 import net.capecraft.bungee.commands.help.AltRulesCommand;
 import net.capecraft.bungee.commands.help.CapeCommand;
@@ -25,6 +26,7 @@ import net.capecraft.bungee.helpers.AfkHelper;
 import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
+import net.capecraft.bungee.helpers.config.WhitelistConfig;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -43,6 +45,7 @@ public class BungeeMain extends Plugin {
     	//Initialise Configuration Manager
     	PluginConfig.initConfig(this);
     	PlayerConfig.initConfig(this);
+    	WhitelistConfig.initConfig(this);
     	
     	//Register Channel
     	getProxy().registerChannel(Main.Channels.CONFIG_CHANNEL);
@@ -62,6 +65,7 @@ public class BungeeMain extends Plugin {
         //Admin Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
         getProxy().getPluginManager().registerCommand(this, new BungeeTeleportCommand());
+        getProxy().getPluginManager().registerCommand(this, new WhitelistCommand());
         getProxy().getPluginManager().registerCommand(this, new ComSpyCommand());
         
         //Server Commands
@@ -94,14 +98,14 @@ public class BungeeMain extends Plugin {
      */
     private void logLogo() {
     	CommandSender sender = getProxy().getConsole();
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a _____                  _____            __ _   "));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a/  __ \\                /  __ \\          / _| |  "));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a            | |                                 "));
-    	sender.sendMessage(TextComponent.fromLegacyText("Â§a            |_|         Â§bhttps://capecraft.net          "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a _____                  _____            __ _   "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a/  __ \\                /  __ \\          / _| |  "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a            | |                                 "));
+    	sender.sendMessage(TextComponent.fromLegacyText("§a            |_|         §bhttps://capecraft.net          "));
     	sender.sendMessage(TextComponent.fromLegacyText(""));
       }
 }

@@ -5,6 +5,8 @@ authors: [james090500, mov51]
 commands:
   capecraftproxy:
     description: CapeCraftProxy commands
+  bwhitelist:
+    description: CapeCraftProxy whitelist
   comspy:
     description: Staff ComSpy
   rules:
@@ -23,4 +25,4 @@ commands:
   creative:
     description: Teleports to creative
   btp:
-    description: Bungee Teleport  
+    description: Bungee Teleport

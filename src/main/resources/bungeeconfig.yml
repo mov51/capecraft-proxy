@@ -2,6 +2,8 @@ versions:
   name: "1.14.4"
   supportedVersions:
     - 498
+    
+whitelist: off
 
 firstJoinMessage: "Please welcome %player% to the server!"
 joinMessage: "%player% has joined the server!"
