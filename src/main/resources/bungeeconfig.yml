@@ -25,3 +25,12 @@ afkActionBar: "§c§lYou're AFK! §a§lYou don't gain playtime while AFK §b§l:'( §a§
 
 kickAfk: "The server is full!\nWe've had to disconnect your account to make place for real players"
 kickAfkBroadcast: "An inactive player has been removed from the playing field to make space! Feel safe in your active minds!"
+
+motd:
+  - '============================================='
+  - 'Welcome back %player%'
+  - ''
+  - 'There are %online%/%max% players online'
+  - ''
+  - 'Join our discord: https://CapeCraft.net/discord'
+  - '============================================='

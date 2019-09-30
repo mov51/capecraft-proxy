@@ -1,8 +1,10 @@
 package net.capecraft.bungee.events;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.BungeeMain;
 import net.capecraft.bungee.helpers.WhitelistHelper;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
@@ -50,8 +52,7 @@ public class JoinLeaveEventHandler implements Listener {
 	
 	@EventHandler
 	public void onLoginEvent(LoginEvent event) {
-		//Checks whitelist isn't on
-		System.out.println(event.getConnection().getUniqueId());
+		//Checks whitelist isn't on		
 		if(WhitelistHelper.isWhitelist() && !WhitelistHelper.inWhitelist(event.getConnection().getUniqueId())) {
 			event.getConnection().disconnect(TextComponent.fromLegacyText("Whitelist on"));
 		}
@@ -62,6 +63,7 @@ public class JoinLeaveEventHandler implements Listener {
 		//Gets msg from config and sends join/leave message		
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.JOIN_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
+		sendMotd(event.getPlayer());
 	}
 	
 	@EventHandler
@@ -96,6 +98,31 @@ public class JoinLeaveEventHandler implements Listener {
 			}
 		}
 		return Integer.parseInt(versionList.get(0).toString());
+	}
+	
+	/**
+	 * Sends the MOTD to the player a couple ticks after logging in
+	 * Use getConfig as its the only way to get max players cleanly
+	 * <img src="https://i.imgur.com/APO1Eka.png">
+	 * @param player ProxiedPlayer
+	 */
+	private void sendMotd(ProxiedPlayer player) {		
+		ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void run() {
+				List<?> motd = PluginConfig.getPluginConfig().getList(PluginConfig.MOTD);				
+				for(Object oLine : motd) {
+					String line = oLine.toString();
+					
+					line = line.replace("%player%", player.getDisplayName());
+					line = line.replace("%online%", String.valueOf(ProxyServer.getInstance().getOnlineCount()));
+					line = line.replace("%max%", String.valueOf(ProxyServer.getInstance().getConfig().getPlayerLimit()));
+					
+					player.sendMessage(TextComponent.fromLegacyText(line.toString()));
+				}
+			}			
+		}, 1, TimeUnit.SECONDS);
 	}
 	
 }

@@ -39,7 +39,9 @@ public class PluginConfig {
 	public static final String AFK_ACTIONBAR = "afkActionBar";
 		
 	public static final String KICK_AFK = "kickAfk";
-	public static final String KICK_AFK_BROADCAST = "kickAfkBroadcast";	
+	public static final String KICK_AFK_BROADCAST = "kickAfkBroadcast";
+	
+	public static final String MOTD = "motd";
 	
 	private static File pluginFolder;
 	private static Configuration pluginConfig;
