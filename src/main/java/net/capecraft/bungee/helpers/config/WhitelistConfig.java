@@ -70,10 +70,12 @@ public class WhitelistConfig {
 	 */
 	public static void addUser(UUID uuid, String username) {
 		//Checks player is in whitelist
-		for(int i = 0; i < whitelistUsers.size(); i++) {
-			JsonObject user = whitelistUsers.get(i).getAsJsonObject();
-			if(user.get("uuid").getAsString().equalsIgnoreCase(uuid.toString())) {
-				return;
+		if(whitelistUsers != null) {
+			for(int i = 0; i < getWhitelistUsers().size(); i++) {
+				JsonObject user = getWhitelistUsers().get(i).getAsJsonObject();
+				if(user.get("uuid").getAsString().equalsIgnoreCase(uuid.toString())) {
+					return;
+				}
 			}
 		}
 		
@@ -81,7 +83,7 @@ public class WhitelistConfig {
 		JsonObject user = new JsonObject();
 		user.addProperty("uuid", uuid.toString());
 		user.addProperty("username", username);
-		whitelistUsers.add(user);
+		getWhitelistUsers().add(user);
 		updateWhitelistFile();
 	}
 	
@@ -91,10 +93,10 @@ public class WhitelistConfig {
 	 */
 	public static void removeUser(UUID uuid) {
 		//Loops through whitelist looking for player to remove
-		for(int i = 0; i < whitelistUsers.size(); i++) {
-			JsonObject user = whitelistUsers.get(i).getAsJsonObject();
+		for(int i = 0; i < getWhitelistUsers().size(); i++) {
+			JsonObject user = getWhitelistUsers().get(i).getAsJsonObject();
 			if(user.get("uuid").getAsString().equalsIgnoreCase(uuid.toString())) {				
-				whitelistUsers.remove(i);
+				getWhitelistUsers().remove(i);
 				updateWhitelistFile();
 				break;
 			}
@@ -107,7 +109,7 @@ public class WhitelistConfig {
 	private static void updateWhitelistFile() {
 		try {
 			FileWriter file = new FileWriter(new File(pluginFolder, Main.Configs.WHITELIST_CONFIG));
-			file.write(whitelistUsers.toString());
+			file.write(getWhitelistUsers().toString());
 			file.close();
 		} catch (Exception e) {
 			e.printStackTrace();

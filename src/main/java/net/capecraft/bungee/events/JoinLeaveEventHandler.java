@@ -20,6 +20,7 @@ import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 
 public class JoinLeaveEventHandler implements Listener {
@@ -46,7 +47,8 @@ public class JoinLeaveEventHandler implements Listener {
 		
 		//Kicks player if version not correct Before they even get to PostLogin
 		if(event.getConnection().getVersion() != getProtocolVersion) {
-			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version ").reset().append(getVersionMsg).create());
+			ProxyServer.getInstance().getConsole().sendMessage(new ComponentBuilder(event.getConnection().getName()).color(ChatColor.YELLOW).append(" Kicked due to version mismatch").create());			
+			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version ").reset().append(getVersionMsg).create());			
 		}
 	}
 	
@@ -54,7 +56,9 @@ public class JoinLeaveEventHandler implements Listener {
 	public void onLoginEvent(LoginEvent event) {
 		//Checks whitelist isn't on		
 		if(WhitelistHelper.isWhitelist() && !WhitelistHelper.inWhitelist(event.getConnection().getUniqueId())) {
-			event.getConnection().disconnect(TextComponent.fromLegacyText("Whitelist on"));
+			ProxyServer.getInstance().getConsole().sendMessage(new ComponentBuilder(event.getConnection().getName()).color(ChatColor.YELLOW).append(" Kicked due to whitelist").create());
+			Configuration config = PluginConfig.getPluginConfig();
+			event.getConnection().disconnect(TextComponent.fromLegacyText(config.getString(PluginConfig.WHITELIST_MESSAGE)));			
 		}
 	}
 	

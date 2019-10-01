@@ -34,11 +34,11 @@ public class WhitelistCommand extends Command implements TabExecutor {
 		//Add player to whitelist
 		} else if(args.length == 2 && args[0].toLowerCase().equals("add")) {			
 			WhitelistHelper.addWhitelist(args[1]);
-			sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("Player added").reset().create());
+			sender.sendMessage(new ComponentBuilder(Main.PREFIX).append(args[1] + " added to whitelist").reset().create());
 		//Remove player from whitelist
 		} else if(args.length == 2 && args[0].toLowerCase().equals("remove")) {
 			WhitelistHelper.removeWhitelist(args[1]);
-			sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("Player removed").reset().create());
+			sender.sendMessage(new ComponentBuilder(Main.PREFIX).append(args[1] + " removed from whitelist").reset().create());
 		//Display valid commands
 		} else {
 			sender.sendMessage(new ComponentBuilder("Usage: /whitelist [on|of|add|remove]").color(ChatColor.RED).create());
