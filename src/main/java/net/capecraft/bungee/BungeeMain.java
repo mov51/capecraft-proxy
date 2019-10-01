@@ -27,6 +27,7 @@ import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.capecraft.bungee.helpers.config.WhitelistConfig;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -98,14 +99,17 @@ public class BungeeMain extends Plugin {
      */
     private void logLogo() {
     	CommandSender sender = getProxy().getConsole();
-    	sender.sendMessage(TextComponent.fromLegacyText("§a _____                  _____            __ _   "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a/  __ \\                /  __ \\          / _| |  "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a            | |                                 "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a            |_|         §bhttps://capecraft.net          "));
+    	String lime = ChatColor.COLOR_CHAR + "a";
+    	String aqua = ChatColor.COLOR_CHAR + "b";
+    	
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + " _____                  _____            __ _   "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "/  __ \\                /  __ \\          / _| |  "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + " \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "            | |                                 "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "            |_|   "+aqua+"      https://capecraft.net          "));
     	sender.sendMessage(TextComponent.fromLegacyText(""));
       }
 }

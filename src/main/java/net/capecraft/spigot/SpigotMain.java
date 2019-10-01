@@ -1,5 +1,6 @@
 package net.capecraft.spigot;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,15 +36,18 @@ public class SpigotMain extends JavaPlugin {
      * Show our pretty logo     
      */
     private void logLogo() {
-    	ConsoleCommandSender sender = getServer().getConsoleSender();
-    	sender.sendMessage(TextComponent.fromLegacyText("§a _____                  _____            __ _   "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a/  __ \\                /  __ \\          / _| |  "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a            | |                                 "));
-    	sender.sendMessage(TextComponent.fromLegacyText("§a            |_|         §bhttps://capecraft.net          "));
+    	ConsoleCommandSender sender = getServer().getConsoleSender();    	
+    	String lime = ChatColor.COLOR_CHAR + "a";
+    	String aqua = ChatColor.COLOR_CHAR + "b";
+    	
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + " _____                  _____            __ _   "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "/  __ \\                /  __ \\          / _| |  "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "| |    / _` | '_ \\ / _ \\ |   | '__/ _` |  _| __|"));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "| \\__/\\ (_| | |_) |  __/ \\__/\\ | | (_| | | | |_ "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + " \\____/\\__,_| .__/ \\___|\\____/_|  \\__,_|_|  \\__|"));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "            | |                                 "));
+    	sender.sendMessage(TextComponent.fromLegacyText(lime + "            |_|   "+aqua+"      https://capecraft.net          "));
     	sender.sendMessage(TextComponent.fromLegacyText(""));
       }
 }
