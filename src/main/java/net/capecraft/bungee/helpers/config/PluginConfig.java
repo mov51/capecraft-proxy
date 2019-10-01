@@ -19,6 +19,7 @@ public class PluginConfig {
 	public static final String VERSIONS_SUPPORTED = VERSIONS + ".supportedVersions";
 	
 	public static final String WHITELIST = "whitelist";
+	public static final String WHITELIST_MESSAGE = "whitelistMessage";
 	
 	public static final String FIRST_JOIN_MESSAGE = "firstJoinMessage";
 	public static final String JOIN_MESSAGE = "joinMessage";
@@ -39,7 +40,7 @@ public class PluginConfig {
 	public static final String AFK_ACTIONBAR = "afkActionBar";
 		
 	public static final String KICK_AFK = "kickAfk";
-	public static final String KICK_AFK_BROADCAST = "kickAfkBroadcast";
+	public static final String KICK_AFK_BROADCAST = "kickAfkBroadcast";	
 	
 	public static final String MOTD = "motd";
 	

@@ -26,9 +26,15 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		if(sender instanceof ProxiedPlayer) {			
-			//Get ProxiedPlayer instance
-			ProxiedPlayer player = (ProxiedPlayer) sender;			
+		if(sender instanceof ProxiedPlayer) {
+			//Get the player
+			ProxiedPlayer player = (args.length == 1) ? ProxyServer.getInstance().getPlayer(args[0]) : (ProxiedPlayer) sender;
+			
+			//Make sure supplied player isn't null
+			if(player == null) {
+				sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("That player can't be found or are they definitely online?").reset().create());
+				return;
+			}
 			
 			//Update players playtime
 			PlayTimeHelper.updatePlaytime(player);
@@ -38,7 +44,7 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 			msgRaw = msgRaw.replace("%player%", player.getDisplayName());
 			msgRaw = msgRaw.replace("%playtime%", PlayTimeHelper.getPlaytime(player.getUniqueId()));
 			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
-			player.sendMessage(msg);
+			sender.sendMessage(msg);
 		}
 	}
 	

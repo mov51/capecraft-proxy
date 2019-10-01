@@ -4,6 +4,7 @@ versions:
     - 498
     
 whitelist: off
+whitelistMessage: "We're under maintenance. Please join our discord for news"
 
 firstJoinMessage: "Please welcome %player% to the server!"
 joinMessage: "%player% has joined the server!"
