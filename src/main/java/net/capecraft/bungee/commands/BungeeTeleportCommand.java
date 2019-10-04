@@ -20,7 +20,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 public class BungeeTeleportCommand extends Command implements TabExecutor {
 
 	public BungeeTeleportCommand() {
-		super("btp");
+		super("btp", Main.Permissions.ADMIN);
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 				ProxiedPlayer player = (ProxiedPlayer) sender;
 				ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
 				
-				if(!player.hasPermission(Main.Permissions.ADMIN))
+				if(!player.hasPermission(Main.Permissions.ADMIN))					
 					return;
 				
 				//Make sure target exists

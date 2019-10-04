@@ -2,10 +2,12 @@ package net.capecraft.bungee.commands;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.google.common.collect.ImmutableSet;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.helpers.MojangAPIHelper;
 import net.capecraft.bungee.helpers.PlayTimeHelper;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
@@ -27,22 +29,35 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		if(sender instanceof ProxiedPlayer) {
-			//Get the player
-			ProxiedPlayer player = (args.length == 1) ? ProxyServer.getInstance().getPlayer(args[0]) : (ProxiedPlayer) sender;
+			//Get the player uuid
+			UUID playerUUID;			
 			
-			//Make sure supplied player isn't null
-			if(player == null) {
-				sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("That player can't be found or are they definitely online?").reset().create());
-				return;
+			//Try get online player
+			ProxiedPlayer player = (args.length == 1) ? ProxyServer.getInstance().getPlayer(args[0]) : (ProxiedPlayer) sender;
+			if(player != null) {
+				playerUUID = player.getUniqueId();				
+			} else {
+				//Else try get uuid from api
+				UUID uuid = MojangAPIHelper.getUUID(args[0]);
+				if(uuid != null) {		
+					playerUUID = uuid;
+				} else {
+					//Else display error
+					sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("That player can't be found").reset().create());
+					return;
+				}
 			}
 			
 			//Update players playtime
-			PlayTimeHelper.updatePlaytime(player);
+			PlayTimeHelper.updatePlaytime(playerUUID);
+			
+			//Get Player response
+			String username = (player != null) ? player.getDisplayName() : args[0];			
 			
 			//Display playtime message
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.PLAYTIME_MESSAGE);
-			msgRaw = msgRaw.replace("%player%", player.getDisplayName());
-			msgRaw = msgRaw.replace("%playtime%", PlayTimeHelper.getPlaytime(player.getUniqueId()));
+			msgRaw = msgRaw.replace("%player%", username);
+			msgRaw = msgRaw.replace("%playtime%", PlayTimeHelper.getPlaytime(playerUUID));
 			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
 			sender.sendMessage(msg);
 		}

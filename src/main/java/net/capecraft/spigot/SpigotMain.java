@@ -1,14 +1,17 @@
 package net.capecraft.spigot;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.capecraft.Main;
+import net.capecraft.spigot.commands.WildCommand;
 import net.capecraft.spigot.commands.server.CreativeCommand;
 import net.capecraft.spigot.commands.server.LobbyCommand;
 import net.capecraft.spigot.commands.server.SurvivalCommand;
+import net.capecraft.spigot.events.AntiCheeseEvent;
 import net.capecraft.spigot.events.messenger.CommandMessage;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -29,7 +32,16 @@ public class SpigotMain extends JavaPlugin {
 	    //Server Commands
 		getCommand("lobby").setExecutor(new LobbyCommand());
 		getCommand("creative").setExecutor(new CreativeCommand());
-		getCommand("survival").setExecutor(new SurvivalCommand());		
+		getCommand("survival").setExecutor(new SurvivalCommand());
+		
+		//Individual Server Commands
+		if(Bukkit.getServer().getName().equalsIgnoreCase(Main.Servers.SURVIVAL)) {
+			//Commands
+			getCommand("wild").setExecutor(new WildCommand());
+			
+			//Event Listeners		
+			getServer().getPluginManager().registerEvents(new AntiCheeseEvent(), this);
+		}
 	}
 	
     /*

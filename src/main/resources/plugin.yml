@@ -10,4 +10,7 @@ commands:
   survival:
     description: Teleports to survival
   creative:
-    description: Teleports to creative   
+    description: Teleports to creative
+  wild:
+    alias: rtp
+    description: Teleports player to a random location

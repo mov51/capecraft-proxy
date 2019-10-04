@@ -27,9 +27,29 @@ public class MojangAPIHelper {
 			return player.getUniqueId();
 		}
 
-		String uuid = getApiData(username);
+		String uuid = getApiData(username).get("id").getAsString();
 		if(uuid != null) {			
 			return UUID.fromString(uuid.substring(0, 8) + "-" + uuid.substring(8, 12) + "-" + uuid.substring(12, 16) + "-" + uuid.substring(16, 20) + "-" + uuid.substring(20, 32));
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns player username
+	 * @param uuid Players uuid
+	 * @return Players username
+	 */
+	public static String getUsername(UUID uuid) {
+		//Try get online player first
+		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
+		if(player != null) {			
+			return player.getName();
+		}
+		
+		String username = getApiData(uuid.toString().replace("-", "")).get("name").getAsString();
+		if(username != null) {
+			return username;
 		}
 		
 		return null;
@@ -40,10 +60,10 @@ public class MojangAPIHelper {
 	 * @param username
 	 * @return
 	 */
-	private static String getApiData(String username) {
+	private static JsonObject getApiData(String data) {
 		try {
 			//Url for request
-			String url = "https://api.mojang.com/users/profiles/minecraft/" + username;
+			String url = "https://api.minetools.eu/uuid/" + data;
 			
 			//Create connection
 			URL obj = new URL(url);
@@ -69,7 +89,7 @@ public class MojangAPIHelper {
 	
 			//Return UUID
 		    JsonObject uuidJsonObj = uuidJsonEle.getAsJsonObject();
-		    return uuidJsonObj.get("id").getAsString();
+		    return uuidJsonObj;
 		} catch (Exception e) {			
 			e.printStackTrace();
 			return null;

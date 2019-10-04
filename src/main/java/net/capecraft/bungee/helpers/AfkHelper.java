@@ -2,6 +2,7 @@ package net.capecraft.bungee.helpers;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import me.lucko.luckperms.api.User;
@@ -81,7 +82,7 @@ public class AfkHelper {
 	}
 	
 	/**
-	 * Check if player is in the AFK list
+	 * Check if player is in the AFK list by proxied player
 	 * @param player Player to check
 	 * @return is player in list
 	 */
@@ -94,6 +95,24 @@ public class AfkHelper {
 	}
 	
 	/**
+	 * Check if player is in the AFK list by uuid
+	 * @param player Player to check
+	 * @return is player in list
+	 */
+	public static boolean isAfk(UUID uuid) {
+		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
+		if(player == null) {
+			return false;
+		} else {
+			String serverName = player.getServer().getInfo().getName();
+			if(!isValidServerName(serverName)) {
+				return false;
+			}		
+			return getQueueList(serverName).contains(player);
+		}
+	}	
+	
+	/**
 	 * Adds a player to the AFK list
 	 * @param player ProxiedPlayer to add
 	 */
@@ -104,7 +123,7 @@ public class AfkHelper {
 		}
 		
 		//Do a playtime update to prevent people gaining AFK playtime		
-		PlayTimeHelper.updatePlaytime(player);
+		PlayTimeHelper.updatePlaytime(player.getUniqueId());
 		
 		//Send config message
 		Configuration pluginConfig = PluginConfig.getPluginConfig();
@@ -129,7 +148,7 @@ public class AfkHelper {
 		}
 		
 		//Do a playtime update to prevent people gaining AFK playtime
-		PlayTimeHelper.updatePlaytime(player);
+		PlayTimeHelper.updatePlaytime(player.getUniqueId());
 		
 		//Send config message
 		Configuration pluginConfig = PluginConfig.getPluginConfig();

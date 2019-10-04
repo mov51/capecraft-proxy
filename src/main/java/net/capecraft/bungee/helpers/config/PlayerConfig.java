@@ -62,7 +62,7 @@ public class PlayerConfig {
 	 * @param uuid The player uuid
 	 * @return Config exists
 	 */
-	public static boolean doesConfigExist(UUID uuid) {
+	public static boolean doesConfigExistElseCreate(UUID uuid) {
 		File playerFile = new File(memberFolder, uuid.toString() + ".yml");		
 		if(!playerFile.exists()) {
 			try (InputStream in = plugin.getResourceAsStream(Main.Configs.PLAYER_CONFIG)) {
@@ -74,6 +74,16 @@ public class PlayerConfig {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Checks if the player config exists.
+	 * @param uuid The player uuid
+	 * @return Config exists
+	 */
+	public static boolean doesConfigExist(UUID uuid) {
+		File playerFile = new File(memberFolder, uuid.toString() + ".yml");		
+		return playerFile.exists();
 	}
 	
 	/**

@@ -21,16 +21,19 @@ public class PlayTimeHelper {
 	 * @param uuid Player uuid
 	 * @param playerConfig Player config
 	 */
-	public static void updatePlaytime(ProxiedPlayer player) {
+	public static void updatePlaytime(UUID playerUUID) {
+		if(!PlayerConfig.doesConfigExist(playerUUID)) 
+			return;
+		
 		//Player config
-		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
+		Configuration playerConfig = PlayerConfig.getPlayerConfig(playerUUID);
 		
 		//Check if player is AFK and prevent playtime updates
-		if(AfkHelper.isAfk(player)) {
+		if(AfkHelper.isAfk(playerUUID)) {
 			playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
-			PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
+			PlayerConfig.saveConfig(playerUUID, playerConfig);
 			return;
-		}
+		}		
 		
 		//Playtime in minutes
 		int playTimeMin = playerConfig.getInt(Main.PlayerConfigs.PLAY_TIME);
@@ -44,10 +47,10 @@ public class PlayTimeHelper {
 
 		playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
 		playerConfig.set(Main.PlayerConfigs.PLAY_TIME, playTimeMin);
-		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
+		PlayerConfig.saveConfig(playerUUID, playerConfig);
 		
 		//Rankup the player if applicable
-		checkPlayerRank(ProxyServer.getInstance().getPlayer(player.getUniqueId()));
+		checkPlayerRank(playerUUID);
 	} 
 	
 	/**
@@ -56,6 +59,10 @@ public class PlayTimeHelper {
 	 * @return Players playtime
 	 */
 	public static String getPlaytime(UUID uuid) {
+		//Check config
+		if(!PlayerConfig.doesConfigExist(uuid))
+			return "no";
+		
 		//Player config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(uuid);
 		
@@ -69,7 +76,12 @@ public class PlayTimeHelper {
 	 * Check the players rank to his playtime
 	 * @param player The Player object
 	 */
-	public static void checkPlayerRank(ProxiedPlayer player) {		
+	public static void checkPlayerRank(UUID playerUUID) {
+		//Convert UUID to ProxiedPlayer, return if null
+		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(playerUUID);
+		if(player == null)
+			return;		
+		
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
 		int playTimeMin = playerConfig.getInt(Main.PlayerConfigs.PLAY_TIME);		
 		

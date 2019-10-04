@@ -26,7 +26,7 @@ public class PlaytimeEventHandler implements Listener {
 		ProxiedPlayer player = event.getPlayer();
 		
 		//If player config doesn't exist, show first join message
-		if(!PlayerConfig.doesConfigExist(player.getUniqueId())) {
+		if(!PlayerConfig.doesConfigExistElseCreate(player.getUniqueId())) {
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.FIRST_JOIN_MESSAGE);
 			msgRaw = msgRaw.replace("%player%", player.getDisplayName());			
 			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
@@ -41,7 +41,7 @@ public class PlaytimeEventHandler implements Listener {
 		playerConfig.set(Main.PlayerConfigs.IS_AFK, false);
 		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
 		
-		PlayTimeHelper.checkPlayerRank(player);
+		PlayTimeHelper.checkPlayerRank(player.getUniqueId());
 	}
 	
 	/*
@@ -50,6 +50,6 @@ public class PlaytimeEventHandler implements Listener {
 	@EventHandler
 	public void onLeave(PlayerDisconnectEvent event) {
 		ProxiedPlayer player = event.getPlayer();
-		PlayTimeHelper.updatePlaytime(player);
+		PlayTimeHelper.updatePlaytime(player.getUniqueId());
 	}
 }
