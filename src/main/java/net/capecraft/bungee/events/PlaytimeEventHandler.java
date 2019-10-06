@@ -10,8 +10,8 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
+import net.md_5.bungee.api.event.ServerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
@@ -48,7 +48,7 @@ public class PlaytimeEventHandler implements Listener {
 	 * Runs when a players leaves and updates playtime
 	 */
 	@EventHandler
-	public void onLeave(PlayerDisconnectEvent event) {
+	public void onLeave(ServerDisconnectEvent event) {
 		ProxiedPlayer player = event.getPlayer();
 		PlayTimeHelper.updatePlaytime(player.getUniqueId());
 	}

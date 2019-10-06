@@ -10,7 +10,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
 
@@ -28,7 +27,7 @@ public class PlayTimeHelper {
 		//Player config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(playerUUID);
 		
-		//Check if player is AFK and prevent playtime updates
+		//Check if player is AFK and prevent playtime updates				
 		if(AfkHelper.isAfk(playerUUID)) {
 			playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
 			PlayerConfig.saveConfig(playerUUID, playerConfig);
@@ -79,7 +78,7 @@ public class PlayTimeHelper {
 	public static void checkPlayerRank(UUID playerUUID) {
 		//Convert UUID to ProxiedPlayer, return if null
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(playerUUID);
-		if(player == null)
+		if(player == null || player.hasPermission(Main.Groups.ALT))
 			return;		
 		
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
@@ -87,32 +86,32 @@ public class PlayTimeHelper {
 		
 		//25 hours regular
 		if(playTimeMin >= 1500 && !player.hasPermission(Main.Groups.REGULAR)) {
-			rankupPlayer(player, Main.Groups.DEFAULT, Main.Groups.REGULAR, "§7§lREGULAR");					
+			rankupPlayer(player, Main.Groups.DEFAULT, Main.Groups.REGULAR, new ComponentBuilder("REGULAR").bold(true).color(ChatColor.GRAY));					
 		}
 
 		//100 hours player
 		if(playTimeMin >= 6000 && !player.hasPermission(Main.Groups.PLAYER)) {
-			rankupPlayer(player, Main.Groups.REGULAR, Main.Groups.PLAYER, "§f§lPLAYER");			
+			rankupPlayer(player, Main.Groups.REGULAR, Main.Groups.PLAYER, new ComponentBuilder("PLAYER").bold(true).color(ChatColor.WHITE));			
 		}
 
 		//200 hours member
 		if(playTimeMin >= 12000 && !player.hasPermission(Main.Groups.MEMBER)) {
-			rankupPlayer(player, Main.Groups.PLAYER, Main.Groups.MEMBER, "§c§lMEMBER");			
+			rankupPlayer(player, Main.Groups.PLAYER, Main.Groups.MEMBER, new ComponentBuilder("MEMBER").bold(true).color(ChatColor.RED));			
 		}
 
 		//350hr elder
 		if(playTimeMin >= 21000 && !player.hasPermission(Main.Groups.ELDER)) {
-			rankupPlayer(player, Main.Groups.MEMBER, Main.Groups.ELDER, "§c§lMEMBER");
+			rankupPlayer(player, Main.Groups.MEMBER, Main.Groups.ELDER, new ComponentBuilder("ELDER").bold(true).color(ChatColor.DARK_RED));
 		}
 		
 		//700h Veteran
 		if(playTimeMin >= 42000 && !player.hasPermission(Main.Groups.VETERAN)) {
-			rankupPlayer(player, Main.Groups.ELDER, Main.Groups.VETERAN, "§5§lVETERAN");
+			rankupPlayer(player, Main.Groups.ELDER, Main.Groups.VETERAN, new ComponentBuilder("VETERAN").bold(true).color(ChatColor.DARK_PURPLE));
 		}
 
 		//1000h Legend
 		if(playTimeMin >= 60000 && !player.hasPermission(Main.Groups.LEGEND)) {
-			rankupPlayer(player, Main.Groups.VETERAN, Main.Groups.LEGEND, "§e§lLEGEND");
+			rankupPlayer(player, Main.Groups.VETERAN, Main.Groups.LEGEND, new ComponentBuilder("LEGEND").bold(true).color(ChatColor.YELLOW));
 		}
 	}
 	
@@ -121,9 +120,9 @@ public class PlayTimeHelper {
 	 * @param player ProxiedPlayer instance
 	 * @param oldGroup The old group eg group.member
 	 * @param newGroup The new group eg group.legend
-	 * @param rankText The rankup message!
+	 * @param componentBuilder The rankup message!
 	 */
-	private static void rankupPlayer(ProxiedPlayer player, String oldGroup, String newGroup, String rankText) {
+	private static void rankupPlayer(ProxiedPlayer player, String oldGroup, String newGroup, ComponentBuilder componentBuilder) {
 		User luckPermsUser = LuckPermsHelper.getUser(player.getUniqueId());
 		LuckPermsHelper.addPermission(luckPermsUser, newGroup);
 		LuckPermsHelper.removePermission(luckPermsUser, oldGroup);
@@ -131,7 +130,7 @@ public class PlayTimeHelper {
 		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX)
 				.append(player.getDisplayName()).color(ChatColor.GOLD)
 				.append(" Has just earned the ").reset()
-				.append(TextComponent.fromLegacyText(rankText, ChatColor.WHITE))
+				.append(componentBuilder.create())
 				.append(" rank!").reset().create();
 		ProxyServer.getInstance().broadcast(msg);
 	}

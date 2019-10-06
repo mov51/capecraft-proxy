@@ -23,6 +23,7 @@ import net.capecraft.bungee.events.PlaytimeEventHandler;
 import net.capecraft.bungee.events.ServerQueueEventHandler;
 import net.capecraft.bungee.events.messaging.CommandMessage;
 import net.capecraft.bungee.helpers.AfkHelper;
+import net.capecraft.bungee.helpers.PlayTimeHelper;
 import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
@@ -89,7 +90,12 @@ public class BungeeMain extends Plugin {
     }
     
     @Override
-    public void onDisable() {
+    public void onDisable() { 
+    	//Save all playtime
+    	getProxy().getPlayers().forEach(player -> {
+    		PlayTimeHelper.updatePlaytime(player.getUniqueId());
+    	});
+    	
     	//Unloaded Log
     	getLogger().log(Level.INFO, "Unloaded");
     }

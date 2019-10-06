@@ -75,6 +75,7 @@ public class ServerQueueHelper {
 						BaseComponent[] disconnectBroadcast = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK_BROADCAST));
 						//Make sure there are players in AFK Queue
 						ProxiedPlayer afkPlayer = AfkHelper.getNextPlayer(serverName);
+						System.out.println(afkPlayer);
 						if(afkPlayer != null) {
 							afkPlayer.disconnect(disconnectMsg);
 							//Broadcast to players in that server
@@ -85,14 +86,19 @@ public class ServerQueueHelper {
 					}
 					
 					//Gets the next queued player
-					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);					
+					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);
+					
+					//Send queue message
+					sendQueueMessages(serverName);					
+					
+					//Check player is not an alt
+					if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
+						return;
+					}
 					
 					//Send player to server
 					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
-					queuedPlayer.connect(serverInfo);										
-					
-					//Send queue message
-					sendQueueMessages(serverName);
+					queuedPlayer.connect(serverInfo);													
 					
 					//Increase online variable
 					playersOnline++;
@@ -103,7 +109,7 @@ public class ServerQueueHelper {
 
 	/**
 	 * Gets all players in queue to send messages to
-	 * @param serverName Server Name to send sueue message for
+	 * @param serverName Server Name to send queue message for
 	 */
 	private static void sendQueueMessages(String serverName) {
 		//The starting queue pos
@@ -139,7 +145,7 @@ public class ServerQueueHelper {
 	}
 	
 	/**
-	 * Gets the first player in the queue and then removed them. Returns proxiedplayer to be handled
+	 * Gets the first player in the queue and then removed them. Returns proxied player to be handled
 	 * @param serverName The server name
 	 * @return The ProxiedPlayer object
 	 */

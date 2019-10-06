@@ -61,7 +61,7 @@ public class AfkHelper {
 	 * @param serverName The server name
 	 * @return The Servers AFK Queue
 	 */
-	private static Queue<ProxiedPlayer> getQueueList(String serverName) {
+	private static Queue<ProxiedPlayer> getQueueList(String serverName) {			
 		if(serverName.equalsIgnoreCase(Main.Servers.SURVIVAL)) {
 			return afkSurvivalQueueList;
 		} else if(serverName.equalsIgnoreCase(Main.Servers.CREATIVE)) {
@@ -76,8 +76,12 @@ public class AfkHelper {
 	 */
 	public static ProxiedPlayer getNextPlayer(String serverName) {
 		if(!isValidServerName(serverName)) {
+			System.out.println(serverName + " invalid!");
 			return null;
 		}
+		
+		System.out.println("Getting next ALT/AFK from " + serverName);
+		
 		return getQueueList(serverName).poll();
 	}
 	
@@ -99,15 +103,19 @@ public class AfkHelper {
 	 * @param player Player to check
 	 * @return is player in list
 	 */
-	public static boolean isAfk(UUID uuid) {
+	public static boolean isAfk(UUID uuid) {		
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
 		if(player == null) {
 			return false;
 		} else {
-			String serverName = player.getServer().getInfo().getName();
+			if(player.getServer() == null) {
+				return false;
+			}
+			
+			String serverName = player.getServer().getInfo().getName();		
 			if(!isValidServerName(serverName)) {
 				return false;
-			}		
+			}				
 			return getQueueList(serverName).contains(player);
 		}
 	}	
@@ -128,7 +136,7 @@ public class AfkHelper {
 		//Send config message
 		Configuration pluginConfig = PluginConfig.getPluginConfig();
 		player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.AFK_MESSAGE))).reset().create());
-		
+	
 		//Add afk permission
 		User user = LuckPermsHelper.getUser(player.getUniqueId());
 		LuckPermsHelper.addPermission(user, "essentials.afk.kickexempt");
@@ -160,6 +168,8 @@ public class AfkHelper {
 		
 		//Remove from queue
 		getQueueList(serverName).remove(player);
+		
+		System.out.println("Removing " + player.getName() + " from " + serverName + " queue");
 	}
 
 	/**
@@ -168,10 +178,10 @@ public class AfkHelper {
 	 */
 	public static void addAltPlayer(ProxiedPlayer player, Server server) {		
 		String serverName = server.getInfo().getName();
-		if(!isValidServerName(serverName)) {
-			return;
-		}
-		getQueueList(serverName).add(player);		
+		if(isValidServerName(serverName)) {
+			System.out.println("Adding " + player.getName() + " to " + serverName + " alt list!");
+			getQueueList(serverName).add(player);
+		}			
 	}
 
 	/**
@@ -179,6 +189,7 @@ public class AfkHelper {
 	 * @param player Player to remove
 	 */
 	public static void purgePlayer(ProxiedPlayer player) {
+		System.out.println("Purging " + player.getName());
 		afkCreativeQueueList.remove(player);
 		afkSurvivalQueueList.remove(player);
 	}

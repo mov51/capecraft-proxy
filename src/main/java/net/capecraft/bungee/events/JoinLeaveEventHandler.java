@@ -19,6 +19,7 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
+import net.md_5.bungee.api.event.ServerKickEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
@@ -75,6 +76,14 @@ public class JoinLeaveEventHandler implements Listener {
 		//Gets msg from config and sends join/leave message
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.LEAVE_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
+	}
+	
+	@EventHandler
+	public void onServerKick(ServerKickEvent event) {
+		if(event.getState() == ServerKickEvent.State.CONNECTING) {
+			event.setCancelServer(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
+			event.setCancelled(true);
+		}
 	}
 	
 	/**
