@@ -76,11 +76,8 @@ public class AfkHelper {
 	 */
 	public static ProxiedPlayer getNextPlayer(String serverName) {
 		if(!isValidServerName(serverName)) {
-			System.out.println(serverName + " invalid!");
 			return null;
 		}
-		
-		System.out.println("Getting next ALT/AFK from " + serverName);
 		
 		return getQueueList(serverName).poll();
 	}
@@ -168,8 +165,6 @@ public class AfkHelper {
 		
 		//Remove from queue
 		getQueueList(serverName).remove(player);
-		
-		System.out.println("Removing " + player.getName() + " from " + serverName + " queue");
 	}
 
 	/**
@@ -179,7 +174,6 @@ public class AfkHelper {
 	public static void addAltPlayer(ProxiedPlayer player, Server server) {		
 		String serverName = server.getInfo().getName();
 		if(isValidServerName(serverName)) {
-			System.out.println("Adding " + player.getName() + " to " + serverName + " alt list!");
 			getQueueList(serverName).add(player);
 		}			
 	}
@@ -189,7 +183,6 @@ public class AfkHelper {
 	 * @param player Player to remove
 	 */
 	public static void purgePlayer(ProxiedPlayer player) {
-		System.out.println("Purging " + player.getName());
 		afkCreativeQueueList.remove(player);
 		afkSurvivalQueueList.remove(player);
 	}

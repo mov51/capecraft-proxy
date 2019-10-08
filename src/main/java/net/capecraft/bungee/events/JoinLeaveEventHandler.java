@@ -29,6 +29,10 @@ public class JoinLeaveEventHandler implements Listener {
 	//Gets version msg and supported protocols from config
 	private String getVersionMsg = PluginConfig.getPluginConfig().getString(PluginConfig.VERSIONS_NAME);	
 	
+	/**
+	 * Called when a player pings the proxy
+	 * @param event ProxyPingEvent
+	 */
 	@EventHandler
 	public void onPingEvent(ProxyPingEvent event) {
 		//Get connecting clients protocol version
@@ -41,6 +45,10 @@ public class JoinLeaveEventHandler implements Listener {
 		event.setResponse(response);
 	}
 	
+	/**
+	 * Called when a player initiates a connection to the proxy
+	 * @param event PreLoginEvent
+	 */
 	@EventHandler
 	public void onPreJoinEvent(PreLoginEvent event) {
 		//Get connecting clients protocol version
@@ -53,6 +61,10 @@ public class JoinLeaveEventHandler implements Listener {
 		}
 	}
 	
+	/**
+	 * Called when the player login to the player is initialised
+	 * @param event LoginEvent
+	 */
 	@EventHandler
 	public void onLoginEvent(LoginEvent event) {
 		//Checks whitelist isn't on		
@@ -60,17 +72,29 @@ public class JoinLeaveEventHandler implements Listener {
 			ProxyServer.getInstance().getConsole().sendMessage(new ComponentBuilder(event.getConnection().getName()).color(ChatColor.YELLOW).append(" Kicked due to whitelist").create());
 			Configuration config = PluginConfig.getPluginConfig();
 			event.getConnection().disconnect(TextComponent.fromLegacyText(config.getString(PluginConfig.WHITELIST_MESSAGE)));			
-		}
+		}		
 	}
 	
+	/**
+	 * Called when the player has logged into the proxy and a connection is ready
+	 * @param event PostLoginEvent
+	 */
 	@EventHandler
 	public void onJoinEvent(PostLoginEvent event) {		
 		//Gets msg from config and sends join/leave message		
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.JOIN_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
 		sendMotd(event.getPlayer());
+		
+		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
+			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
+		}
 	}
 	
+	/**
+	 * Called when a player disconnect/is disconnected from the proxy
+	 * @param event PlayerDisconnectEvent
+	 */
 	@EventHandler
 	public void onLeaveEvent(PlayerDisconnectEvent event) {
 		//Gets msg from config and sends join/leave message
@@ -78,6 +102,10 @@ public class JoinLeaveEventHandler implements Listener {
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
 	}
 	
+	/**
+	 * Called when a player is kicked from a server
+	 * @param event ServerKickEvent
+	 */
 	@EventHandler
 	public void onServerKick(ServerKickEvent event) {
 		if(event.getState() == ServerKickEvent.State.CONNECTING) {

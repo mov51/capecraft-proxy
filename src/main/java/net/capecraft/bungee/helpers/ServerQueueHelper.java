@@ -30,7 +30,7 @@ public class ServerQueueHelper {
 		ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
 			@Override
 			public void run() {				
-				ServerQueueHelper.checkServerSlots();	
+				//ServerQueueHelper.checkServerSlots();	
 			}        	
         }, 0, 2, TimeUnit.SECONDS);   
 	}
@@ -47,7 +47,10 @@ public class ServerQueueHelper {
 	 * Polls the server, checks the payer count and connects them to the server
 	 * @param serverName Server name to poll
 	 */
-	private static void pollServer(String serverName) {
+	public static void pollServer(String serverName) {
+		
+		System.out.println("Doing a server poll of " + serverName);
+		
 		//Check server has queued players
 		if(getQueueSize(serverName) < 0) {
 			return;
@@ -66,13 +69,16 @@ public class ServerQueueHelper {
 				int playersOnline = result.getPlayers().getOnline();
 				int playersMax = result.getPlayers().getMax();
 				
+				System.out.println("Players: " + playersOnline + "/" + playersMax);
+				
 				while(getQueueSize(serverName) > 0) {
 					
 					//Gets the next queued player
 					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);
 					
 					//Check if server is full
-					if(playersOnline >= (playersMax - 1)) {
+					if(playersOnline >= playersMax) {
+						System.out.println("Server is full");
 						
 						//If player is alt kick them
 						if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
@@ -103,12 +109,16 @@ public class ServerQueueHelper {
 							//Send queue message
 							sendQueueMessages(serverName);
 							
+							System.out.println("Server is full, AFK kicked");
+							
+							return;
+						} else {
+							System.out.println("Server is full, No afk");
 							return;
 						}
-					}			
+					}														
 					
-					//Send queue message
-					sendQueueMessages(serverName);										
+					System.out.println("Server has space telkeporting....");
 					
 					//Send player to server
 					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
@@ -118,7 +128,10 @@ public class ServerQueueHelper {
 					removePlayer(queuedPlayer.getUniqueId());
 					
 					//Increase online variable
-					playersOnline++;				
+					playersOnline++;
+										
+					//Send queue message
+					sendQueueMessages(serverName);		
 				}
 			}			
 		});
@@ -169,11 +182,9 @@ public class ServerQueueHelper {
 	private static ProxiedPlayer getNextPlayer(String serverName) {
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			UUID uuid = survivalQueue.get(0);
-			survivalQueue.remove(uuid);
 			return ProxyServer.getInstance().getPlayer(uuid);
 		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			UUID uuid = creativeQueue.get(0);
-			creativeQueue.remove(uuid);
 			return ProxyServer.getInstance().getPlayer(uuid);
 		} else {
 			return null;
@@ -211,7 +222,7 @@ public class ServerQueueHelper {
 		}
 
 		//Generate queue message
-		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName));			
+		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName) + 1);			
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_MESSAGE);
 		msgRaw = msgRaw.replace("%place%", queuePos);
 		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			
@@ -222,6 +233,8 @@ public class ServerQueueHelper {
 		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			creativeQueue.add(player.getUniqueId());
 		}
+		
+		pollServer(serverName);
 	}
 	
 	/**

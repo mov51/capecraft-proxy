@@ -22,7 +22,7 @@ altAfk: "Your an alt! You are already AFK silly!"
 noAfk: "Oops, you can't AFK Here!"
 failAfk: "You cant AFK! If you think this is an error contact a staff member!"
 fullAfk: "You cant AFK! The server is too full!"
-afkActionBar: "§c§lYou're AFK! §a§lYou don't gain playtime while AFK §b§l:'( §a§lUse /afk to play normally!"
+afkActionBar: "You're AFK! You don't gain playtime while AFK :( Use /afk to play normally!"
 
 kickAfk: "The server is full!\nWe've had to disconnect your account to make place for real players"
 kickAfkBroadcast: "An inactive player has been removed from the playing field to make space! Feel safe in your active minds!"
