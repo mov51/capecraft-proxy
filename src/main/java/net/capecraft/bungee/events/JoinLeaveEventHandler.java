@@ -72,7 +72,7 @@ public class JoinLeaveEventHandler implements Listener {
 			ProxyServer.getInstance().getConsole().sendMessage(new ComponentBuilder(event.getConnection().getName()).color(ChatColor.YELLOW).append(" Kicked due to whitelist").create());
 			Configuration config = PluginConfig.getPluginConfig();
 			event.getConnection().disconnect(TextComponent.fromLegacyText(config.getString(PluginConfig.WHITELIST_MESSAGE)));			
-		}		
+		}
 	}
 	
 	/**
@@ -87,6 +87,7 @@ public class JoinLeaveEventHandler implements Listener {
 		sendMotd(event.getPlayer());
 		
 		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
+			System.out.println("Player has ALT Perms");
 			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
 		}
 	}
