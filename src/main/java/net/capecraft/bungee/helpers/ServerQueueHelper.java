@@ -68,40 +68,57 @@ public class ServerQueueHelper {
 				
 				while(getQueueSize(serverName) > 0) {
 					
-					//Check if server is capped
+					//Gets the next queued player
+					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);
+					
+					//Check if server is full
 					if(playersOnline >= (playersMax - 1)) {
-						//Get messages
-						BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK));
-						BaseComponent[] disconnectBroadcast = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK_BROADCAST));
-						//Make sure there are players in AFK Queue
+						
+						//If player is alt kick them
+						if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
+							//Send disconnection messages
+							BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.FULL_AFK));
+							queuedPlayer.sendMessage(disconnectMsg);
+							
+							//Remove player from queue
+							removePlayer(queuedPlayer.getUniqueId());
+							
+							//Send queue message							
+							sendQueueMessages(serverName);
+							return;
+						}						
+						
+						//Make sure there are players in AFK the server server
 						ProxiedPlayer afkPlayer = AfkHelper.getNextPlayer(serverName);
-						System.out.println(afkPlayer);
 						if(afkPlayer != null) {
+							//Get messages
+							BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK));
+							BaseComponent[] disconnectBroadcast = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK_BROADCAST));
 							afkPlayer.disconnect(disconnectMsg);
 							//Broadcast to players in that server
 							for(ProxiedPlayer players : ProxyServer.getInstance().getServerInfo(serverName).getPlayers()) {
 								players.sendMessage(new ComponentBuilder(Main.PREFIX).append(disconnectBroadcast).reset().create());
 						    }
-						}						
-					}
-					
-					//Gets the next queued player
-					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);
+							
+							//Send queue message
+							sendQueueMessages(serverName);
+							
+							return;
+						}
+					}			
 					
 					//Send queue message
-					sendQueueMessages(serverName);					
-					
-					//Check player is not an alt
-					if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
-						return;
-					}
+					sendQueueMessages(serverName);										
 					
 					//Send player to server
 					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
-					queuedPlayer.connect(serverInfo);													
+					queuedPlayer.connect(serverInfo);
+					
+					//Removes that player
+					removePlayer(queuedPlayer.getUniqueId());
 					
 					//Increase online variable
-					playersOnline++;
+					playersOnline++;				
 				}
 			}			
 		});
