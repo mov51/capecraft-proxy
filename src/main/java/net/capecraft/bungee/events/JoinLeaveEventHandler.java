@@ -100,9 +100,9 @@ public class JoinLeaveEventHandler implements Listener {
 	 * When a player joins check the queue is empty before connecting directly to the server
 	 * @param event ServerConnectEvent
 	 */
+	@EventHandler
 	public void onServerConnect(ServerConnectEvent event) {
 		if(event.getReason() == Reason.JOIN_PROXY) {
-			System.out.println(event.getPlayer().getName() + " is trying to join " + event.getTarget().getName());
 			if(ServerQueueHelper.getQueueSize(event.getTarget().getName()) != 0) {
 				event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
 			}
