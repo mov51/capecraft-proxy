@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import net.capecraft.Main;
 import net.capecraft.bungee.BungeeMain;
+import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.WhitelistHelper;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.ChatColor;
@@ -19,7 +20,10 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
+import net.md_5.bungee.api.event.ServerConnectEvent;
+import net.md_5.bungee.api.event.ServerConnectEvent.Reason;
 import net.md_5.bungee.api.event.ServerKickEvent;
+import net.md_5.bungee.api.event.ServerKickEvent.State;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
@@ -90,11 +94,19 @@ public class JoinLeaveEventHandler implements Listener {
 		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
 			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
 		}
+	}
 
-		//If server has a queue move them to the lobby
-//	if(ServerQueueHelper.getQueueSize(event.getPlayer().getServer().getInfo().getName()) != 0) {
-//			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
-//		}
+	/**
+	 * When a player joins check the queue is empty before connecting directly to the server
+	 * @param event ServerConnectEvent
+	 */
+	public void onServerConnect(ServerConnectEvent event) {
+		if(event.getReason() == Reason.JOIN_PROXY) {
+			System.out.println(event.getPlayer().getName() + " is trying to join " + event.getTarget().getName());
+			if(ServerQueueHelper.getQueueSize(event.getTarget().getName()) != 0) {
+				event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
+			}
+		}
 	}
 
 	/**
@@ -114,7 +126,7 @@ public class JoinLeaveEventHandler implements Listener {
 	 */
 	@EventHandler
 	public void onServerKick(ServerKickEvent event) {
-		if(event.getState() == ServerKickEvent.State.CONNECTING) {
+		if(event.getState() == State.CONNECTING) {
 			event.setCancelServer(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
 			event.setCancelled(true);
 		}
