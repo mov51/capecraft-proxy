@@ -20,18 +20,18 @@ public class CommandMessage implements Listener {
 		if (!event.getTag().equalsIgnoreCase(Main.Channels.CONFIG_CHANNEL)) {
 			return;
 		}
-		
+
 		//Gets data from message
-		ByteArrayDataInput in = ByteStreams.newDataInput(event.getData());    	   
+		ByteArrayDataInput in = ByteStreams.newDataInput(event.getData());
 		String playerUUID = in.readUTF();
 		String commandToRun = in.readUTF();
-		
+
 		//converts uuid to player
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(UUID.fromString(playerUUID));
 		if(player != null) {
 			//If player not null, do command
 			ProxyServer.getInstance().getPluginManager().dispatchCommand(player, commandToRun);
-		}	    
+		}
 	}
 
 }

@@ -16,8 +16,8 @@ import net.capecraft.Main;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class WhitelistConfig {
-	
-	private static File pluginFolder;	
+
+	private static File pluginFolder;
 	private static JsonArray whitelistUsers;
 
 	/**
@@ -30,20 +30,20 @@ public class WhitelistConfig {
 		if(!pluginFolder.exists()) {
 			pluginFolder.mkdir();
         }
-		
+
 		//Copy default config if it doesn't exist
         File whitelistFile = new File(pluginFolder, Main.Configs.WHITELIST_CONFIG);
 		if (!whitelistFile.exists()) {
             try (InputStream in = plugin.getResourceAsStream(Main.Configs.WHITELIST_CONFIG)) {
             	whitelistFile.createNewFile();
             	getWhitelistUsers();
-            	updateWhitelistFile();            	
+            	updateWhitelistFile();
             } catch (Exception e) {
                 e.printStackTrace();
             }
 		}
 	}
-	
+
 	/**
 	 * Loads the whitelisted users into memory
 	 * @return The users
@@ -54,16 +54,16 @@ public class WhitelistConfig {
 				File whitelistFile = new File(pluginFolder, Main.Configs.WHITELIST_CONFIG);
 				String content = Files.toString(whitelistFile, StandardCharsets.US_ASCII);
 				content = (!content.isEmpty()) ? content : new JsonArray().toString();
-			    whitelistUsers = new JsonParser().parse(content).getAsJsonArray();			    
+			    whitelistUsers = new JsonParser().parse(content).getAsJsonArray();
 			} catch (IOException e) {
-				e.printStackTrace();				
+				e.printStackTrace();
 			}
 		} else {
 			return whitelistUsers;
 		}
 		return whitelistUsers;
 	}
-	
+
 	/**
 	 * Add the user to the whitelist
 	 * @param uuid ProxiedPlayer to add
@@ -78,7 +78,7 @@ public class WhitelistConfig {
 				}
 			}
 		}
-		
+
 		//Else adds user to playlist
 		JsonObject user = new JsonObject();
 		user.addProperty("uuid", uuid.toString());
@@ -86,7 +86,7 @@ public class WhitelistConfig {
 		getWhitelistUsers().add(user);
 		updateWhitelistFile();
 	}
-	
+
 	/**
 	 * Removes a player from whitelist
 	 * @param player ProxiedPlayer to remove
@@ -95,14 +95,14 @@ public class WhitelistConfig {
 		//Loops through whitelist looking for player to remove
 		for(int i = 0; i < getWhitelistUsers().size(); i++) {
 			JsonObject user = getWhitelistUsers().get(i).getAsJsonObject();
-			if(user.get("uuid").getAsString().equalsIgnoreCase(uuid.toString())) {				
+			if(user.get("uuid").getAsString().equalsIgnoreCase(uuid.toString())) {
 				getWhitelistUsers().remove(i);
 				updateWhitelistFile();
 				break;
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * Updates the whitelist IO File
 	 */

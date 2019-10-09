@@ -13,7 +13,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 
 public class ComSpyHelper implements Listener {
-	
+
 	//The ComListener List
     private static List<ProxiedPlayer> ComListener = new ArrayList<ProxiedPlayer>();
 
@@ -24,7 +24,7 @@ public class ComSpyHelper implements Listener {
 	public static List<ProxiedPlayer> getListeners() {
 		return ComListener;
 	}
-    
+
     /**
      * Add Player to comspy listener
      * @param player The Player object
@@ -48,9 +48,9 @@ public class ComSpyHelper implements Listener {
     	//Updates config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
 		playerConfig.set(Main.PlayerConfigs.IS_SPYING, false);
-		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);    	
+		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
     }
-    
+
     /**
      * Is player spying on commands
      * @param player ProxiedPlayer object
@@ -59,7 +59,7 @@ public class ComSpyHelper implements Listener {
     public static boolean isPlayerSpying(ProxiedPlayer player) {
     	return ComSpyHelper.ComListener.contains(player);
     }
-    
+
     /**
      * Build the message component
      * @param name Player who initiated the command

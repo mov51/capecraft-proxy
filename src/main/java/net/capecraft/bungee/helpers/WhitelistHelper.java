@@ -14,7 +14,7 @@ public class WhitelistHelper {
 
 	//Variables
 	private static boolean whitelist_Enabled = PluginConfig.getPluginConfig().getBoolean(PluginConfig.WHITELIST);
-	
+
 	/**
 	 * Check if whitelist is enabled
 	 * @return Whether whitelist is on or off
@@ -22,7 +22,7 @@ public class WhitelistHelper {
 	public static boolean isWhitelist() {
 		return whitelist_Enabled;
 	}
-		
+
 	/**
 	 * Sets the whitelist to on our off
 	 * @param bool value of whitelist status
@@ -33,11 +33,11 @@ public class WhitelistHelper {
 		pluginConfig.set(PluginConfig.WHITELIST, value);
 		PluginConfig.saveConfig(pluginConfig);
 	}
-	
+
 	/**
 	 * Check if a player is in the whitelist
 	 * @param player The player to check
-	 * @return 
+	 * @return
 	 * @return The result
 	 */
 	public static boolean inWhitelist(UUID uuid) {
@@ -51,7 +51,7 @@ public class WhitelistHelper {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Adds a player to whitelist
 	 * @param player the player to add
@@ -59,12 +59,12 @@ public class WhitelistHelper {
 	public static void addWhitelist(String username) {
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(username);
 		if(player != null) {
-			WhitelistConfig.addUser(player.getUniqueId(), player.getDisplayName());		
+			WhitelistConfig.addUser(player.getUniqueId(), player.getDisplayName());
 		} else {
 			WhitelistConfig.addUser(MojangAPIHelper.getUUID(username), username);
 		}
 	}
-	
+
 	/**
 	 * Removes a player from the whitelist
 	 * @param player The player to remove
@@ -72,7 +72,7 @@ public class WhitelistHelper {
 	public static void removeWhitelist(String username) {
 		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(username);
 		if(player != null) {
-			WhitelistConfig.removeUser(player.getUniqueId());		
+			WhitelistConfig.removeUser(player.getUniqueId());
 		} else {
 			WhitelistConfig.removeUser(MojangAPIHelper.getUUID(username));
 		}

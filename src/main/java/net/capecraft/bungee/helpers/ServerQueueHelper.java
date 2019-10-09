@@ -19,43 +19,40 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ServerQueueHelper {
-		
+
 	private static List<UUID> survivalQueue = new ArrayList<UUID>();
 	private static List<UUID> creativeQueue = new ArrayList<UUID>();
-	
+
 	/**
 	 * Schedule the server ping
 	 */
 	public static void scheduleServerPing() {
 		ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
 			@Override
-			public void run() {				
-				//ServerQueueHelper.checkServerSlots();	
-			}        	
-        }, 0, 2, TimeUnit.SECONDS);   
+			public void run() {
+				//ServerQueueHelper.checkServerSlots();
+			}
+        }, 0, 2, TimeUnit.SECONDS);
 	}
-	
+
 	/**
 	 * The first method calls by the task schedule
 	 */
-	public static void checkServerSlots() {		
+	public static void checkServerSlots() {
 		pollServer(Main.Servers.SURVIVAL);
 		pollServer(Main.Servers.CREATIVE);
 	}
-	
+
 	/**
 	 * Polls the server, checks the payer count and connects them to the server
 	 * @param serverName Server name to poll
 	 */
 	public static void pollServer(String serverName) {
-		
-		System.out.println("Doing a server poll of " + serverName);
-		
 		//Check server has queued players
 		if(getQueueSize(serverName) < 0) {
 			return;
 		}
-		
+
 		//Starts a server ping to serverName
 		ProxyServer.getInstance().getServerInfo(serverName).ping(new Callback<ServerPing>() {
 			@Override
@@ -64,36 +61,32 @@ public class ServerQueueHelper {
 				if(error != null) {
 					return;
 				}
-				
+
 				//Sets dynamic variables
 				int playersOnline = result.getPlayers().getOnline();
 				int playersMax = result.getPlayers().getMax();
-				
-				System.out.println("Players: " + playersOnline + "/" + playersMax);
-				
+
 				while(getQueueSize(serverName) > 0) {
-					
+
 					//Gets the next queued player
 					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);
-					
+
 					//Check if server is full
 					if(playersOnline >= playersMax) {
-						System.out.println("Server is full");
-						
 						//If player is alt kick them
 						if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
 							//Send disconnection messages
 							BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.FULL_AFK));
 							queuedPlayer.sendMessage(disconnectMsg);
-							
+
 							//Remove player from queue
 							removePlayer(queuedPlayer.getUniqueId());
-							
-							//Send queue message							
+
+							//Send queue message
 							sendQueueMessages(serverName);
 							return;
-						}						
-						
+						}
+
 						//Make sure there are players in AFK the server server
 						ProxiedPlayer afkPlayer = AfkHelper.getNextPlayer(serverName);
 						if(afkPlayer != null) {
@@ -105,35 +98,30 @@ public class ServerQueueHelper {
 							for(ProxiedPlayer players : ProxyServer.getInstance().getServerInfo(serverName).getPlayers()) {
 								players.sendMessage(new ComponentBuilder(Main.PREFIX).append(disconnectBroadcast).reset().create());
 						    }
-							
+
 							//Send queue message
 							sendQueueMessages(serverName);
-							
-							System.out.println("Server is full, AFK kicked");
-							
+
 							return;
 						} else {
-							System.out.println("Server is full, No afk");
 							return;
 						}
-					}														
-					
-					System.out.println("Server has space telkeporting....");
-					
+					}
+
 					//Send player to server
-					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
+					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);
 					queuedPlayer.connect(serverInfo);
-					
+
 					//Removes that player
 					removePlayer(queuedPlayer.getUniqueId());
-					
+
 					//Increase online variable
 					playersOnline++;
-										
+
 					//Send queue message
-					sendQueueMessages(serverName);		
+					sendQueueMessages(serverName);
 				}
-			}			
+			}
 		});
 	}
 
@@ -144,7 +132,7 @@ public class ServerQueueHelper {
 	private static void sendQueueMessages(String serverName) {
 		//The starting queue pos
 		int queuePlace = 1;
-		
+
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			//Loops through survivalQueue to send messages
 			for(UUID uuid : survivalQueue) {
@@ -153,13 +141,13 @@ public class ServerQueueHelper {
 			}
 		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			//Loops through creative queue to send messages
-			for(UUID uuid : creativeQueue) {		
+			for(UUID uuid : creativeQueue) {
 				sendQueueMessage(uuid, queuePlace);
 				queuePlace++;
-			}	
+			}
 		}
 	}
-	
+
 	/**
 	 * Sends the final queue message
 	 * @param uuid UUID Target
@@ -167,13 +155,13 @@ public class ServerQueueHelper {
 	 */
 	private static void sendQueueMessage(UUID uuid, int pos) {
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_STATUS);
-		msgRaw = msgRaw.replace("%place%", String.valueOf(pos));			
+		msgRaw = msgRaw.replace("%place%", String.valueOf(pos));
 		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX)
 				.append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE))
 				.color(ChatColor.AQUA).create();
 		ProxyServer.getInstance().getPlayer(uuid).sendMessage(msg);
 	}
-	
+
 	/**
 	 * Gets the first player in the queue and then removed them. Returns proxied player to be handled
 	 * @param serverName The server name
@@ -190,12 +178,12 @@ public class ServerQueueHelper {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Gets the servers queue size
 	 * @param serverName The name of the server
 	 */
-	private static int getQueueSize(String serverName) {
+	public static int getQueueSize(String serverName) {
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			return survivalQueue.size();
 		} else if(serverName.equals(Main.Servers.CREATIVE)) {
@@ -203,7 +191,7 @@ public class ServerQueueHelper {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Adds a player to the queue or connects them straight away if they have permissions
 	 * @param serverName The server name to queue
@@ -212,44 +200,44 @@ public class ServerQueueHelper {
 	public static void addPlayer(String serverName, ProxiedPlayer player) {
 		//If player has full join command then make them skip queue
 		if(player.hasPermission(Main.Permissions.FULL_JOIN)) {
-			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);					
+			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);
 			player.connect(serverInfo);
-			
-			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_DONATOR_MESSAGE);			
-			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			
+
+			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_DONATOR_MESSAGE);
+			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
 			player.sendMessage(msg);
 			return;
 		}
 
 		//Generate queue message
-		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName) + 1);			
+		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName) + 1);
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_MESSAGE);
 		msgRaw = msgRaw.replace("%place%", queuePos);
-		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();			
+		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
 		player.sendMessage(msg);
-		
+
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			survivalQueue.add(player.getUniqueId());
 		} else if(serverName.equals(Main.Servers.CREATIVE)) {
 			creativeQueue.add(player.getUniqueId());
 		}
-		
+
 		pollServer(serverName);
 	}
-	
+
 	/**
 	 * Removes a player from the queue and updates other players
 	 * @param uuid The players uuid
 	 */
-	public static void removePlayer(UUID uuid) {		
+	public static void removePlayer(UUID uuid) {
 		int survivalIndex = survivalQueue.indexOf(uuid);
 		survivalQueue.remove(uuid);
 		for(int s = 0; s < survivalQueue.size(); s++) {
 			if(s >= survivalIndex) {
 				sendQueueMessage(survivalQueue.get(s), s+1);
 			}
-		}		
-		
+		}
+
 		int creativeIndex = creativeQueue.indexOf(uuid);
 		creativeQueue.remove(uuid);
 		for(int c = 0; c < survivalQueue.size(); c++) {

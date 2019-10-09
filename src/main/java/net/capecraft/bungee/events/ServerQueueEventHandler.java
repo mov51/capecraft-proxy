@@ -13,7 +13,6 @@ public class ServerQueueEventHandler implements Listener {
 
 	@EventHandler
 	public void onLeaveEvent(ServerDisconnectEvent event) {
-		System.out.println(event.getPlayer().getName() + " has just left " + event.getTarget().getName());
 		//Remove player from queue
 		ServerQueueHelper.removePlayer(event.getPlayer().getUniqueId());
 
@@ -22,8 +21,8 @@ public class ServerQueueEventHandler implements Listener {
 			@Override
 			public void run() {
 				ServerQueueHelper.pollServer(event.getTarget().getName());
-			}        	
-        }, 1, TimeUnit.SECONDS);			
+			}
+        }, 1, TimeUnit.SECONDS);
 	}
-	
+
 }

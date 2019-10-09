@@ -13,7 +13,7 @@ public class PluginCommands extends Command {
 		super("capecraftproxy", Main.Permissions.ADMIN);
 	}
 
-	@Override	
+	@Override
 	public void execute(CommandSender sender, String[] args) {
 		if(args.length == 1 && args[0].toLowerCase().equals("reload")) {
 			PluginConfig.reloadPluginConfig();
@@ -22,5 +22,5 @@ public class PluginCommands extends Command {
 			sender.sendMessage(new ComponentBuilder("Usage: /capecraftproxy [reload]").color(ChatColor.RED).create());
 		}
 	}
-	
+
 }

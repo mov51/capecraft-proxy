@@ -34,24 +34,24 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeMain extends Plugin {
-	
+
 	public static Plugin INSTANCE;
-	
+
     @Override
     public void onEnable() {
     	this.logLogo();
     	getLogger().log(Level.INFO, "Loading CapeCraft Proxy");
-    	
+
     	BungeeMain.INSTANCE = this;
-    	
+
     	//Initialise Configuration Manager
     	PluginConfig.initConfig(this);
     	PlayerConfig.initConfig(this);
     	WhitelistConfig.initConfig(this);
-    	
+
     	//Register Channel
     	getProxy().registerChannel(Main.Channels.CONFIG_CHANNEL);
-    	
+
     	//Load Events
         getProxy().getPluginManager().registerListener(this, new JoinLeaveEventHandler());
         getProxy().getPluginManager().registerListener(this, new PlaytimeEventHandler());
@@ -59,55 +59,55 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerListener(this, new CommandMessage());
         getProxy().getPluginManager().registerListener(this, new ComSpyEventHandler());
         getProxy().getPluginManager().registerListener(this, new AfkEventHandler());
-        
+
         //Play Commands
         getProxy().getPluginManager().registerCommand(this, new AfkCommand());
         getProxy().getPluginManager().registerCommand(this, new PlayTimeCommands());
-        
+
         //Admin Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
         getProxy().getPluginManager().registerCommand(this, new BungeeTeleportCommand());
         getProxy().getPluginManager().registerCommand(this, new WhitelistCommand());
         getProxy().getPluginManager().registerCommand(this, new ComSpyCommand());
-        
+
         //Server Commands
         getProxy().getPluginManager().registerCommand(this, new LobbyCommand());
         getProxy().getPluginManager().registerCommand(this, new CreativeCommand());
         getProxy().getPluginManager().registerCommand(this, new SurvivalCommand());
-        
+
         //Help Commands
         getProxy().getPluginManager().registerCommand(this, new RulesCommand());
         getProxy().getPluginManager().registerCommand(this, new AltRulesCommand());
         getProxy().getPluginManager().registerCommand(this, new AfkRulesCommand());
         getProxy().getPluginManager().registerCommand(this, new CapeCommand());
-        
+
         //Scheduled Events
         ServerQueueHelper.scheduleServerPing();
         AfkHelper.scheduleAfkMessage();
-        
+
         //Loaded Log
         getLogger().log(Level.INFO, "Loaded");
     }
-    
+
     @Override
-    public void onDisable() { 
+    public void onDisable() {
     	//Save all playtime
     	getProxy().getPlayers().forEach(player -> {
     		PlayTimeHelper.updatePlaytime(player.getUniqueId());
     	});
-    	
+
     	//Unloaded Log
     	getLogger().log(Level.INFO, "Unloaded");
     }
-    
+
     /*
-     * Show our pretty logo     
+     * Show our pretty logo
      */
     private void logLogo() {
     	CommandSender sender = getProxy().getConsole();
     	String lime = ChatColor.COLOR_CHAR + "a";
     	String aqua = ChatColor.COLOR_CHAR + "b";
-    	
+
     	sender.sendMessage(TextComponent.fromLegacyText(lime + " _____                  _____            __ _   "));
     	sender.sendMessage(TextComponent.fromLegacyText(lime + "/  __ \\                /  __ \\          / _| |  "));
     	sender.sendMessage(TextComponent.fromLegacyText(lime + "| /  \\/ __ _ _ __   ___| /  \\/_ __ __ _| |_| |_ "));

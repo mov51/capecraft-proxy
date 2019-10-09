@@ -18,5 +18,5 @@ public class CreativeCommand extends Command {
 			ServerQueueHelper.addPlayer(Main.Servers.CREATIVE, (ProxiedPlayer) sender);
 		}
 	}
-	
+
 }

@@ -32,7 +32,7 @@ public class WhitelistCommand extends Command implements TabExecutor {
 			WhitelistHelper.setWhitelist(false);
 			sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("Whitelist off").reset().create());
 		//Add player to whitelist
-		} else if(args.length == 2 && args[0].toLowerCase().equals("add")) {			
+		} else if(args.length == 2 && args[0].toLowerCase().equals("add")) {
 			WhitelistHelper.addWhitelist(args[1]);
 			sender.sendMessage(new ComponentBuilder(Main.PREFIX).append(args[1] + " added to whitelist").reset().create());
 		//Remove player from whitelist
@@ -54,7 +54,7 @@ public class WhitelistCommand extends Command implements TabExecutor {
 			matches.add("off");
 			matches.add("add");
 			matches.add("remove");
-			return matches;	
+			return matches;
 		//If second arg then loop through players
 		} else if(args.length == 2) {
 		    //Get a set of players to tab complete with
@@ -67,7 +67,7 @@ public class WhitelistCommand extends Command implements TabExecutor {
 		    }
 		    return matches;
 		//Else return nothing
-	    } else {	    	
+	    } else {
 	    	return ImmutableSet.of();
 	    }
 	}

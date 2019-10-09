@@ -24,26 +24,26 @@ public class PlaytimeEventHandler implements Listener {
 	@EventHandler
 	public void onJoinEvent(PostLoginEvent event) {
 		ProxiedPlayer player = event.getPlayer();
-		
+
 		//If player config doesn't exist, show first join message
 		if(!PlayerConfig.doesConfigExistElseCreate(player.getUniqueId())) {
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.FIRST_JOIN_MESSAGE);
-			msgRaw = msgRaw.replace("%player%", player.getDisplayName());			
+			msgRaw = msgRaw.replace("%player%", player.getDisplayName());
 			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
-			ProxyServer.getInstance().broadcast(msg);	
+			ProxyServer.getInstance().broadcast(msg);
 		}
-		
+
 		//Fill config values of player
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
-		playerConfig.set(Main.PlayerConfigs.USERNAME, player.getDisplayName());		
+		playerConfig.set(Main.PlayerConfigs.USERNAME, player.getDisplayName());
 		playerConfig.set(Main.PlayerConfigs.JOIN_TIME, (System.currentTimeMillis() / 1000));
 		playerConfig.set(Main.PlayerConfigs.IS_ALT, player.hasPermission(Main.Groups.ALT));
 		playerConfig.set(Main.PlayerConfigs.IS_AFK, false);
 		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
-		
+
 		PlayTimeHelper.checkPlayerRank(player.getUniqueId());
 	}
-	
+
 	/*
 	 * Runs when a players leaves and updates playtime
 	 */

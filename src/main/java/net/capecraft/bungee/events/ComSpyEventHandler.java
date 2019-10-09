@@ -14,7 +14,7 @@ import net.md_5.bungee.event.EventPriority;
 public class ComSpyEventHandler implements Listener {
 
     /**
-     * Get all commands and send to comspy players 
+     * Get all commands and send to comspy players
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public static void PlayerCommandPreprocessEvent(ChatEvent event) {
@@ -23,7 +23,7 @@ public class ComSpyEventHandler implements Listener {
     		String command = event.getMessage();
     		String name = sender.getName();
 
-    		//Send players command to staff if in same server (except their own commands)    		    	
+    		//Send players command to staff if in same server (except their own commands)
     		for (ProxiedPlayer target : ComSpyHelper.getListeners()){
     			if(sender != target && target.getServer().getInfo().equals(sender.getServer().getInfo())) {
     				target.sendMessage(ComSpyHelper.buildCommandMessage(name, command));
@@ -31,7 +31,7 @@ public class ComSpyEventHandler implements Listener {
     		}
         }
     }
-    
+
     @EventHandler
     public static void onStaffJoin(PostLoginEvent event) {
     	//Creates proxied player
@@ -41,10 +41,10 @@ public class ComSpyEventHandler implements Listener {
     		//Gets isSpying value
     		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
     		Boolean isSpying = playerConfig.getBoolean(Main.PlayerConfigs.IS_SPYING);
-    		//If isSpying is null 
+    		//If isSpying is null
     		if(isSpying) {
     			playerConfig.set(Main.PlayerConfigs.IS_SPYING, false);
     		}
-    	}		
+    	}
     }
 }

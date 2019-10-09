@@ -15,10 +15,10 @@ public class CapeCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		sender.sendMessage(new ComponentBuilder(Main.PREFIX)				
+		sender.sendMessage(new ComponentBuilder(Main.PREFIX)
 				.append("To get a cape visit ")
 				.reset()
-				.append("https://minecraftcapes.co.uk/discord")				
+				.append("https://minecraftcapes.co.uk/discord")
 				.event(new ClickEvent(Action.OPEN_URL, "https://minecraftcapes.co.uk/discord"))
 				.create());
 	}

@@ -30,16 +30,16 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 	public void execute(CommandSender sender, String[] args) {
 		if(sender instanceof ProxiedPlayer) {
 			//Get the player uuid
-			UUID playerUUID;			
-			
+			UUID playerUUID;
+
 			//Try get online player
 			ProxiedPlayer player = (args.length == 1) ? ProxyServer.getInstance().getPlayer(args[0]) : (ProxiedPlayer) sender;
 			if(player != null) {
-				playerUUID = player.getUniqueId();				
+				playerUUID = player.getUniqueId();
 			} else {
 				//Else try get uuid from api
 				UUID uuid = MojangAPIHelper.getUUID(args[0]);
-				if(uuid != null) {		
+				if(uuid != null) {
 					playerUUID = uuid;
 				} else {
 					//Else display error
@@ -47,13 +47,13 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 					return;
 				}
 			}
-			
+
 			//Update players playtime
 			PlayTimeHelper.updatePlaytime(playerUUID);
-			
+
 			//Get Player response
-			String username = (player != null) ? player.getDisplayName() : args[0];			
-			
+			String username = (player != null) ? player.getDisplayName() : args[0];
+
 			//Display playtime message
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.PLAYTIME_MESSAGE);
 			msgRaw = msgRaw.replace("%player%", username);
@@ -62,14 +62,14 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 			sender.sendMessage(msg);
 		}
 	}
-	
+
 	@Override
 	public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
 		//Make sure the argument is the first one
 	    if (args.length != 1) {
 	        return ImmutableSet.of();
 	    }
-	
+
 	    //Get a set of players to tab complete with
 	    Set<String> matches = new HashSet<>();
     	String search = args[0].toLowerCase();
@@ -80,5 +80,5 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 	    }
 	    return matches;
 	}
-	
+
 }

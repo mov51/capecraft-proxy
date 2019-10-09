@@ -30,10 +30,10 @@ public class ComSpyCommand extends Command {
 					return;
 				}
 			}
-		}		
+		}
         sender.sendMessage(buildCommandMessage("No permission"));
 	}
-	
+
 	private static BaseComponent[] buildCommandMessage(String message) {
     	return new ComponentBuilder("[CC] ").color(ChatColor.RED).bold(true).append(message).color(ChatColor.GREEN).bold(false).create();
     }

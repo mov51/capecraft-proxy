@@ -9,7 +9,7 @@ public class CoolDownManager {
 	private static HashMap<UUID, Long> cooldowns = new HashMap<>();
 	//60 second cooldown between commands
     public static final int DEFAULT_COOLDOWN = 300;
-    
+
     /**
      * Add player to the cooldown list
      * @param player The Player Object
@@ -26,5 +26,5 @@ public class CoolDownManager {
      */
     public static long getCooldown(UUID player){
         return (cooldowns.get(player) == null ? Long.valueOf(0) : cooldowns.get(player));
-    }    
+    }
 }

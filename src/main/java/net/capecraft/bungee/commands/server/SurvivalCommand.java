@@ -7,7 +7,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class SurvivalCommand extends Command {
-	
+
 	public SurvivalCommand() {
 		super("survival");
 	}
@@ -18,5 +18,5 @@ public class SurvivalCommand extends Command {
 			ServerQueueHelper.addPlayer(Main.Servers.SURVIVAL, (ProxiedPlayer) sender);
 		}
 	}
-	
+
 }

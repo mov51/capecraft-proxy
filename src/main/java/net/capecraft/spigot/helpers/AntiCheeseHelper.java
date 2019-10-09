@@ -9,9 +9,9 @@ import net.capecraft.Main;
 
 public class AntiCheeseHelper {
 
-	//Hashmap creation	
+	//Hashmap creation
     private static HashMap<UUID, Long> damageEvent = new HashMap<>();
-    
+
     /**
      * Sets the a player to be damaged
      * @param player The Player Object
@@ -30,9 +30,9 @@ public class AntiCheeseHelper {
 	public static boolean isInCombat(Player player, long combatInSeconds) {
 		//Get player uuid
 		UUID uuid = player.getUniqueId();
-		
+
 		//Check if uuid is in damage hashmap
-		if(damageEvent.containsKey(uuid)) {			
+		if(damageEvent.containsKey(uuid)) {
 			//If it is, check the value is less than current time
 			long combatTime = damageEvent.get(uuid) + (combatInSeconds * 1000);
 			if(combatTime < System.currentTimeMillis()) {

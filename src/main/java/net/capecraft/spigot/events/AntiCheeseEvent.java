@@ -14,10 +14,10 @@ public class AntiCheeseEvent implements Listener {
 	 */
     @EventHandler
     public void onDamage(EntityDamageEvent event){
-        if (event.getEntity() instanceof Player) {            
+        if (event.getEntity() instanceof Player) {
         	//Puts player in combat mode for 5 seconds
             AntiCheeseHelper.setDamageEvent((Player) event.getEntity());
         }
     }
-	
+
 }

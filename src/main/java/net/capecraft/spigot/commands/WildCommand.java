@@ -19,20 +19,20 @@ import net.capecraft.spigot.helpers.CoolDownManager;
 public class WildCommand implements CommandExecutor {
 
 	//Max X and Z Blocks
-	private static final int MAX_X = 100000;	
+	private static final int MAX_X = 100000;
 	private static final int MAX_Z = 100000;
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
 		if(sender instanceof Player && Bukkit.getServer().getName().equalsIgnoreCase(Main.Servers.SURVIVAL)) {
-			if(commandLabel.equalsIgnoreCase("wild") || commandLabel.equalsIgnoreCase("rtp")) {			
+			if(commandLabel.equalsIgnoreCase("wild") || commandLabel.equalsIgnoreCase("rtp")) {
 				this.teleportPlayer((Player) sender);
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Teleport's the player to a random coordinates
 	 * @param player The Player Object
@@ -52,17 +52,17 @@ public class WildCommand implements CommandExecutor {
 
 				//Add slow falling to the player
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, (20 * 20), 0), true);
-				
+
 				//Teleport player and send them a message
 				player.teleport(new Location(Bukkit.getWorld("survival"), RAND_X, 150, RAND_Z));
 				player.sendMessage(Main.PREFIX + "You have been teleported to the wild!");
-				
-				//Will give player 
+
+				//Will give player
 				CoolDownManager.setCooldown(player.getUniqueId(), System.currentTimeMillis());
 			}
 		} else {
 			player.sendMessage(Main.PREFIX + "You'll need to wait " + timeLeft + " seconds before you can do that again.");
 		}
 
-	}	
+	}
 }

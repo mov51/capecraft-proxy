@@ -13,18 +13,18 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 public class BungeeTeleportHandler {
 
 	private static int teleportRetry = 0;
-	
+
 	public static void teleport(UUID senderUUID, UUID targetUUID) {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				Player sender = Bukkit.getPlayer(senderUUID);
 				Player target = Bukkit.getPlayer(targetUUID);
-				
+
 				if(teleportRetry >= 5) {
 					this.cancel();
 				}
-				
+
 				if(target != null && sender != null) {
 					sender.teleport(target);
 					sender.sendMessage(new ComponentBuilder(Main.PREFIX).append("You've been teleported!").reset().create());
@@ -33,7 +33,7 @@ public class BungeeTeleportHandler {
 					teleportRetry++;
 				}
 			}
-		}.runTaskTimer(SpigotMain.INSTANCE, 0, 20);		
+		}.runTaskTimer(SpigotMain.INSTANCE, 0, 20);
 	}
 
 }

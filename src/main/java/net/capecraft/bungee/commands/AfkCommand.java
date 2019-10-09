@@ -24,40 +24,40 @@ public class AfkCommand extends Command {
 			ProxiedPlayer player = (ProxiedPlayer) sender;
 			Configuration pluginConfig = PluginConfig.getPluginConfig();
 			//Make sure player isn't an alt
-			if(player.hasPermission(Main.Groups.ALT)) {				
+			if(player.hasPermission(Main.Groups.ALT)) {
 				player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.ALT_AFK))).reset().create());
 				return;
 			}
-			
+
 			//Make sure player has AFK permission
-			if(!player.hasPermission(Main.Permissions.PlAY_AFK)) {				
+			if(!player.hasPermission(Main.Permissions.PlAY_AFK)) {
 				player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.FAIL_AFK))).reset().create());
 				return;
 			}
-			
+
 			//Checks player can AFK in this server
 			if(!AfkHelper.isValidServerName(player.getServer().getInfo().getName())) {
 				player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.NO_AFK))).reset().create());
 				return;
 			}
-						
+
 			//Pings the sub server for checks
 			player.getServer().getInfo().ping(new Callback<ServerPing>() {
 				@Override
 				public void done(ServerPing result, Throwable error) {
 					//Checks if server is full else do AFK check
-					if(result.getPlayers().getOnline() == result.getPlayers().getMax()) {						
+					if(result.getPlayers().getOnline() == result.getPlayers().getMax()) {
 						player.sendMessage(new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(pluginConfig.getString(PluginConfig.FULL_AFK))).reset().create());
 						return;
 					} else {
-						if(!AfkHelper.isAfk(player)) {							
+						if(!AfkHelper.isAfk(player)) {
 							AfkHelper.addPlayer(player);
-						} else {							
+						} else {
 							AfkHelper.removePlayer(player);
 						}
 					}
 				}
 			});
-		}		
-	}	
+		}
+	}
 }

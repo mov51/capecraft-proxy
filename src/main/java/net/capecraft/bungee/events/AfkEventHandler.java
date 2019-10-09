@@ -16,10 +16,10 @@ public class AfkEventHandler implements Listener {
 			AfkHelper.addAltPlayer(event.getPlayer(), event.getServer());
 		}
 	}
-		
+
 	@EventHandler
-	public void onLeave(PlayerDisconnectEvent event) {		
+	public void onLeave(PlayerDisconnectEvent event) {
 		AfkHelper.purgePlayer(event.getPlayer());
 	}
-	
+
 }

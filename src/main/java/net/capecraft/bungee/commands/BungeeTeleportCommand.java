@@ -30,10 +30,10 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 				//checks player name
 				ProxiedPlayer player = (ProxiedPlayer) sender;
 				ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
-				
-				if(!player.hasPermission(Main.Permissions.ADMIN))					
+
+				if(!player.hasPermission(Main.Permissions.ADMIN))
 					return;
-				
+
 				//Make sure target exists
 				if(target != null && target.isConnected()) {
 					//Connect player to the target server and a callback is used to wait for connection
@@ -45,15 +45,15 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 								player.sendMessage(new ComponentBuilder(Main.PREFIX).append("Error connecting to server").reset().create());
 								return;
 							}
-							
+
 							//Output teleport command
 							ByteArrayDataOutput out = ByteStreams.newDataOutput();
 							out.writeUTF("teleport");
 							out.writeUTF(player.getUniqueId().toString());
 							out.writeUTF(target.getUniqueId().toString());
 							target.getServer().getInfo().sendData(Main.Channels.CONFIG_CHANNEL, out.toByteArray());
-						}						
-					});																
+						}
+					});
 				} else {
 					player.sendMessage(new ComponentBuilder(Main.PREFIX).append("That player isn't found").reset().create());
 				}
@@ -69,7 +69,7 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 	    if (args.length != 1) {
 	        return ImmutableSet.of();
 	    }
-	
+
 	    //Get a set of players to tab complete with
 	    Set<String> matches = new HashSet<>();
     	String search = args[0].toLowerCase();
@@ -81,5 +81,5 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 	    return matches;
 	}
 
-	
+
 }
