@@ -24,7 +24,6 @@ import net.capecraft.bungee.events.ServerQueueEventHandler;
 import net.capecraft.bungee.events.messaging.CommandMessage;
 import net.capecraft.bungee.helpers.AfkHelper;
 import net.capecraft.bungee.helpers.PlayTimeHelper;
-import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.capecraft.bungee.helpers.config.WhitelistConfig;
@@ -82,7 +81,6 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new CapeCommand());
 
         //Scheduled Events
-        ServerQueueHelper.scheduleServerPing();
         AfkHelper.scheduleAfkMessage();
 
         //Loaded Log

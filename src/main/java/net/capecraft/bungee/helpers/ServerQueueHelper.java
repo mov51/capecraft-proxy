@@ -3,10 +3,8 @@ package net.capecraft.bungee.helpers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import net.capecraft.Main;
-import net.capecraft.bungee.BungeeMain;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatColor;
@@ -22,18 +20,6 @@ public class ServerQueueHelper {
 
 	private static List<UUID> survivalQueue = new ArrayList<UUID>();
 	private static List<UUID> creativeQueue = new ArrayList<UUID>();
-
-	/**
-	 * Schedule the server ping
-	 */
-	public static void scheduleServerPing() {
-		ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
-			@Override
-			public void run() {
-				//ServerQueueHelper.checkServerSlots();
-			}
-        }, 0, 2, TimeUnit.SECONDS);
-	}
 
 	/**
 	 * The first method calls by the task schedule
@@ -104,6 +90,12 @@ public class ServerQueueHelper {
 
 							return;
 						} else {
+							//Generate queue message
+							String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName));
+							String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_MESSAGE);
+							msgRaw = msgRaw.replace("%place%", queuePos);
+							BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
+							queuedPlayer.sendMessage(msg);
 							return;
 						}
 					}
@@ -208,13 +200,6 @@ public class ServerQueueHelper {
 			player.sendMessage(msg);
 			return;
 		}
-
-		//Generate queue message
-		String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName) + 1);
-		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_MESSAGE);
-		msgRaw = msgRaw.replace("%place%", queuePos);
-		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
-		player.sendMessage(msg);
 
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
 			survivalQueue.add(player.getUniqueId());
