@@ -13,6 +13,8 @@ import net.capecraft.spigot.commands.server.LobbyCommand;
 import net.capecraft.spigot.commands.server.SurvivalCommand;
 import net.capecraft.spigot.events.AntiCheeseEvent;
 import net.capecraft.spigot.events.messenger.CommandMessage;
+import net.capecraft.spigot.events.protect.ArmorStandProtect;
+import net.capecraft.spigot.events.protect.ItemFrameProtect;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class SpigotMain extends JavaPlugin {
@@ -34,6 +36,11 @@ public class SpigotMain extends JavaPlugin {
 		getCommand("creative").setExecutor(new CreativeCommand());
 		getCommand("survival").setExecutor(new SurvivalCommand());
 
+		//Creates the folder
+		if(!getDataFolder().exists()) {
+			getDataFolder().mkdir();
+		}
+		
 		//Individual Server Commands
 		if(Bukkit.getServer().getName().equalsIgnoreCase(Main.Servers.SURVIVAL)) {
 			//Commands
@@ -41,6 +48,8 @@ public class SpigotMain extends JavaPlugin {
 
 			//Event Listeners
 			getServer().getPluginManager().registerEvents(new AntiCheeseEvent(), this);
+			getServer().getPluginManager().registerEvents(new ArmorStandProtect(this), this);
+			getServer().getPluginManager().registerEvents(new ItemFrameProtect(this), this);
 		}
 	}
 
