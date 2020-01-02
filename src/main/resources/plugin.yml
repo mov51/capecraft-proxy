@@ -1,6 +1,7 @@
 name: CapeCraftProxy
 main: net.capecraft.spigot.SpigotMain
 version: 1.0
+depends: [LuckPerms, Essentials]
 authors: [james090500, mov51]
 api-version: 1.15
 commands:

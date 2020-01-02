@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import net.capecraft.Main;
 import net.capecraft.bungee.BungeeMain;
+import net.capecraft.bungee.helpers.NicknameHelper;
 import net.capecraft.bungee.helpers.ServerQueueHelper;
 import net.capecraft.bungee.helpers.WhitelistHelper;
 import net.capecraft.bungee.helpers.config.PluginConfig;
@@ -118,6 +119,7 @@ public class JoinLeaveEventHandler implements Listener {
 		//Gets msg from config and sends join/leave message
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.LEAVE_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
+		NicknameHelper.nicknames.remove(event.getPlayer().getUniqueId());
 	}
 
 	/**

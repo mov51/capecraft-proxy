@@ -17,8 +17,8 @@ public class Main {
 	//Plugin Messaging
 	public class Channels {
 		private static final String MAIN_CHANNEL = "capecraft";
-		public static final String COMMANDS_CHANNEL = MAIN_CHANNEL + ":commands";
-		public static final String CONFIG_CHANNEL = MAIN_CHANNEL + ":config";
+		public static final String COMMAND_CHANNEL = MAIN_CHANNEL + ":command";
+		public static final String NICKNAME_CHANNEL = MAIN_CHANNEL + ":nick";
 	}
 
 	//Server Names

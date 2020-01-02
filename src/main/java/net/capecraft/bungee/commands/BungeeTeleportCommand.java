@@ -51,7 +51,7 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 							out.writeUTF("teleport");
 							out.writeUTF(player.getUniqueId().toString());
 							out.writeUTF(target.getUniqueId().toString());
-							target.getServer().getInfo().sendData(Main.Channels.CONFIG_CHANNEL, out.toByteArray());
+							target.getServer().getInfo().sendData(Main.Channels.COMMAND_CHANNEL, out.toByteArray());
 						}
 					});
 				} else {

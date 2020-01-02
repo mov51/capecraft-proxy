@@ -10,8 +10,8 @@
      
     <properties>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-   		<maven.compiler.source>11</maven.compiler.source>
-   		<maven.compiler.target>11</maven.compiler.target>    	
+   		<maven.compiler.source>8</maven.compiler.source>
+   		<maven.compiler.target>8</maven.compiler.target>    	
   	</properties>
     
     <repositories>
@@ -21,8 +21,12 @@
         </repository>
         <repository>
             <id>luckperms-api</id>
-            <url>https://repo1.maven.org/maven2/me/lucko/luckperms/luckperms-api/</url>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
+		<repository>
+            <id>EssentialsX</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>        
     </repositories>
     <dependencies>
         <dependency>
@@ -38,10 +42,23 @@
 	    	<scope>provided</scope>
 	 	</dependency>
  	    <dependency>
-    		<groupId>me.lucko.luckperms</groupId>
-    		<artifactId>luckperms-api</artifactId>
-    		<version>4.4</version>
+    		<groupId>net.luckperms</groupId>
+    		<artifactId>api</artifactId>
+    		<version>5.0</version>
     		<scope>provided</scope>
 		</dependency>
+ 	    <dependency>
+    		<groupId>net.ess3</groupId>
+    		<artifactId>EssentialsX</artifactId>
+    		<version>2.17.0</version>
+    		<scope>provided</scope>
+		</dependency>		
+    	<dependency>
+      		<groupId>me.neznamy</groupId>
+      		<artifactId>tab</artifactId>
+      		<version>2.6.2</version>
+      		<scope>system</scope>
+      		<systemPath>E:\Development\Projects\capecraft-proxy\lib\TAB v2.6.2.jar</systemPath>
+    	</dependency>		
     </dependencies>
 </project>
