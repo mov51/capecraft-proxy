@@ -18,6 +18,10 @@ commands:
     description: Show afk the rules
   cape:
     description: cape command
+  donate:
+    description: donate command
+  vote:
+    description: vote command
   lobby:
     alias: hub
     description: Teleports to lobby

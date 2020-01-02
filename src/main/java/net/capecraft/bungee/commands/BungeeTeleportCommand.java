@@ -32,7 +32,7 @@ public class BungeeTeleportCommand extends Command implements TabExecutor {
 				ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
 
 				if(!player.hasPermission(Main.Permissions.ADMIN))
-					return;
+					return;				
 
 				//Make sure target exists
 				if(target != null && target.isConnected()) {

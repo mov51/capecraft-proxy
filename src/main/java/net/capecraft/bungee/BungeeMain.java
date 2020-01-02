@@ -15,7 +15,9 @@ import net.capecraft.bungee.commands.WhitelistCommand;
 import net.capecraft.bungee.commands.help.AfkRulesCommand;
 import net.capecraft.bungee.commands.help.AltRulesCommand;
 import net.capecraft.bungee.commands.help.CapeCommand;
+import net.capecraft.bungee.commands.help.DonateCommand;
 import net.capecraft.bungee.commands.help.RulesCommand;
+import net.capecraft.bungee.commands.help.VoteCommand;
 import net.capecraft.bungee.commands.server.CreativeCommand;
 import net.capecraft.bungee.commands.server.LobbyCommand;
 import net.capecraft.bungee.commands.server.SurvivalCommand;
@@ -90,6 +92,8 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new AltRulesCommand());
         getProxy().getPluginManager().registerCommand(this, new AfkRulesCommand());
         getProxy().getPluginManager().registerCommand(this, new CapeCommand());
+        getProxy().getPluginManager().registerCommand(this, new VoteCommand());
+        getProxy().getPluginManager().registerCommand(this, new DonateCommand());
 
         //Scheduled Events
         AfkHelper.scheduleAfkMessage();

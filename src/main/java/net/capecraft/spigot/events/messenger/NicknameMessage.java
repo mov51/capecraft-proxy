@@ -23,11 +23,14 @@ public class NicknameMessage implements Listener {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				Player player = event.getPlayer();	
-				ByteArrayDataOutput out = ByteStreams.newDataOutput();		
-				out.writeUTF(player.getUniqueId().toString());		
-				out.writeUTF(ess.getUserMap().getUser(player.getUniqueId())._getNickname());
-				player.sendPluginMessage(SpigotMain.INSTANCE, Main.Channels.NICKNAME_CHANNEL, out.toByteArray());
+				Player player = event.getPlayer();
+				String nickname = ess.getUserMap().getUser(player.getUniqueId())._getNickname();
+				if(nickname != null) {					
+					ByteArrayDataOutput out = ByteStreams.newDataOutput();		
+					out.writeUTF(player.getUniqueId().toString());		
+					out.writeUTF(nickname);
+					player.sendPluginMessage(SpigotMain.INSTANCE, Main.Channels.NICKNAME_CHANNEL, out.toByteArray());	
+				}				
 			}
 		}.runTaskLater(SpigotMain.INSTANCE, 1);
 		

@@ -26,7 +26,7 @@ public class ComSpyCommand extends Command {
 					return;
 				} else {
 					ComSpyHelper.removeComListener(player);
-					player.sendMessage(buildCommandMessage("ComSpy Enabled!"));
+					player.sendMessage(buildCommandMessage("ComSpy Disabled!"));
 					return;
 				}
 			}
