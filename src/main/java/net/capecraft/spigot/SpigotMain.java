@@ -1,12 +1,12 @@
 package net.capecraft.spigot;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.capecraft.Main;
+import net.capecraft.spigot.commands.SendCommand;
 import net.capecraft.spigot.commands.WildCommand;
 import net.capecraft.spigot.commands.server.CreativeCommand;
 import net.capecraft.spigot.commands.server.LobbyCommand;
@@ -16,6 +16,7 @@ import net.capecraft.spigot.events.messenger.CommandMessage;
 import net.capecraft.spigot.events.messenger.NicknameMessage;
 import net.capecraft.spigot.events.protect.ArmorStandProtect;
 import net.capecraft.spigot.events.protect.ItemFrameProtect;
+import net.capecraft.spigot.helpers.config.PluginConfig;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class SpigotMain extends JavaPlugin {
@@ -27,16 +28,21 @@ public class SpigotMain extends JavaPlugin {
 
 		this.logLogo();
 		SpigotMain.INSTANCE = this;
+		
+		//Init Config
+		PluginConfig.initConfig(this);
 
 		//Register listener channels		
 	    getServer().getMessenger().registerOutgoingPluginChannel(this, Main.Channels.COMMAND_CHANNEL);
 	    getServer().getMessenger().registerOutgoingPluginChannel(this, Main.Channels.NICKNAME_CHANNEL);
 	    getServer().getMessenger().registerIncomingPluginChannel(this, Main.Channels.COMMAND_CHANNEL, new CommandMessage());
+	    getServer().getMessenger().registerOutgoingPluginChannel(this, Main.Channels.BUNGEECORD);
 
 	    //Server Commands
 		getCommand("lobby").setExecutor(new LobbyCommand());
 		getCommand("creative").setExecutor(new CreativeCommand());
 		getCommand("survival").setExecutor(new SurvivalCommand());
+		getCommand("send").setExecutor(new SendCommand());
 
 		//Global Event Listeners
 		getServer().getPluginManager().registerEvents(new NicknameMessage(), this);
@@ -47,7 +53,7 @@ public class SpigotMain extends JavaPlugin {
 		}
 		
 		//Individual Server Commands
-		if(Bukkit.getServer().getPort() == 25102) {
+		if(PluginConfig.getPluginConfig().getString("server-name").equalsIgnoreCase(Main.Servers.SURVIVAL)) {
 			//Commands
 			getCommand("wild").setExecutor(new WildCommand());
 

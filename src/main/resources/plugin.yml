@@ -12,6 +12,8 @@ commands:
     description: Teleports to survival
   creative:
     description: Teleports to creative
+  send:
+    description: Teleports all players to server
   wild:
     alias: rtp
     description: Teleports player to a random location

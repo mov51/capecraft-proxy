@@ -19,6 +19,7 @@ public class Main {
 		private static final String MAIN_CHANNEL = "capecraft";
 		public static final String COMMAND_CHANNEL = MAIN_CHANNEL + ":command";
 		public static final String NICKNAME_CHANNEL = MAIN_CHANNEL + ":nick";
+		public static final String BUNGEECORD = "BungeeCord";
 	}
 
 	//Server Names
@@ -31,6 +32,7 @@ public class Main {
 	//Config files
 	public class Configs {
 		public static final String BUNGEE_CONFIG = "bungeeconfig.yml";
+		public static final String PAPER_CONFIG = "paperconfig.yml";
 		public static final String PLAYER_CONFIG = "playerconfig.yml";
 		public static final String WHITELIST_CONFIG = "whitelist.json";
 	}

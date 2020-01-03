@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import net.capecraft.Main;
 import net.capecraft.spigot.helpers.AntiCheeseHelper;
 import net.capecraft.spigot.helpers.CoolDownManager;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class WildCommand implements CommandExecutor {
 
@@ -55,13 +56,13 @@ public class WildCommand implements CommandExecutor {
 
 				//Teleport player and send them a message
 				player.teleport(new Location(Bukkit.getWorld("survival"), RAND_X, 150, RAND_Z));
-				player.sendMessage(Main.PREFIX.append("You have been teleported to the wild!").reset().create());
+				player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You have been teleported to the wild!").reset().create());
 
 				//Will give player
 				CoolDownManager.setCooldown(player.getUniqueId(), System.currentTimeMillis());
 			}
 		} else {
-			player.sendMessage(Main.PREFIX.append("You'll need to wait " + timeLeft + " seconds before you can do that again.").reset().create());
+			player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You'll need to wait " + timeLeft + " seconds before you can do that again.").reset().create());
 		}
 
 	}
