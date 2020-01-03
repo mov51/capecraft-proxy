@@ -24,7 +24,7 @@ public class WildCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
-		if(sender instanceof Player && Bukkit.getServer().getName().equalsIgnoreCase(Main.Servers.SURVIVAL)) {
+		if(sender instanceof Player) {
 			if(commandLabel.equalsIgnoreCase("wild") || commandLabel.equalsIgnoreCase("rtp")) {
 				this.teleportPlayer((Player) sender);
 				return true;
@@ -55,13 +55,13 @@ public class WildCommand implements CommandExecutor {
 
 				//Teleport player and send them a message
 				player.teleport(new Location(Bukkit.getWorld("survival"), RAND_X, 150, RAND_Z));
-				player.sendMessage(Main.PREFIX + "You have been teleported to the wild!");
+				player.sendMessage(Main.PREFIX.append("You have been teleported to the wild!").reset().create());
 
 				//Will give player
 				CoolDownManager.setCooldown(player.getUniqueId(), System.currentTimeMillis());
 			}
 		} else {
-			player.sendMessage(Main.PREFIX + "You'll need to wait " + timeLeft + " seconds before you can do that again.");
+			player.sendMessage(Main.PREFIX.append("You'll need to wait " + timeLeft + " seconds before you can do that again.").reset().create());
 		}
 
 	}

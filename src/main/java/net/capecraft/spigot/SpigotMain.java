@@ -47,7 +47,7 @@ public class SpigotMain extends JavaPlugin {
 		}
 		
 		//Individual Server Commands
-		if(Bukkit.getServer().getName().equalsIgnoreCase(Main.Servers.SURVIVAL)) {
+		if(Bukkit.getServer().getPort() == 25102) {
 			//Commands
 			getCommand("wild").setExecutor(new WildCommand());
 
