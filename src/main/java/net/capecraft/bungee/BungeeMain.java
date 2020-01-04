@@ -2,9 +2,6 @@ package net.capecraft.bungee;
 
 import java.util.logging.Level;
 
-import me.neznamy.tab.shared.ITabPlayer;
-import me.neznamy.tab.shared.placeholders.Placeholders;
-import me.neznamy.tab.shared.placeholders.PlayerPlaceholder;
 import net.capecraft.Main;
 import net.capecraft.bungee.commands.AfkCommand;
 import net.capecraft.bungee.commands.BungeeTeleportCommand;
@@ -29,16 +26,14 @@ import net.capecraft.bungee.events.ServerQueueEventHandler;
 import net.capecraft.bungee.events.messaging.CommandMessage;
 import net.capecraft.bungee.events.messaging.NicknameMessage;
 import net.capecraft.bungee.helpers.AfkHelper;
-import net.capecraft.bungee.helpers.NicknameHelper;
 import net.capecraft.bungee.helpers.PlayTimeHelper;
+import net.capecraft.bungee.helpers.TABPlaceholder;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.capecraft.bungee.helpers.config.WhitelistConfig;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeMain extends Plugin {
@@ -95,22 +90,11 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new VoteCommand());
         getProxy().getPluginManager().registerCommand(this, new DonateCommand());
 
+        //TAB
+        TABPlaceholder.addPlaceholders();
+        
         //Scheduled Events
-        AfkHelper.scheduleAfkMessage();
-        
-        //Hook into TAB
-        Placeholders.playerPlaceholders.add(new PlayerPlaceholder("%capecraft_afk%", 2000) {
-        	public String get(ITabPlayer p) {
-        		ProxiedPlayer player = ProxyServer.getInstance().getPlayer(p.getUniqueId());
-        		return (AfkHelper.isAfk(player)) ? " &4&lAFK" : "";
-        	}
-        });
-        
-        Placeholders.playerPlaceholders.add(new PlayerPlaceholder("%capecraft_nick%", 60000) {
-        	public String get(ITabPlayer p) {
-        		return (NicknameHelper.nicknames.containsKey(p.getUniqueId())) ? NicknameHelper.nicknames.get(p.getUniqueId()) : p.getName();
-        	}
-        });
+        AfkHelper.scheduleAfkMessage();      
 
         //Loaded Log
         getLogger().log(Level.INFO, "Loaded");

@@ -183,6 +183,11 @@ public class AfkHelper {
 	 * @param player Player to remove
 	 */
 	public static void purgePlayer(ProxiedPlayer player) {
+		//remove AFK permission
+		User user = LuckPermsHelper.getUser(player.getUniqueId());
+		LuckPermsHelper.removePermission(user, "essentials.afk.kickexempt");
+		
+		//Remove from queues
 		afkCreativeQueueList.remove(player);
 		afkSurvivalQueueList.remove(player);
 	}

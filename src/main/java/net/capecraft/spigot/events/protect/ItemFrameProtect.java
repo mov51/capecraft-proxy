@@ -26,6 +26,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import net.capecraft.Main;
 import net.capecraft.spigot.events.protect.utils.SQLUtils;
 import net.capecraft.spigot.events.protect.utils.Utils;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class ItemFrameProtect implements Listener {
 
@@ -179,15 +180,15 @@ public class ItemFrameProtect implements Listener {
 		}
 
 		if (!player.getUniqueId().equals(ownerId)) {
-			if (player.hasPermission("capecraft.admin")) {
+			if (player.hasPermission(Main.Permissions.ADMIN)) {
 				if (player.getInventory().getItemInMainHand().getType() == Material.CARROT_ON_A_STICK) {
-					player.sendMessage(Main.PREFIX + "That item frame is owned by " + ownerName);
+					player.sendMessage(new ComponentBuilder(Main.PREFIX).append("That item frame is owned by " + ownerName).reset().create());
 					return true;
 				} else {
 					return false;
 				}
 			} else {
-				player.sendMessage(Main.PREFIX + "That item frame belongs to someone else!");
+				player.sendMessage(new ComponentBuilder(Main.PREFIX).append("That item frame belongs to someone else!").reset().create());
 				return true;
 			}
 		} else {

@@ -124,8 +124,7 @@ public class PlayTimeHelper {
 	 */
 	private static void rankupPlayer(ProxiedPlayer player, String oldGroup, String newGroup, ComponentBuilder componentBuilder) {
 		User luckPermsUser = LuckPermsHelper.getUser(player.getUniqueId());
-		LuckPermsHelper.addPermission(luckPermsUser, newGroup);
-		LuckPermsHelper.removePermission(luckPermsUser, oldGroup);
+		LuckPermsHelper.changeGroup(luckPermsUser, oldGroup, newGroup);
 
 		BaseComponent[] msg = new ComponentBuilder(Main.PREFIX)
 				.append(player.getDisplayName()).color(ChatColor.GOLD)
