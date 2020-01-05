@@ -24,7 +24,7 @@ public class AfkEventHandler implements Listener {
 	
 	@EventHandler
 	public void onServerDisconnect(ServerDisconnectEvent event) {
-		AfkHelper.removePlayer(event.getPlayer());
+		AfkHelper.purgePlayer(event.getPlayer());
 	}
 
 	@EventHandler
