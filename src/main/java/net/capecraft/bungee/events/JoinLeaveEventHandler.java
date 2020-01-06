@@ -93,7 +93,7 @@ public class JoinLeaveEventHandler implements Listener {
 
 		//If player is alt, move them to lobby
 		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
-			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
+			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));			
 		}
 	}
 

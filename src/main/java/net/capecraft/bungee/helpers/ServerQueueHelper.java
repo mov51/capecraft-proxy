@@ -35,7 +35,7 @@ public class ServerQueueHelper {
 	 */
 	public static void pollServer(String serverName) {
 		//Check server has queued players
-		if(getQueueSize(serverName) < 0) {
+		if(getQueueSize(serverName) <= 0) {
 			return;
 		}
 
@@ -55,8 +55,8 @@ public class ServerQueueHelper {
 				while(getQueueSize(serverName) > 0) {
 
 					//Gets the next queued player
-					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);
-
+					ProxiedPlayer queuedPlayer = getNextPlayer(serverName);			
+					
 					//Check if server is full
 					if(playersOnline >= playersMax) {
 						//If player is alt kick them
@@ -100,9 +100,17 @@ public class ServerQueueHelper {
 						}
 					}
 
-					//Send player to server
+					//Send player to server and if an ALT add to server afk queue
 					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);
-					queuedPlayer.connect(serverInfo);
+					queuedPlayer.connect(serverInfo, new Callback<Boolean>() {						
+						@Override
+						public void done(Boolean result, Throwable error) {
+							//Check if player is an alt and add to AFK queue
+							if(queuedPlayer.hasPermission(Main.Groups.ALT) && result) {
+								AfkHelper.addPlayer(queuedPlayer);
+							}
+						}
+					});
 
 					//Removes that player
 					removePlayer(queuedPlayer.getUniqueId());

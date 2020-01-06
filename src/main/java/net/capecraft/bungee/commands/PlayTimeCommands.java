@@ -36,6 +36,9 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 			ProxiedPlayer player = (args.length == 1) ? ProxyServer.getInstance().getPlayer(args[0]) : (ProxiedPlayer) sender;
 			if(player != null) {
 				playerUUID = player.getUniqueId();
+
+				//Update players playtime here as we dont want to update offline players with free playtime
+				PlayTimeHelper.updatePlaytime(playerUUID);	
 			} else {
 				//Else try get uuid from api
 				UUID uuid = MojangAPIHelper.getUUID(args[0]);
@@ -47,9 +50,6 @@ public class PlayTimeCommands extends Command implements TabExecutor {
 					return;
 				}
 			}
-
-			//Update players playtime
-			PlayTimeHelper.updatePlaytime(playerUUID);
 
 			//Get Player response
 			String username = (player != null) ? player.getDisplayName() : args[0];
