@@ -20,9 +20,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
-public class PlayTimeCommands extends Command implements TabExecutor {
+public class PlayTimeCommand extends Command implements TabExecutor {
 
-	public PlayTimeCommands() {
+	public PlayTimeCommand() {
 		super("playtime");
 	}
 

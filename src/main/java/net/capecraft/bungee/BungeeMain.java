@@ -6,7 +6,7 @@ import net.capecraft.Main;
 import net.capecraft.bungee.commands.AfkCommand;
 import net.capecraft.bungee.commands.BungeeTeleportCommand;
 import net.capecraft.bungee.commands.ComSpyCommand;
-import net.capecraft.bungee.commands.PlayTimeCommands;
+import net.capecraft.bungee.commands.PlayTimeCommand;
 import net.capecraft.bungee.commands.PluginCommands;
 import net.capecraft.bungee.commands.WhitelistCommand;
 import net.capecraft.bungee.commands.help.AfkRulesCommand;
@@ -69,7 +69,7 @@ public class BungeeMain extends Plugin {
 
         //Play Commands
         getProxy().getPluginManager().registerCommand(this, new AfkCommand());
-        getProxy().getPluginManager().registerCommand(this, new PlayTimeCommands());
+        getProxy().getPluginManager().registerCommand(this, new PlayTimeCommand());
 
         //Admin Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());
