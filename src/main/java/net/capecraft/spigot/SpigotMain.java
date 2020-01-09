@@ -44,8 +44,8 @@ public class SpigotMain extends JavaPlugin {
 		getCommand("survival").setExecutor(new SurvivalCommand());
 		getCommand("send").setExecutor(new SendCommand());
 
-		//Global Event Listeners
-		getServer().getPluginManager().registerEvents(new NicknameMessage(), this);
+		//Initialise Nickname loop
+		NicknameMessage.start();
 		
 		//Creates the folder
 		if(!getDataFolder().exists()) {

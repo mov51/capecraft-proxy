@@ -17,7 +17,7 @@ public class TABPlaceholder {
         	}
         });
         
-        Placeholders.playerPlaceholders.add(new PlayerPlaceholder("%capecraft_nick%", 60000) {
+        Placeholders.playerPlaceholders.add(new PlayerPlaceholder("%capecraft_nick%", 2000) {
         	public String get(ITabPlayer p) {
         		return (NicknameHelper.nicknames.containsKey(p.getUniqueId())) ? NicknameHelper.nicknames.get(p.getUniqueId()) : p.getName();
         	}
