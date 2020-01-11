@@ -36,7 +36,9 @@ public class LuckPermsHelper {
 		Node node = luckPermsApi.getNodeBuilderRegistry().forPermission().permission(permission).build();		
 		user.data().add(node);
 		luckPermsApi.getUserManager().saveUser(user).thenRun(() -> {
-			luckPermsApi.getMessagingService().ifPresent(MessagingService::pushUpdate);
+			luckPermsApi.getMessagingService().ifPresent(service -> {
+	            service.pushUserUpdate(user);
+	        });
 		});
 	}
 
@@ -49,7 +51,9 @@ public class LuckPermsHelper {
 		Node node = luckPermsApi.getNodeBuilderRegistry().forPermission().permission(permission).build();
 		user.data().remove(node);
 		luckPermsApi.getUserManager().saveUser(user).thenRun(() -> {
-			luckPermsApi.getMessagingService().ifPresent(MessagingService::pushUpdate);
+			luckPermsApi.getMessagingService().ifPresent(service -> {
+	            service.pushUserUpdate(user);
+	        });
 		});
 	}
 	
@@ -67,7 +71,9 @@ public class LuckPermsHelper {
 	    user.data().remove(remove);
 	    user.data().add(add);
 	    return luckPermsApi.getUserManager().saveUser(user).thenRun(() -> {
-			luckPermsApi.getMessagingService().ifPresent(MessagingService::pushUpdate);
+			luckPermsApi.getMessagingService().ifPresent(service -> {
+	            service.pushUserUpdate(user);
+	        });
 		});
 	}	
 }
