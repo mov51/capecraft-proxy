@@ -18,7 +18,7 @@ public class AfkEventHandler implements Listener {
 	public void onServerConnect(ServerConnectedEvent event) {
 		AfkHelper.purgePlayer(event.getPlayer());
 		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
-			AfkHelper.addAltPlayer(event.getPlayer(), event.getServer());
+			AfkHelper.addAltPlayer(event.getPlayer(), event.getServer().getInfo());
 		}
 	}
 	

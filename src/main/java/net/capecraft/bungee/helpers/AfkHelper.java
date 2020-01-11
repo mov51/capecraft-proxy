@@ -13,8 +13,8 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.config.Configuration;
 
 public class AfkHelper {
@@ -171,8 +171,8 @@ public class AfkHelper {
 	 * Add Alt to AFK List
 	 * @param player Player to add
 	 */
-	public static void addAltPlayer(ProxiedPlayer player, Server server) {
-		String serverName = server.getInfo().getName();
+	public static void addAltPlayer(ProxiedPlayer player, ServerInfo server) {
+		String serverName = server.getName();
 		if(isValidServerName(serverName)) {
 			getQueueList(serverName).add(player);
 		}

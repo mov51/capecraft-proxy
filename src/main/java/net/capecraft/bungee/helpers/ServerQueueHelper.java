@@ -107,7 +107,9 @@ public class ServerQueueHelper {
 						public void done(Boolean result, Throwable error) {
 							//Check if player is an alt and add to AFK queue
 							if(queuedPlayer.hasPermission(Main.Groups.ALT) && result) {
-								AfkHelper.addPlayer(queuedPlayer);
+								System.out.println(queuedPlayer.hasPermission(Main.Groups.ALT));
+								System.out.println(serverName);
+								AfkHelper.addAltPlayer(queuedPlayer, serverInfo);
 							}
 						}
 					});

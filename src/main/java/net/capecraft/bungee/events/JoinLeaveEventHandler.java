@@ -90,11 +90,6 @@ public class JoinLeaveEventHandler implements Listener {
 		String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.JOIN_MESSAGE);
 		broadcastJoinLeaveMessage(msgRaw, event.getPlayer());
 		sendMotd(event.getPlayer());
-
-		//If player is alt, move them to lobby
-		if(event.getPlayer().hasPermission(Main.Groups.ALT)) {
-			event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));			
-		}
 	}
 
 	/**

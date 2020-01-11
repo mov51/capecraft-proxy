@@ -24,5 +24,4 @@ public class ServerQueueEventHandler implements Listener {
 			}
         }, 1, TimeUnit.SECONDS);
 	}
-
 }

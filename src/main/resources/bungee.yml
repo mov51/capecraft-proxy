@@ -31,3 +31,5 @@ commands:
     description: Teleports to creative
   btp:
     description: Bungee Teleport
+  playtimetop:
+    description: Gets /playtimetop

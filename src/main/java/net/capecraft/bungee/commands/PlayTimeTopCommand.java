@@ -62,7 +62,7 @@ public class PlayTimeTopCommand extends Command {
 			});
 			
 			//Final message
-			sender.sendMessage(new ComponentBuilder("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯").color(ChatColor.YELLOW).create());
+			sender.sendMessage(new ComponentBuilder("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯").color(ChatColor.YELLOW).create());
 		}
 	}
 
