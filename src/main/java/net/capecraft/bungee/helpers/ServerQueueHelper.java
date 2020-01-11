@@ -212,11 +212,15 @@ public class ServerQueueHelper {
 		}
 
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
-			survivalQueue.add(player.getUniqueId());
-		} else if(serverName.equals(Main.Servers.CREATIVE)) {
-			creativeQueue.add(player.getUniqueId());
-		}
+			if(!survivalQueue.contains(player.getUniqueId())){
+				survivalQueue.add(player.getUniqueId());
+			}
 
+		} else if(serverName.equals(Main.Servers.CREATIVE)) {
+			if(!survivalQueue.contains(player.getUniqueId())) {
+				creativeQueue.add(player.getUniqueId());
+			}
+		}
 		pollServer(serverName);
 	}
 
