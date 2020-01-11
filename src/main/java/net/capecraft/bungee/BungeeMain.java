@@ -70,6 +70,7 @@ public class BungeeMain extends Plugin {
         //Play Commands
         getProxy().getPluginManager().registerCommand(this, new AfkCommand());
         getProxy().getPluginManager().registerCommand(this, new PlayTimeCommand());
+        //getProxy().getPluginManager().registerCommand(this, new PlayTimeTopCommand());
 
         //Admin Commands
         getProxy().getPluginManager().registerCommand(this, new PluginCommands());

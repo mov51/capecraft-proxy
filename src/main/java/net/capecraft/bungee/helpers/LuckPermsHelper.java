@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.messaging.MessagingService;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
@@ -34,7 +35,9 @@ public class LuckPermsHelper {
 	public static void addPermission(User user, String permission) {		
 		Node node = luckPermsApi.getNodeBuilderRegistry().forPermission().permission(permission).build();		
 		user.data().add(node);
-		luckPermsApi.getUserManager().saveUser(user);
+		luckPermsApi.getUserManager().saveUser(user).thenRun(() -> {
+			luckPermsApi.getMessagingService().ifPresent(MessagingService::pushUpdate);
+		});
 	}
 
 	/**
@@ -45,7 +48,9 @@ public class LuckPermsHelper {
 	public static void removePermission(User user, String permission) {
 		Node node = luckPermsApi.getNodeBuilderRegistry().forPermission().permission(permission).build();
 		user.data().remove(node);
-		luckPermsApi.getUserManager().saveUser(user);
+		luckPermsApi.getUserManager().saveUser(user).thenRun(() -> {
+			luckPermsApi.getMessagingService().ifPresent(MessagingService::pushUpdate);
+		});
 	}
 	
 	/**
@@ -61,6 +66,8 @@ public class LuckPermsHelper {
 	    Node add = InheritanceNode.builder(newGroup).build();
 	    user.data().remove(remove);
 	    user.data().add(add);
-	    return luckPermsApi.getUserManager().saveUser(user);
+	    return luckPermsApi.getUserManager().saveUser(user).thenRun(() -> {
+			luckPermsApi.getMessagingService().ifPresent(MessagingService::pushUpdate);
+		});
 	}	
 }
