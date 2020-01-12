@@ -1,10 +1,12 @@
 package net.capecraft.bungee.helpers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.BungeeMain;
 import net.capecraft.bungee.helpers.config.PluginConfig;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatColor;
@@ -18,16 +20,16 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ServerQueueHelper {
 
-	private static List<UUID> survivalQueue = new ArrayList<UUID>();
-	private static List<UUID> creativeQueue = new ArrayList<UUID>();
-
-	/**
-	 * The first method calls by the task schedule
-	 */
-	public static void checkServerSlots() {
-		pollServer(Main.Servers.SURVIVAL);
-		pollServer(Main.Servers.CREATIVE);
-	}
+	private static Queue<UUID> survivalQueue = new LinkedList<UUID>();
+	private static Queue<UUID> creativeQueue = new LinkedList<UUID>();
+	
+	//Survival/Creative Queue Loop
+	private static int survivalIndex = 0;
+	private static int creativeIndex = 0;
+	
+	private static int playersOnline = 0;
+	private static int playersMax = 0;
+	
 
 	/**
 	 * Polls the server, checks the payer count and connects them to the server
@@ -49,8 +51,8 @@ public class ServerQueueHelper {
 				}
 
 				//Sets dynamic variables
-				int playersOnline = result.getPlayers().getOnline();
-				int playersMax = result.getPlayers().getMax();
+				playersOnline = result.getPlayers().getOnline();
+				playersMax = result.getPlayers().getMax();
 
 				while(getQueueSize(serverName) > 0) {
 
@@ -63,32 +65,33 @@ public class ServerQueueHelper {
 						if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
 							//Send disconnection messages
 							BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.FULL_AFK));
-							queuedPlayer.sendMessage(disconnectMsg);
+							queuedPlayer.sendMessage(new ComponentBuilder(Main.PREFIX).append(disconnectMsg).reset().create());
 
 							//Remove player from queue
 							removePlayer(queuedPlayer.getUniqueId());
-
-							//Send queue message
-							sendQueueMessages(serverName);
 							return;
 						}
 
 						//Make sure there are players in AFK the server server
-						ProxiedPlayer afkPlayer = AfkHelper.getNextPlayer(serverName);
-						if(afkPlayer != null) {
+						if(AfkHelper.getQueueList(serverName).size() > 0) {
 							//Get messages
 							BaseComponent[] disconnectMsg = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK));
 							BaseComponent[] disconnectBroadcast = TextComponent.fromLegacyText(PluginConfig.getPluginConfig().getString(PluginConfig.KICK_AFK_BROADCAST));
-							afkPlayer.disconnect(disconnectMsg);
+																					
+							ProxiedPlayer afkPlayer = AfkHelper.getNextPlayer(serverName);
+							while(afkPlayer != null) {
+								afkPlayer.disconnect(new ComponentBuilder(Main.PREFIX).append(disconnectMsg).reset().create());
+								afkPlayer = AfkHelper.getNextPlayer(serverName);
+								playersOnline--;
+							}
+							
 							//Broadcast to players in that server
 							for(ProxiedPlayer players : ProxyServer.getInstance().getServerInfo(serverName).getPlayers()) {
 								players.sendMessage(new ComponentBuilder(Main.PREFIX).append(disconnectBroadcast).reset().create());
 						    }
 
 							//Send queue message
-							sendQueueMessages(serverName);
-
-							return;
+							sendQueueMessages(serverName);							
 						} else {
 							//Generate queue message
 							String queuePos = String.valueOf(ServerQueueHelper.getQueueSize(serverName));
@@ -96,32 +99,41 @@ public class ServerQueueHelper {
 							msgRaw = msgRaw.replace("%place%", queuePos);
 							BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
 							queuedPlayer.sendMessage(msg);
-							return;
 						}
 					}
 
-					//Send player to server and if an ALT add to server afk queue
-					ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);
-					queuedPlayer.connect(serverInfo, new Callback<Boolean>() {						
-						@Override
-						public void done(Boolean result, Throwable error) {
-							//Check if player is an alt and add to AFK queue
-							if(queuedPlayer.hasPermission(Main.Groups.ALT) && result) {
-								System.out.println(queuedPlayer.hasPermission(Main.Groups.ALT));
-								System.out.println(serverName);
-								AfkHelper.addAltPlayer(queuedPlayer, serverInfo);
+					//Send player to server if the playersonline is now less than the max
+					if(playersOnline < playersMax) {
+						ProxyServer.getInstance().getScheduler().schedule(BungeeMain.INSTANCE, new Runnable() {
+							@Override
+							public void run() {
+								ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);
+								queuedPlayer.connect(serverInfo, new Callback<Boolean>() {
+									@Override
+									public void done(Boolean result, Throwable error) {									
+										if(result) {
+											//Check if player is an alt and add to AFK queue
+											if(queuedPlayer.hasPermission(Main.Groups.ALT)) {
+												AfkHelper.addAltPlayer(queuedPlayer, serverInfo);
+											}
+											
+											//Removes that player
+											removePlayer(queuedPlayer.getUniqueId());
+	
+											//Increase online variable
+											playersOnline++;
+	
+											//Send queue message
+											sendQueueMessages(serverName);
+										} else {
+											queuedPlayer.sendMessage(new ComponentBuilder(Main.PREFIX).append("An error has occured").reset().create());
+										}
+									}
+								});
 							}
-						}
-					});
-
-					//Removes that player
-					removePlayer(queuedPlayer.getUniqueId());
-
-					//Increase online variable
-					playersOnline++;
-
-					//Send queue message
-					sendQueueMessages(serverName);
+							
+						}, 1, TimeUnit.SECONDS);
+					}
 				}
 			}
 		});
@@ -171,10 +183,10 @@ public class ServerQueueHelper {
 	 */
 	private static ProxiedPlayer getNextPlayer(String serverName) {
 		if(serverName.equals(Main.Servers.SURVIVAL)) {
-			UUID uuid = survivalQueue.get(0);
+			UUID uuid = survivalQueue.poll();
 			return ProxyServer.getInstance().getPlayer(uuid);
 		} else if(serverName.equals(Main.Servers.CREATIVE)) {
-			UUID uuid = creativeQueue.get(0);
+			UUID uuid = creativeQueue.poll();
 			return ProxyServer.getInstance().getPlayer(uuid);
 		} else {
 			return null;
@@ -200,6 +212,12 @@ public class ServerQueueHelper {
 	 * @param uuid The players uuid
 	 */
 	public static void addPlayer(String serverName, ProxiedPlayer player) {
+		//Check player isn't in the server
+		if(player.getServer().getInfo().getName().equalsIgnoreCase(serverName)) {
+			player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You're already in this server...").reset().create());
+			return;
+		}
+		
 		//If player has full join command then make them skip queue
 		if(player.hasPermission(Main.Permissions.FULL_JOIN)) {
 			ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(serverName);
@@ -225,20 +243,21 @@ public class ServerQueueHelper {
 	 * @param uuid The players uuid
 	 */
 	public static void removePlayer(UUID uuid) {
-		int survivalIndex = survivalQueue.indexOf(uuid);
-		survivalQueue.remove(uuid);
-		for(int s = 0; s < survivalQueue.size(); s++) {
-			if(s >= survivalIndex) {
-				sendQueueMessage(survivalQueue.get(s), s+1);
-			}
-		}
 
-		int creativeIndex = creativeQueue.indexOf(uuid);
-		creativeQueue.remove(uuid);
-		for(int c = 0; c < survivalQueue.size(); c++) {
-			if(c >= creativeIndex) {
-				sendQueueMessage(survivalQueue.get(c), c+1);
-			}
+		if(survivalQueue.contains(uuid)) {
+			survivalQueue.remove(uuid);
+			survivalQueue.forEach(sUUID -> {
+				sendQueueMessage(sUUID, survivalIndex+1);
+				survivalIndex++;
+			});
+		}
+		
+		if(creativeQueue.contains(uuid)) {
+			creativeQueue.remove(uuid);		
+			creativeQueue.forEach(cUUID -> {
+				sendQueueMessage(cUUID, creativeIndex+1);
+				creativeIndex++;
+			});
 		}
 	}
 }
