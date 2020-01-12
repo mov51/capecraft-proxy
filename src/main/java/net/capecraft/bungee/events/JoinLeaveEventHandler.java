@@ -101,6 +101,7 @@ public class JoinLeaveEventHandler implements Listener {
 		if(event.getReason() == Reason.JOIN_PROXY) {
 			if(ServerQueueHelper.getQueueSize(event.getTarget().getName()) != 0) {
 				event.getPlayer().connect(ProxyServer.getInstance().getServerInfo(Main.Servers.LOBBY));
+				event.setCancelled(true);
 			}
 		}
 	}

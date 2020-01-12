@@ -61,7 +61,7 @@ public class AfkHelper {
 	 * @param serverName The server name
 	 * @return The Servers AFK Queue
 	 */
-	private static Queue<ProxiedPlayer> getQueueList(String serverName) {
+	public static Queue<ProxiedPlayer> getQueueList(String serverName) {
 		if(serverName.equalsIgnoreCase(Main.Servers.SURVIVAL)) {
 			return afkSurvivalQueueList;
 		} else if(serverName.equalsIgnoreCase(Main.Servers.CREATIVE)) {
