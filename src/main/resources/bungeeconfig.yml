@@ -1,0 +1,37 @@
+versions:
+  name: "1.14.4"
+  supportedVersions:
+    - 498
+    
+whitelist: off
+whitelistMessage: "We're under maintenance. Please join our discord for news"
+
+firstJoinMessage: "Please welcome %player% to the server!"
+joinMessage: "%player% has joined the server!"
+leaveMessage: "%player% has left the server!"
+
+playtimeMessage: "%player% has %playtime% hours of play time!"
+
+queueMessage: "You're position %place% in the server queue. You'll be teleported shortly"
+queueDonatorMessage: "Thanks for supporting the server, you've been granted the CapeCraft FastPass"
+queueStatus: "You're %place% in the queue! Type /queue cancel to leave the queue"
+
+afkMessage: "You're now AFK!"
+unAfkMessage: "You're no longer AFK!"
+altAfk: "Your an alt! You are already AFK silly!"
+noAfk: "Oops, you can't AFK Here!"
+failAfk: "You cant AFK! If you think this is an error contact a staff member!"
+fullAfk: "You cant AFK! The server is too full!"
+afkActionBar: "You're AFK! You don't gain playtime while AFK :( Use /afk to play normally!"
+
+kickAfk: "The server is full!\nWe've had to disconnect your account to make place for real players"
+kickAfkBroadcast: "An inactive player has been removed from the playing field to make space! Feel safe in your active minds!"
+
+motd:
+  - '============================================='
+  - 'Welcome back %player%'
+  - ''
+  - 'There are %online%/%max% players online'
+  - ''
+  - 'Join our discord: https://CapeCraft.net/discord'
+  - '============================================='

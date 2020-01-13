@@ -1,0 +1,35 @@
+name: CapeCraftProxy
+main: net.capecraft.bungee.BungeeMain
+depends: [TAB, LuckPerms]
+version: 1.0
+authors: [james090500, mov51]
+commands:
+  capecraftproxy:
+    description: CapeCraftProxy commands
+  bwhitelist:
+    description: CapeCraftProxy whitelist
+  comspy:
+    description: Staff ComSpy
+  rules:
+    description: Show the rules
+  altrules:
+    description: Show alt the rules
+  afkrules:
+    description: Show afk the rules
+  cape:
+    description: cape command
+  donate:
+    description: donate command
+  vote:
+    description: vote command
+  lobby:
+    alias: hub
+    description: Teleports to lobby
+  survival:
+    description: Teleports to survival
+  creative:
+    description: Teleports to creative
+  btp:
+    description: Bungee Teleport
+  playtimetop:
+    description: Gets /playtimetop
