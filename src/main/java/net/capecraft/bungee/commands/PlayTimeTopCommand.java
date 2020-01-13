@@ -58,6 +58,8 @@ public class PlayTimeTopCommand extends Command {
 				playtime = playtime / 60;
 				DecimalFormat df = new DecimalFormat("#.##");
 				
+				System.out.println(value.getValue() + " " + value.getKey());
+				
 				sender.sendMessage(new ComponentBuilder(" " + df.format(playtime) + "hrs " + value.getValue()).create());
 			});
 			
@@ -97,11 +99,9 @@ public class PlayTimeTopCommand extends Command {
 			for (File file : new File(BungeeMain.INSTANCE.getDataFolder() + "/users/").listFiles()) {
 				if (file.getName().contains(".yml")) {
 					try {
-						Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class)
-								.load(file);
+						Configuration playerConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
 						if (!playerConfig.getBoolean("alt")) {
-							int playtime = playerConfig.getInt("playtime") / 60;
-							playtimeCache.put(playtime, playerConfig.getString("username"));
+							playtimeCache.put(playerConfig.getInt("playtime"), playerConfig.getString("username"));
 						}
 					} catch (IOException e) {
 						e.printStackTrace();

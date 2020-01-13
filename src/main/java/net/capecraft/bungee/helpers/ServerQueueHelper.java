@@ -201,8 +201,7 @@ public class ServerQueueHelper {
 	public static void addPlayer(String serverName, ProxiedPlayer player) {
 		// Check player isn't in the server
 		if (player.getServer().getInfo().getName().equalsIgnoreCase(serverName)) {
-			player.sendMessage(
-					new ComponentBuilder(Main.PREFIX).append("You're already in this server...").reset().create());
+			player.sendMessage(new ComponentBuilder(Main.PREFIX).append("You're already in this server...").reset().create());
 			return;
 		}
 
@@ -212,8 +211,7 @@ public class ServerQueueHelper {
 			player.connect(serverInfo);
 
 			String msgRaw = PluginConfig.getPluginConfig().getString(PluginConfig.QUEUE_DONATOR_MESSAGE);
-			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX)
-					.append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
+			BaseComponent[] msg = new ComponentBuilder(Main.PREFIX).append(TextComponent.fromLegacyText(msgRaw, ChatColor.WHITE)).reset().create();
 			player.sendMessage(msg);
 			return;
 		}
