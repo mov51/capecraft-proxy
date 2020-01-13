@@ -58,8 +58,6 @@ public class PlayTimeTopCommand extends Command {
 				playtime = playtime / 60;
 				DecimalFormat df = new DecimalFormat("#.##");
 				
-				System.out.println(value.getValue() + " " + value.getKey());
-				
 				sender.sendMessage(new ComponentBuilder(" " + df.format(playtime) + "hrs " + value.getValue()).create());
 			});
 			
