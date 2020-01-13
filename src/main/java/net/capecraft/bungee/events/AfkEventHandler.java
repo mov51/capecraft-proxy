@@ -2,6 +2,8 @@ package net.capecraft.bungee.events;
 
 import net.capecraft.Main;
 import net.capecraft.bungee.helpers.AfkHelper;
+import net.capecraft.bungee.helpers.PlayTimeHelper;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectedEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -23,6 +25,11 @@ public class AfkEventHandler implements Listener {
 
 	@EventHandler
 	public void onLeave(PlayerDisconnectEvent event) {
+		//Update playtime before player leaves
+		ProxiedPlayer player = event.getPlayer();
+		PlayTimeHelper.updatePlaytime(player.getUniqueId());
+		
+		//Remove player from AFK
 		AfkHelper.purgePlayer(event.getPlayer());
 	}
 	

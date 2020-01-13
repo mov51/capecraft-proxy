@@ -43,13 +43,4 @@ public class PlaytimeEventHandler implements Listener {
 
 		PlayTimeHelper.checkPlayerRank(player.getUniqueId());
 	}
-
-	/*
-	 * Runs when a players leaves and updates playtime
-	 */
-	@EventHandler
-	public void onLeave(ServerDisconnectEvent event) {
-		ProxiedPlayer player = event.getPlayer();
-		PlayTimeHelper.updatePlaytime(player.getUniqueId());
-	}
 }
