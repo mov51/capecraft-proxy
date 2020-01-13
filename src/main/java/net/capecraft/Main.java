@@ -63,6 +63,7 @@ public class Main {
 		public static final String ELDER = "group.elder";
 		public static final String VETERAN = "group.veteran";
 		public static final String LEGEND = "group.legend";
+		public static final String CHAMPION = "group.champion";
 		//Donator
 		public static final String RESPECTED = "group.respected";
 		public static final String PREMIUM = "group.premium";

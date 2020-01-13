@@ -72,6 +72,7 @@ public class PlayTimeTopCommand extends Command {
 	 * @param localPlaytimeCache Cache just generated
 	 */
 	private static void updateCache(TreeMap<Integer, String> localPlaytimeCache) {
+		playtimeCache = new TreeMap<>(Collections.reverseOrder());
 		playtimeCache.putAll(localPlaytimeCache);
 		playtimeLastChecked = System.currentTimeMillis() / 1000;
 	}

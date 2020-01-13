@@ -113,6 +113,11 @@ public class PlayTimeHelper {
 		if(playTimeMin >= 60000 && !player.hasPermission(Main.Groups.LEGEND)) {
 			rankupPlayer(player, Main.Groups.VETERAN, Main.Groups.LEGEND, new ComponentBuilder("LEGEND").bold(true).color(ChatColor.YELLOW));
 		}
+
+		//2000h Champion
+		if(playTimeMin >= 120000 && !player.hasPermission(Main.Groups.CHAMPION)) {
+			rankupPlayer(player, Main.Groups.LEGEND, Main.Groups.CHAMPION, new ComponentBuilder("CHAMPION").bold(true).color(ChatColor.GREEN));
+		}		
 	}
 
 	/**
