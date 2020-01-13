@@ -34,6 +34,11 @@ public class ComSpyCommand extends Command {
         sender.sendMessage(buildCommandMessage("No permission"));
 	}
 
+	/**
+	 * Sends the command message response
+	 * @param message The response
+	 * @return
+	 */
 	public static BaseComponent[] buildCommandMessage(String message) {
     	return new ComponentBuilder("[CC] ").color(ChatColor.RED).bold(true).append(message).color(ChatColor.GREEN).bold(false).create();
     }

@@ -28,14 +28,14 @@ public class ComSpyEventHandler implements Listener {
     		for (ProxiedPlayer target : ComSpyHelper.getListeners()){
     			if(sender != target) {
     				switch (server){
-						case "creative":
-							target.sendMessage(ComSpyHelper.buildCommandMessage("[C] " + name, command));
+						case Main.Servers.CREATIVE:
+							target.sendMessage(ComSpyHelper.buildCommandMessage("[C]", name, command));
 							break;
-						case "survival":
-							target.sendMessage(ComSpyHelper.buildCommandMessage("[S] " + name, command));
+						case Main.Servers.SURVIVAL:
+							target.sendMessage(ComSpyHelper.buildCommandMessage("[S]", name, command));
 							break;
-						case "lobby":
-							target.sendMessage(ComSpyHelper.buildCommandMessage("[H] " + name, command));
+						case Main.Servers.LOBBY:
+							target.sendMessage(ComSpyHelper.buildCommandMessage("[H]", name, command));
 							break;
 					}
 
@@ -44,6 +44,10 @@ public class ComSpyEventHandler implements Listener {
         }
     }
 
+    /**
+     * Sets the staff comspy status depending on last join
+     * @param event
+     */
     @EventHandler
     public static void onStaffJoin(PostLoginEvent event) {
     	//Creates proxied player

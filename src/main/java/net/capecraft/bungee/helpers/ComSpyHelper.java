@@ -14,59 +14,64 @@ import net.md_5.bungee.config.Configuration;
 
 public class ComSpyHelper implements Listener {
 
-	//The ComListener List
-    private static List<ProxiedPlayer> ComListener = new ArrayList<ProxiedPlayer>();
+	// The ComListener List
+	private static List<ProxiedPlayer> ComListener = new ArrayList<ProxiedPlayer>();
 
-    /**
-     * Get the list and return it
-     * @return ComListener list
-     */
+	/**
+	 * Get the list and return it
+	 * 
+	 * @return ComListener list
+	 */
 	public static List<ProxiedPlayer> getListeners() {
 		return ComListener;
 	}
 
-    /**
-     * Add Player to comspy listener
-     * @param player The Player object
-     */
-    public static void addComListener(ProxiedPlayer player) {
-        //Adds player to the List
-    	ComSpyHelper.ComListener.add(player);
-    	//Updates config
+	/**
+	 * Add Player to comspy listener
+	 * 
+	 * @param player The Player object
+	 */
+	public static void addComListener(ProxiedPlayer player) {
+		// Adds player to the List
+		ComSpyHelper.ComListener.add(player);
+		// Updates config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
 		playerConfig.set(Main.PlayerConfigs.IS_SPYING, true);
 		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
-    }
+	}
 
-    /**
-     * Remove player from company listener
-     * @param player The Player object
-     */
-    public static void removeComListener(ProxiedPlayer player) {
-        //Removes player from the List
-    	ComSpyHelper.ComListener.remove(player);
-    	//Updates config
+	/**
+	 * Remove player from company listener
+	 * 
+	 * @param player The Player object
+	 */
+	public static void removeComListener(ProxiedPlayer player) {
+		// Removes player from the List
+		ComSpyHelper.ComListener.remove(player);
+		// Updates config
 		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
 		playerConfig.set(Main.PlayerConfigs.IS_SPYING, false);
 		PlayerConfig.saveConfig(player.getUniqueId(), playerConfig);
-    }
+	}
 
-    /**
-     * Is player spying on commands
-     * @param player ProxiedPlayer object
-     * @return is the player spying
-     */
-    public static boolean isPlayerSpying(ProxiedPlayer player) {
-    	return ComSpyHelper.ComListener.contains(player);
-    }
+	/**
+	 * Is player spying on commands
+	 * 
+	 * @param player ProxiedPlayer object
+	 * @return is the player spying
+	 */
+	public static boolean isPlayerSpying(ProxiedPlayer player) {
+		return ComSpyHelper.ComListener.contains(player);
+	}
 
-    /**
-     * Build the message component
-     * @param name Player who initiated the command
-     * @param command The command
-     * @return The built message
-     */
-    public static BaseComponent[] buildCommandMessage(String name, String command) {
-    	return new ComponentBuilder("[CC] ").color(ChatColor.RED).bold(true).append( name + ": " + command).color(ChatColor.YELLOW).bold(false).create();
-    }
+	/**
+	 * Build the message component
+	 * 
+	 * @param name    Player who initiated the command
+	 * @param command The command
+	 * @return The built message
+	 */
+	public static BaseComponent[] buildCommandMessage(String server, String name, String command) {
+		return new ComponentBuilder("[CC] " + server + " ").color(ChatColor.RED).bold(true).append(name + ": " + command).color(ChatColor.YELLOW).bold(false).create();
+	}
 }
