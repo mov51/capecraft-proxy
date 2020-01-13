@@ -1,9 +1,9 @@
 name: CapeCraftProxy
 main: net.capecraft.spigot.SpigotMain
-version: 1.0
+version: "1.0"
 depends: [LuckPerms, Essentials]
 authors: [james090500, mov51]
-api-version: 1.15
+api-version: "1.15"
 commands:
   lobby:
     alias: hub
@@ -17,3 +17,10 @@ commands:
   wild:
     alias: rtp
     description: Teleports player to a random location
+permissions:
+  capecraft.admin:
+    description: Allows for usage of admin commands
+  capecraft.fulljoin:
+    description: Grants users the CapeCraft Fastpass
+  capecraft.playafk:
+    description: Allows for the use of the ./afk command

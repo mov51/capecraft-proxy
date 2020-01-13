@@ -1,6 +1,7 @@
 package net.capecraft.bungee.events;
 
 import net.capecraft.Main;
+import net.capecraft.bungee.commands.ComSpyCommand;
 import net.capecraft.bungee.helpers.ComSpyHelper;
 import net.capecraft.bungee.helpers.config.PlayerConfig;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -22,11 +23,22 @@ public class ComSpyEventHandler implements Listener {
     		ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
     		String command = event.getMessage();
     		String name = sender.getName();
-
-    		//Send players command to staff if in same server (except their own commands)
+    		String server = sender.getServer().getInfo().getName();
+    		//Send labeled player commands from all servers (except their own commands)
     		for (ProxiedPlayer target : ComSpyHelper.getListeners()){
-    			if(sender != target && target.getServer().getInfo().equals(sender.getServer().getInfo())) {
-    				target.sendMessage(ComSpyHelper.buildCommandMessage(name, command));
+    			if(sender != target) {
+    				switch (server){
+						case "creative":
+							target.sendMessage(ComSpyHelper.buildCommandMessage("[C] " + name, command));
+							break;
+						case "survival":
+							target.sendMessage(ComSpyHelper.buildCommandMessage("[S] " + name, command));
+							break;
+						case "lobby":
+							target.sendMessage(ComSpyHelper.buildCommandMessage("[H] " + name, command));
+							break;
+					}
+
     			}
     		}
         }
@@ -35,16 +47,19 @@ public class ComSpyEventHandler implements Listener {
     @EventHandler
     public static void onStaffJoin(PostLoginEvent event) {
     	//Creates proxied player
-    	ProxiedPlayer player = event.getPlayer();
+		ProxiedPlayer player = event.getPlayer();
+
     	//Check player is admin
-    	if(player.hasPermission(Main.Permissions.ADMIN)) {
-    		//Gets isSpying value
-    		Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
-    		Boolean isSpying = playerConfig.getBoolean(Main.PlayerConfigs.IS_SPYING);
-    		//If isSpying is null
-    		if(isSpying) {
-    			playerConfig.set(Main.PlayerConfigs.IS_SPYING, false);
-    		}
-    	}
+		if(player.hasPermission(Main.Permissions.ADMIN)) {
+			//Gets isSpying value
+			Configuration playerConfig = PlayerConfig.getPlayerConfig(player.getUniqueId());
+			boolean isSpying = playerConfig.getBoolean(Main.PlayerConfigs.IS_SPYING);
+			//If isSpying is null
+			if(isSpying) {
+				player.sendMessage(ComSpyCommand.buildCommandMessage("ComSpy Enabled!"));
+				ComSpyHelper.addComListener(player);
+			}
+		}
+
     }
 }
