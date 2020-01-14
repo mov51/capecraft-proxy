@@ -1,6 +1,6 @@
 name: CapeCraftProxy
 main: net.capecraft.bungee.BungeeMain
-depends: [TAB, LuckPerms]
+depends: [TAB, LuckPerms, AdvancedBan]
 version: 1.0
 authors: [james090500, mov51]
 commands:

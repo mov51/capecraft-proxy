@@ -8,6 +8,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class TABPlaceholder {
 
+	/**
+	 * Adds the placeholders to TAB AFK
+	 */
 	public static void addPlaceholders() {
         //Hook into TAB
         Placeholders.playerPlaceholders.add(new PlayerPlaceholder("%capecraft_afk%", 2000) {

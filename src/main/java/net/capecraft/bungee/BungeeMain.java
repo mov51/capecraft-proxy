@@ -20,6 +20,7 @@ import net.capecraft.bungee.commands.server.CreativeCommand;
 import net.capecraft.bungee.commands.server.LobbyCommand;
 import net.capecraft.bungee.commands.server.SurvivalCommand;
 import net.capecraft.bungee.events.AfkEventHandler;
+import net.capecraft.bungee.events.AutoBanListener;
 import net.capecraft.bungee.events.ComSpyEventHandler;
 import net.capecraft.bungee.events.JoinLeaveEventHandler;
 import net.capecraft.bungee.events.PlaytimeEventHandler;
@@ -62,11 +63,12 @@ public class BungeeMain extends Plugin {
     	getProxy().getPluginManager().registerListener(this, new NicknameMessage());        
     	
     	//Load Events
+    	getProxy().getPluginManager().registerListener(this, new AfkEventHandler());
+    	getProxy().getPluginManager().registerListener(this, new AutoBanListener());
+    	getProxy().getPluginManager().registerListener(this, new ComSpyEventHandler());
         getProxy().getPluginManager().registerListener(this, new JoinLeaveEventHandler());
         getProxy().getPluginManager().registerListener(this, new PlaytimeEventHandler());
-        getProxy().getPluginManager().registerListener(this, new ServerQueueEventHandler());        
-        getProxy().getPluginManager().registerListener(this, new ComSpyEventHandler());
-        getProxy().getPluginManager().registerListener(this, new AfkEventHandler());
+        getProxy().getPluginManager().registerListener(this, new ServerQueueEventHandler());         
 
         //Play Commands
         getProxy().getPluginManager().registerCommand(this, new AfkCommand());
