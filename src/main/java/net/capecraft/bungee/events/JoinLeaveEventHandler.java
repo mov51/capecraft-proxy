@@ -63,6 +63,7 @@ public class JoinLeaveEventHandler implements Listener {
 		if(event.getConnection().getVersion() != getProtocolVersion) {
 			ProxyServer.getInstance().getConsole().sendMessage(new ComponentBuilder(event.getConnection().getName()).color(ChatColor.YELLOW).append(" Kicked due to version mismatch").create());
 			event.getConnection().disconnect(new ComponentBuilder(Main.PREFIX).append("Please join using version ").reset().append(getVersionMsg).create());
+			event.setCancelled(true);
 		}
 	}
 
